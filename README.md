@@ -6,7 +6,13 @@
 
 *A Rails inspired framework for using AngularJS with Rails*
 
-The main motivations behind this gem is to standardize and simplify how AngularJS is integrated in a rails  application.
+The main motivations behind this gem is to standardize and simplify how AngularJS is integrated in a rails  application.  
+
+I am just getting started but this does function *as-is*.  Big things left to do:
+* write more specs!
+* create generators for controllers/services/(views?)
+
+I would love feed back (especially on convention choices) and possibly other contributers.  Send me a note!
 
 #### Overview
 
