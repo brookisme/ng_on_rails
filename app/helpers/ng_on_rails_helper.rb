@@ -6,24 +6,30 @@ module NgOnRailsHelper
       unless !!var_name.match(/^@_/)
         unless ignorables.include? var_name
           name = var_name.gsub("@","")
-          unless ng_data[name] == "IGNORE"
-            instance_var = instance_variable_get(var_name)
-            if !ng_data[name]
-              if !!ng_data["BUILD"] 
-                rv = build(name,instance_var)
-              else
-                rv = instance_var
-              end
-            elsif ng_data[name]=="BUILD"
-              rv = build(name,instance_var)
-            elsif ng_data[name].class==Hash
-              path = ng_data[name][:path]
-              model_name = ng_data[name][:as] || name
-              rv = build(model_name,instance_var,path)
+          instance_var = instance_variable_get(var_name)
+          unless instance_var.blank?
+            if ng_data.blank?
+              rv = instance_var
+            else
+              unless ng_data[name] == "IGNORE"
+                if !ng_data[name]
+                  if !!ng_data["BUILD"] 
+                    rv = build(name,instance_var)
+                  else
+                    rv = instance_var
+                  end
+                elsif ng_data[name]=="BUILD"
+                  rv = build(name,instance_var)
+                elsif ng_data[name].class==Hash
+                  path = ng_data[name][:path]
+                  model_name = ng_data[name][:as] || name
+                  rv = build(model_name,instance_var,path)
+                end
+              end        
             end
-            unless !defined?(rv) || rv.nil?
-              locals_hash[name] = j.decode(rv)
-            end
+            unless !defined?(rv) || rv.blank?
+              locals_hash[name.to_s] = j.decode(rv)
+            end  
           end
         end
       end
