@@ -30,10 +30,10 @@ module NgOnRailsHelper
             unless !defined?(rv) || rv.blank?
               if (rv.is_a?(String) && !is_json?(rv)) || rv.is_a?(Numeric)
                 locals_hash[name] = rv
-              elsif rv.is_a?(Hash) || rv.is_a?(Array)
-                locals_hash[name] = j.decode(rv.to_json)
-              else
+              elsif is_json?(rv)
                 locals_hash[name] = j.decode(rv)
+              else
+                locals_hash[name] = j.decode(rv.to_json)
               end
             end  
           end
