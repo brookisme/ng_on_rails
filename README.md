@@ -26,7 +26,7 @@ As time goes on generators for angular controllers and services (rails-models) w
 
 It relies on two pieces of slight magic
 
-1. a "Rails" service that holds all your rails variables.  This service automatically turns rails instance variables into json that can be used by Angular. For example the rails instance variable `@pages` will get mapped to `Rails.pages` that can be used by angular
+* a "Rails" service that holds all your rails variables.  This service automatically turns rails instance variables into json that can be used by Angular. For example the rails instance variable `@pages` will get mapped to `Rails.pages` that can be used by angular
 ```
 <div ng-repeat="page in Rails.pages">...
 ```
@@ -37,7 +37,8 @@ To get this work you simply need to load the rails_service.js.erb partial
 </script>    
 ```
 "rails_service.js.erb" calls the `locals_to_json` helper method to automatically turn instance variables into json.  Here `ng_data` is a local rails variable used to customize how this is converted. This will be discussed in detail [below](#locals_to_json).
-2. Your angular views(partials) should be placed in app/views/angular_app.  This solution is discussed in a handfull of places including [here](http://stackoverflow.com/questions/12116476/rails-static-html-template-files-in-the-asset-pipeline-and-caching-in-developmen), but the key parts are:
+
+* Your angular views(partials) should be placed in app/views/angular_app.  This solution is discussed in a handfull of places including [here](http://stackoverflow.com/questions/12116476/rails-static-html-template-files-in-the-asset-pipeline-and-caching-in-developmen), but the key parts are:
 ```ruby
 # routes.rb
 scope :angular_app do
