@@ -15,7 +15,7 @@ I am just getting started but this does function *as-is*.  Some things left to d
 
 Install it!
 ```
-gem 'ng\_on\_rails'
+gem 'ng_on_rails'
 ```
 
 I would love feed back (especially on convention choices) and possibly other contributers.  Send me a note!
