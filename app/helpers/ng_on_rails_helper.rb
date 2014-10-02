@@ -28,12 +28,12 @@ module NgOnRailsHelper
               end        
             end
             unless !defined?(rv) || rv.blank?
-              if rv.is_a?(String) || rv.is_a?(Numeric)
+              if (rv.is_a?(String) && !is_json?(rv)) || rv.is_a?(Numeric)
                 locals_hash[name] = rv
-              elsif rv.is_a?(Hash)
+              elsif rv.is_a?(Hash) || rv.is_a?(Array)
                 locals_hash[name] = j.decode(rv.to_json)
               else
-                locals_hash[name] = j.decode(rv.to_json)
+                locals_hash[name] = j.decode(rv)
               end
             end  
           end
@@ -60,6 +60,14 @@ private
       "@output_buffer", 
       "@rendered"
     ]
+  end
+
+  def is_json? string
+    begin
+      !!JSON.parse(string)
+    rescue
+      false
+    end
   end
 
   def build name, var, path=nil
