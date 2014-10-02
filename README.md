@@ -16,10 +16,11 @@ It relies on two pieces of slight magic and a directive.
 
 * put your angular views in app/views/angular_app.  this solution is discussed in a handfull of places including [here](http://stackoverflow.com/questions/12116476/rails-static-html-template-files-in-the-asset-pipeline-and-caching-in-developmen).
 
-    scope :angular_app do
-      get ':path.html' => 'ng_on_rails#template', constraints: { path: /.+/ }
-    end 
-
+> ```
+scope :angular_app do
+  get ':path.html' => 'ng_on_rails#template', constraints: { path: /.+/ }
+end 
+```
 * a Render directive that mimics the rails render
 
 
