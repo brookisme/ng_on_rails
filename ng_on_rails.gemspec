@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = NgOnRails::VERSION
   s.authors     = ["Brookie Williams"]
   s.email       = ["brookwilliams@laborvoices.com"]
-  s.homepage    = "http://www.laborvoices.com"
+  s.homepage    = "https://github.com/brookisme/ng_on_rails"
   s.summary     = "A Rails inspired framework for using AngularJS with Rails"
   s.description = "A Rails inspired framework for using AngularJS with Rails"
   s.license     = "MIT"
