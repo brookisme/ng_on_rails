@@ -8,9 +8,10 @@
 
 The main motivations behind this gem is to standardize and simplify how AngularJS is integrated in a rails  application.  
 
-I am just getting started but this does function *as-is*.  Big things left to do:
-* write more specs!
-* create generators for controllers/services/(views?)
+I am just getting started but this does function *as-is*.  Some left to do:
+* Write more specs!!!
+* Create generators for controllers/services/(views?)
+* (ViewHelper functions via shared service?)
 
 I would love feed back (especially on convention choices) and possibly other contributers.  Send me a note!
 
@@ -95,7 +96,7 @@ Files should be named / put in folders in the same maner that you would in Rails
 ```
 *In the above, `ctrl.rails` has been set to the Rails service in the AppController*
 
-* This brings up another point.  Use the Controller-As syntax!  I know there are people who aren't a fan.  However in most apps where I am using angular there is a complicated Model structure.   I necessarly want to edit all these things on a single page Controller-As really really helps keep the logic clear.
+* This brings up another point.  Use the Controller-As syntax!  I know there are people who aren't a fan.  However in most apps where I am using angular there is a complicated Model structure.   I necessarly want to edit all these things on a single page, though spread out through many partials. Controller-As really really helps keep the logic clear.
 
 
 #### Angular Services for Rails Models
