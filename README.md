@@ -235,12 +235,13 @@ As mentioned using the Rails-service you can get access to all your rails variab
   = render( partial: 'angular_app/rails_service', formats: ['js'], locals: { ng_data: ng_data} )
 </script>    
 ```
-Here, ng_data is a local rails variable that tells you have to do the conversion. Assume we have a variables called `@var_1, @var_2, ...`
+Here, ng_data is a local rails variable that tells you have to do the conversion:
 
 * if ng_data is nil all varibles will be converted with `.to_json` ( or if its a string/numeric with .to_s )
 * if `ng_data['BUILD'].blank?` the default will be to use `.to_json` for conversion.
 * if `ng_data['BUILD']=true` the default will be to look for a `.json` file in the app/views directory. It will guess the name and path to this file using the name of var. For instance, if we have @page it will look for the the file app/views/pages/page.json.
-* if `ng_data[var_1]={ path: 'path/to/file', as: model_name } it will use this info to try and find the build file.  For instance, suppose I have a collection of pages called `@admin_pages`. Then `ng_data['admin_pages'] = { path: "survey_link/pages/pages", as: :pages }` will look for the file app/views/pages/pages.json seting the local variable `pages = @admin_pages`.
+* if `ng_data[var_name].blank?` the conversion will use the defaults discussed above
+* if `ng_data[var_name]={ path: 'path/to/file', as: model_name } it will use this info to try and find the build file.  For instance, suppose I have a collection of pages called `@admin_pages`. Then `ng_data['admin_pages'] = { path: "survey_link/pages/pages", as: :pages }` will look for the file app/views/pages/pages.json seting the local variable `pages = @admin_pages`.
 
 To understand it better look at [ng_on_rails_helper.rb](https://github.com/brookisme/ng_on_rails/blob/master/app/helpers/ng_on_rails_helper.rb).
 
