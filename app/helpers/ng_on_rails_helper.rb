@@ -28,7 +28,13 @@ module NgOnRailsHelper
               end        
             end
             unless !defined?(rv) || rv.blank?
-              locals_hash[name.to_s] = j.decode(rv)
+              if rv.is_a?(String) || rv.is_a?(Numeric)
+                locals_hash[name] = rv
+              elsif rv.is_a?(Hash)
+                locals_hash[name] = j.decode(rv.to_json)
+              else
+                locals_hash[name] = j.decode(rv.to_json)
+              end
             end  
           end
         end
@@ -44,7 +50,15 @@ private
       "@view_renderer",
       "@view_flow",
       "@output_buffer",
-      "@virtual_path"
+      "@virtual_path",
+      "@fixture_connections",
+      "@example", 
+      "@fixture_cache", 
+      "@loaded_fixtures", 
+      "@controller", 
+      "@request", 
+      "@output_buffer", 
+      "@rendered"
     ]
   end
 
