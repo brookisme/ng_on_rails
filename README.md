@@ -8,7 +8,7 @@
 
 The main motivations behind this gem is to standardize and simplify how AngularJS is integrated in a rails  application.  
 
-I am just getting started but this does function *as-is*.  Some left to do:
+I am just getting started but this does function *as-is*.  Some things left to do:
 * Write more specs!!!
 * Create generators for controllers/services/(views?)
 * (ViewHelper functions via shared service?)
@@ -32,7 +32,6 @@ To get this work you simply need to load the rails_service.js.erb partial
 </script>    
 ```
 "rails_service.js.erb" calls the `locals_to_json` helper method to automatically turn instance variables into json.  Here `ng_data` is a local rails variable used to customize how this is converted. This will be discussed in detail [below](#locals_to_json).
-
 2. Your angular views(partials) should be placed in app/views/angular_app.  This solution is discussed in a handfull of places including [here](http://stackoverflow.com/questions/12116476/rails-static-html-template-files-in-the-asset-pipeline-and-caching-in-developmen), but the key parts are:
 ```ruby
 # routes.rb
@@ -65,7 +64,7 @@ to load your angualar views in at 'app/views/angular_app'
 
 #### Conventions
 
-* Put Angular controllers/directives/... goes in a folder "angular\_app" in the assets directory.  Similarly, as discussed above, the angular views(partials) are placed in a folder "angular\_app" in the views directory
+* Put Angular controllers/directives/... in a folder "angular\_app" in the assets directory.  Similarly, as discussed above, the angular views(partials) are placed in a folder "angular\_app" in the views directory
 ```
 |-- app/
   |-- assests/
@@ -79,7 +78,7 @@ to load your angualar views in at 'app/views/angular_app'
     |-- angular_app/
 
 ```
-Files should be named / put in folders in the same maner that you would in Rails.  For instance, if you have a Page model, you would have a pages_controller.js and a service page.js. Then under views you would have pages/{show.html,index.html,...}.  *The way these views are handled makes them more like partials that views but for now at least I am not prefixing the name with and underscore  "\_"*
+Files should be named/put in folders in the same maner that you would in Rails.  For instance, if you have a Page model, you would have a pages_controller.js and a service page.js. Then under views you would have pages/{show.html,index.html,...}.  *The way these views are handled makes them more like partials that views but for now at least I am not prefixing the name with and underscore  "\_"*
 
 * As for views, I try to have as little AngularJS outside of my angular_app folder.  I will load the "Rails" service and set `ng-app="NgOnRailsApp"` in the application layout.  Additionally I will usuallly have an angular `AppController` that is very limited in behavior that is part of the application layout.  Again assuming I have a "Page" model I will handle the views like this
 
@@ -100,7 +99,7 @@ Files should be named / put in folders in the same maner that you would in Rails
 
 
 #### Angular Services for Rails Models
-You are going to have a service for each rails model.  I plan on adding a generators but for now this is what my services look like
+You are going to have a service for each rails model.  I plan on adding generators but for now this is what my services look like
 
 ```coffeescript
 # app/assets/javascripts/angular_app/services/page.js.coffee
@@ -114,7 +113,7 @@ NgOnRailsApp.factory "Page", ($resource) ->
 
 
 #### Angular Controllers for Rails Models
-Simalarly you are going to have an angular controller for each rails model.  Again, I plan on adding a generators but for now an example is below.  Note that I place all the REST methods in a rest object.  Bridge is a service I use to pass data from one controller to another.
+Simalarly you are going to have an angular controller for each rails model.  Again, I plan on adding generators but for now an example is below.  Note that I place all the REST methods in a rest object.  Bridge is a service I use to pass data from one controller to another.
 
 ```coffeescript
 NgOnRailsApp.controller 'PagesController', ($scope,Page,Bridge) ->
