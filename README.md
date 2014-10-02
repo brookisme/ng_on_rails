@@ -13,6 +13,11 @@ I am just getting started but this does function *as-is*.  Some things left to d
 * Create generators for controllers/services/(views?)
 * (ViewHelper functions via shared service?)
 
+Install it!
+```
+gem 'ng\_on\_rails'
+```
+
 I would love feed back (especially on convention choices) and possibly other contributers.  Send me a note!
 
 #### Overview
