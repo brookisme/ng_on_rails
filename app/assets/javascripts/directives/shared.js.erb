@@ -1,0 +1,12 @@
+NgOnRailsApp.directive(
+  "render", 
+  function(){
+    return {
+      restrict: "AE",
+      transclude: true,
+      template: function(el,attrs){
+        return '<div ng_include="\'/angular_app/'+attrs.url+'.html\'"></div>'
+      }
+    }
+  }
+)
