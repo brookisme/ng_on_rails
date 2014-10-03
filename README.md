@@ -13,9 +13,39 @@ I am just getting started but this does function *as-is*.  Some things left to d
 * Create generators for controllers/services/(views?)
 * (ViewHelper functions via shared service?)
 
-Install it!
+### Install it!
 ```
+# Gemfile
 gem 'ng_on_rails'
+
+# your_app/app/assets/javascripts/application.js
+//
+//= require angular
+//= require angular-resource
+//= require angular-animate
+//= require angular-sanitize
+//= require ng_on_rails
+//= require_tree .
+```
+
+Note: NgOnRailsApp is automatically created if it doesn't already exsit
+```javascript
+# app/assets/javascripts/app.js
+if (!window.NgOnRailsApp){
+  window.NgOnRailsApp = angular.module("NgOnRailsApp", ["ngResource","ngAnimate","ngSanitize"])
+}
+```
+If you want to overide NgOnRailsApp - so you can inject your own providers
+Just incldue a app.js file that defines NgOnRailsApp in your own app and load it **before** ng\_on\_rails
+```
+# your_app/app/assets/javascripts/angular_app/app.js 
+  window.NgOnRailsApp = angular.module("NgOnRailsApp", ["ngResource","ngAnimate","ngSanitize","angular-sortable-view"])
+
+# your_app/app/assets/javascripts/application.js
+//= require ...
+//= require angular_app/app.js
+//= require ng_on_rails
+//= require tree.
 ```
 
 I would love feed back (especially on convention choices) and possibly other contributers.  Send me a note!
