@@ -37,9 +37,9 @@ if (!window.NgOnRailsApp){
 ```
 If you want to overide NgOnRailsApp - so you can inject your own providers
 Just incldue a app.js file that defines NgOnRailsApp in your own app and load it **before** ng\_on\_rails
-```
+```javascript
 # your_app/app/assets/javascripts/angular_app/app.js 
-  window.NgOnRailsApp = angular.module("NgOnRailsApp", ["ngResource","ngAnimate","ngSanitize","angular-sortable-view"])
+window.NgOnRailsApp = angular.module("NgOnRailsApp", ["ngResource","ngAnimate","ngSanitize","angular-sortable-view"])
 
 # your_app/app/assets/javascripts/application.js
 //= require ...
