@@ -1,58 +1,66 @@
 class DocsController < ApplicationController
   before_action :set_doc, only: [:show, :edit, :update, :destroy]
 
-  # GET /docs
   def index
     @docs = Doc.all
   end
 
-  # GET /docs/1
   def show
   end
 
-  # GET /docs/new
   def new
     @doc = Doc.new
   end
 
-  # GET /docs/1/edit
   def edit
   end
 
-  # POST /docs
   def create
     @doc = Doc.new(doc_params)
-
-    if @doc.save
-      redirect_to @doc, notice: 'Doc was successfully created.'
-    else
-      render :new
+    respond_to do |format|
+      if @doc.save
+        format.html { redirect_to @doc, notice: 'Doc was successfully created.' }
+        format.json { render action: 'show', status: :created, location: @doc }
+      else
+        format.html { render action: 'new' }
+      end
     end
   end
 
-  # PATCH/PUT /docs/1
   def update
-    if @doc.update(doc_params)
-      redirect_to @doc, notice: 'Doc was successfully updated.'
-    else
-      render :edit
+    unless @new_pages.blank?
+      @doc.pages |= @new_pages
+    end
+    respond_to do |format|
+      if @doc.update_attributes(doc_params)
+        format.html { redirect_to @doc, notice: 'Doc was successfully updated.' }
+        format.json { render action: 'show', status: :created, location: @doc }
+      else
+        format.html { render action: 'edit' }
+      end
     end
   end
 
-  # DELETE /docs/1
   def destroy
     @doc.destroy
-    redirect_to docs_url, notice: 'Doc was successfully destroyed.'
+    respond_to do |format|
+      format.html { redirect_to docs_url, notice: 'Doc was successfully destroyed.' }
+      format.json { head :no_content }
+    end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_doc
-      @doc = Doc.find(params[:id])
-    end
+private
 
-    # Only allow a trusted parameter "white list" through.
-    def doc_params
-      params.require(:doc).permit(:name, :description)
-    end
+  def set_doc
+    @doc = Doc.find(params[:id])
+  end
+
+  def doc_params
+    params.require(:doc).permit(
+      :id,
+      :_destroy,
+      :name,
+      :description
+    )
+  end
 end

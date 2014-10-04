@@ -1,3 +1,6 @@
+require 'angularjs-rails'
+require 'angular_rails_csrf'
+
 module NgOnRails
   class Engine < ::Rails::Engine
     initializer 'ng_on_rails.load_static_assets' do |app|

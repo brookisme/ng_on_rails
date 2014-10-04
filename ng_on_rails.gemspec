@@ -17,6 +17,9 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
+  s.add_dependency 'angularjs-rails', '~>  1.2.22'
+  s.add_dependency 'angular_rails_csrf', '~> 1.0.2'
+  
   s.add_dependency "rails", "~> 4.1.6"
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "guard-rspec"

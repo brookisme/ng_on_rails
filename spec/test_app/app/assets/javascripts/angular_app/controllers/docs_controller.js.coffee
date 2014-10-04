@@ -24,7 +24,6 @@ NgOnRailsApp.controller 'DocsController', ($scope,Doc,Page,Bridge) ->
     new: ()->
       ctrl.clear()
       ctrl.data.activeDoc = {}
-      ctrl.data.activeDoc.order_index = new_order_index()
       ctrl.data.creating_new_doc = true
 
     create: ->
@@ -82,37 +81,8 @@ NgOnRailsApp.controller 'DocsController', ($scope,Doc,Page,Bridge) ->
 
 
   # scope methods
-  ctrl.addPages = (doc)->
-    doc.page_ids = []
-    added_pages = []
-    for page in ctrl.bridge.data.admin_pages
-      if page.add_this_page
-        console.log("add pg",page.name)
-        doc.page_ids.push(page.id)
-        added_pages[page]
-    Doc.update(
-      doc,
-      (doc)->
-        console.log("success",doc.pages)
-      ,
-      (error)->
-        console.log("addpages error:",error)
-    )
-
   ctrl.toggleDetails = (doc)->
     doc.show_details = !doc.show_details
-
-  ctrl.resort = (docs) ->
-    for doc, index in docs
-      doc.order_index = index + 1
-      Doc.update(
-        doc,
-       (doc)->
-          # success handler
-        ,
-        (error)->
-          console.log("update_error:",error)
-        )
 
   ctrl.clear = ->
     ctrl.data.activeDoc = null
@@ -123,14 +93,7 @@ NgOnRailsApp.controller 'DocsController', ($scope,Doc,Page,Bridge) ->
     (ctrl.data.editing_doc && !!doc && doc.id == ctrl.data.activeDoc.id) ||
     (ctrl.data.creating_new_doc && !doc)
 
-  # internal
-  new_order_index = ()->
-    length = ctrl.bridge.data.docs.length
-    last_doc = ctrl.bridge.data.docs[length-1]
-    if !!last_doc && !!last_doc.order_index
-      last_doc.order_index + 1
-    else
-      length + 1
+  # internal methods go here...
 
   # return
   return

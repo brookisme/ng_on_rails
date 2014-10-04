@@ -1,0 +1,1 @@
+json.partial! 'pages/pages.json', pages: @pages

@@ -2,6 +2,8 @@ module NgOnRailsHelper
   def locals_to_json ng_data
     j = ActiveSupport::JSON
     locals_hash = {}
+    puts "***********"
+    puts "#{instance_variable_names}"
     instance_variable_names.each do |var_name|
       unless !!var_name.match(/^@_/)
         unless ignorables.include? var_name
@@ -58,7 +60,8 @@ private
       "@controller", 
       "@request", 
       "@output_buffer", 
-      "@rendered"
+      "@rendered",
+      "@marked_for_same_origin_verification"
     ]
   end
 

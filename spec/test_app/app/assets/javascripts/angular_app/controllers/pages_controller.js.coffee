@@ -24,7 +24,9 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Bridge) ->
 
     new: (doc_id)->
       ctrl.clear()
+      ctrl.bridge.data.pages ||= []
       ctrl.data.activePage = {}
+      ctrl.data.activePage.order_index = ctrl.bridge.data.pages.length + 1
       ctrl.data.activePage.doc_id = doc_id
       ctrl.data.creating_new_page = true
 

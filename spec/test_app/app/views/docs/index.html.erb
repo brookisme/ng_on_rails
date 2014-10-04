@@ -1,27 +1,36 @@
-<h1>Listing docs</h1>
+<section class="angular">
+  <h1>Angular Index</h1>
+  <div render="true" url="docs/index" ng-init="docs=ctrl.rails.docs" ></div>
+</section>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @docs.each do |doc| %>
+<section class="rails">
+  <h1>Rails Scaffold</h1>
+
+  <h3>Listing docs</h3>
+  <table>
+    <thead>
       <tr>
-        <td><%= doc.name %></td>
-        <td><%= doc.description %></td>
-        <td><%= link_to 'Show', doc %></td>
-        <td><%= link_to 'Edit', edit_doc_path(doc) %></td>
-        <td><%= link_to 'Destroy', doc, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Name</th>
+        <th>Description</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @docs.each do |doc| %>
+        <tr>
+          <td><%= doc.name %></td>
+          <td><%= doc.description %></td>
+          <td><%= link_to 'Show', doc %></td>
+          <td><%= link_to 'Edit', edit_doc_path(doc) %></td>
+          <td><%= link_to 'Destroy', doc, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'New Doc', new_doc_path %>
+  <br>
+
+  <%= link_to 'New Doc', new_doc_path %>
+</section>

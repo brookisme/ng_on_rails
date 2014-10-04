@@ -17,5 +17,5 @@
 //= require angular-sanitize
 //= require angular_app/app.js
 //= require ng_on_rails
-//= require survey_link/angular_app/thirdparty/angular-sortable-view/angular-sortable-view.min.js
+//= require angular_app/thirdparty/angular-sortable-view/angular-sortable-view.min.js
 //= require_tree .

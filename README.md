@@ -100,6 +100,8 @@ to load your angualar views in at 'app/views/angular_app'
 
 #### Conventions
 
+The test_app serves as an example of the conventions discussed below, but before looking it over read [this](#test_app).
+
 * Put Angular controllers/directives/... in a folder "angular\_app" in the assets directory.  Similarly, as discussed above, the angular views(partials) are placed in a folder "angular\_app" in the views directory
 ```
 |-- app/
@@ -140,7 +142,7 @@ You are going to have a service for each rails model.  I plan on adding generato
 ```coffeescript
 # app/assets/javascripts/angular_app/services/page.js.coffee
 NgOnRailsApp.factory "Page", ($resource) ->
-  PageResource = $resource "/survey_link/questions/:id.json", {id: "@id"}, {
+  PageResource = $resource "/questions/:id.json", {id: "@id"}, {
     update:{method: "PUT"}
   }
   class Page extends PageResource
@@ -283,11 +285,21 @@ Here, ng_data is a local rails variable that describes how to create the json:
 * if `ng_data['BUILD'].blank?` the default will be to use `.to_json` for conversion.
 * if `ng_data['BUILD']=true` the default will be to look for a `.json` file in the app/views directory. It will guess the name and path to this file using the name of var. For instance, if we have @page it will look for the the file app/views/pages/page.json.
 * if `ng_data[var_name].blank?` the conversion will use the default discussed above
-* if `ng_data[var_name]={ path: 'path/to/file', as: model_name } it will use this info to try and find the build file.  For instance, suppose I have a collection of pages called `@admin_pages`. Then `ng_data['admin_pages'] = { path: "survey_link/pages/pages", as: :pages }` will look for the file app/views/pages/pages.json seting the local variable `pages = @admin_pages`.
+* if `ng_data[var_name]={ path: 'path/to/file', as: model_name } it will use this info to try and find the build file.  For instance, suppose I have a collection of pages called `@admin_pages`. Then `ng_data['admin_pages'] = { path: "pages/pages", as: :pages }` will look for the file app/views/pages/pages.json seting the local variable `pages = @admin_pages`.
 
 To understand it better look at [ng_on_rails_helper.rb](https://github.com/brookisme/ng_on_rails/blob/master/app/helpers/ng_on_rails_helper.rb).
 
+<a name="test_app"></a>
+#### Test App
+The [test_app](https://github.com/brookisme/ng_on_rails/blob/master/app/spec/test_app) can be used as an example application.  A some details to mention:
 
+* The DB is Postgres
+* The (Angular) Views use Slim
+* The JS uses CoffeeScript (except for _rails_service.js.erb -- where I need access to Rails)
+* Much of app/views/angular_app & app/assests/javascripts/angular_app has been cut and pasted in from a different project and the models have been generated with Rails scaffolding.  This leads to a few oddities:
+  * There is a mixture of both erb and slim
+  * The full scaffolding has been left in but the Angular views are contained solely withing the docs-index and doc-show pages.
+  * Though there is limited CSS but I use both bootstrap and font-awesome 
 
 
 
