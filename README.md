@@ -63,7 +63,7 @@ html
 
 Note: NgOnRailsApp is automatically created if it doesn't already exsit
 ```javascript
-# app/assets/javascripts/app.js
+# ng_on_rails/app/assets/javascripts/app.js
 if (!window.NgOnRailsApp){
   window.NgOnRailsApp = angular.module("NgOnRailsApp", ["ngResource","ngAnimate","ngSanitize"])
 }
@@ -83,6 +83,8 @@ window.NgOnRailsApp = angular.module("NgOnRailsApp", ["ngResource","ngAnimate","
 
 I would love feed back (especially on convention choices) and possibly other contributers.  Send me a note!
 
+-----------------------------------------------------------
+
 #### Overview
 
 As time goes on generators for angular controllers and services (rails-models) will be added, as well as some view helpers and directives.  For the time being however the the gem is rather simple.
@@ -101,7 +103,7 @@ To get this work you simply need to load the rails_service.js.erb partial
 ```
 "rails_service.js.erb" calls the `locals_to_json` helper method to automatically turn instance variables into json.  Here `ng_data` is a local rails variable used to customize how this is converted. This will be discussed in detail [below](#locals_to_json).
 
-* Your angular views(partials) should be placed in app/views/angular_app.  This solution is discussed in a handfull of places including [here](http://stackoverflow.com/questions/12116476/rails-static-html-template-files-in-the-asset-pipeline-and-caching-in-developmen), but the key parts are:
+* Your angular views and partials should be placed in your\_app/app/views/angular_app.  This solution is discussed in a handfull of places including [here](http://stackoverflow.com/questions/12116476/rails-static-html-template-files-in-the-asset-pipeline-and-caching-in-developmen), but the key parts are:
 ```ruby
 # routes.rb
 scope :angular_app do
@@ -114,22 +116,7 @@ def template
   render template: '/angular_app/' + @path, layout: nil
 end
 ```
-You can then use the angular directive 'render'
-```javascript
-NgOnRailsApp.directive(
-  "render", 
-  function(){
-    return {
-      restrict: "AE",
-      transclude: true,
-      template: function(el,attrs){
-        return '<div ng_include="\'/angular_app/'+attrs.url+'.html\'"></div>'
-      }
-    }
-  }
-)
-```
-to load your angualar views in at 'app/views/angular_app'
+Now you can then use the ng\_on\_rails directives 'render' and 'render\_view' to load your your angular partials and views in 'your\_app/app/views/angular\_app'.
 
 #### Conventions
 
@@ -149,19 +136,42 @@ The test_app serves as an example of the conventions discussed below, but before
     |-- angular_app/
 
 ```
-Files should be named/put in folders in the same maner that you would in Rails.  For instance, if you have a Page model, you would have a pages_controller.js and a service page.js. Then under views you would have pages/{show.html,index.html,...}.  *The way these views are handled makes them more like partials that views but for now at least I am not prefixing the name with and underscore  "\_"*
+Files should be named/put in folders in the same maner that you would in Rails.  For instance, if you have a Page model, you would have a pages_controller.js and a service page.js. Then under views you would have pages/{show.html,index.html,\_page.html,\_form.html,...}. 
 
-* As for views, I try to have as little AngularJS outside of my angular_app folder.  I will load the "Rails" service and set `ng-app="NgOnRailsApp"` in the application layout.  Additionally I will usuallly have an angular `AppController` that is very limited in behavior that is part of the application layout.  Again assuming I have a "Page" model I will handle the views like this
+As in rails files prefixed with "\_" are 'partials' and should be loaded with the render directive. The 'views' should be loaded with the render\_view directive.  The main distinguishing factor between views and partials are if they load a angular controller.   Here are two examples: The first is a 'view', the index view for a Doc model, and the second is partial that displays information on the doc.
+```slim
+# VIEW:  your_app/app/views/angular_app/docs/index.html.slim
+div ng_controller="DocsController as ctrl" ng-init="ctrl.setDocs(docs)"
+  .div-table
+    .tr.header
+      .td.id ID
+      .td.name NAME
+      .td ...
+
+# PARTIAL:  your_app/app/views/angular_app/docs/_doc.html.slim
+h3 Doc Details
+h5 
+  | ID:
+  span ng-bind="doc.id"
+h5 CREATED AT
+div ng-bind="doc.created_at"
+h5 DESCRIPTION
+div ng-bind="doc.description"
+```
+Note that using distinguishing characterisic of loading the controller via `ng_controller` loading layout is parallel to how views and partials are distinguished in rails.
+
+* Note: I try to have as little AngularJS outside of my angular_app folder.  I will load the "Rails" service and set `ng-app="NgOnRailsApp"` in the application layout.  Additionally I will usuallly have an angular `AppController` that is very limited in behavior that is part of the application layout.  Again assuming I have a "Page" model I will handle the views like this
 
 ```html
-# app/views/pages/index.html
-<!-- Apart from this render directive don't put any other angular in this file -->
-<div render="true" url="pages/index" ng-init="pages=ctrl.rails.pages"></div>
+# your_app/app/views/pages/index.html
+<!-- Apart from this render_view directive don't put any other angular in this file -->
+<div render_view="true" url="pages/index" ng-init="pages=ctrl.rails.pages"></div>
 
 
-# app/views/angular_app/pages/show.html
+# your_app/app/views/angular_app/pages/show.html
 <div ng_controller="PagesController as ctrl">
   <div ng-repeat="page in pages">
+    <div render='true' url='pages/page'>
     <div ng-show="ctrl.is_editing(page)">... 
 ```
 *In the above, `ctrl.rails` has been set to the Rails service in the AppController*
