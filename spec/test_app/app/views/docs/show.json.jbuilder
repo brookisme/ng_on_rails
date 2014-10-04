@@ -1,0 +1,1 @@
+json.partial! 'docs/doc.json', doc: @doc

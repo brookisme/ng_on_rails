@@ -1,0 +1,22 @@
+
+- ng_data = {}
+- ng_data['BUILD'] = true
+
+doctype html
+html
+  head
+    title NgOnRails | TestApp
+    = csrf_meta_tags 
+    = stylesheet_link_tag  "application", :media => "all"
+    == yield :meta
+    == yield :styles
+
+  body ng-app="NgOnRailsApp" ng_controller="AppController as ctrl" 
+    .wrapper
+      == yield
+
+    / scripts
+    = javascript_include_tag "application"
+    script
+      = render( partial: 'angular_app/rails_service', formats: ['js'], locals: { ng_data: ng_data} )
+    == yield :javascripts

@@ -1,0 +1,17 @@
+.tr
+  .td.id
+    span ng-bind="doc.id"
+  .td.name
+    span ng-bind="doc.name"
+  .td.btn-group
+    button.btn.btn-default ng-click="ctrl.toggleDetails(doc)"
+      i.fa.fa-plus-square-o.fa-lg ng-hide="doc.show_details"
+      i.fa.fa-minus-square-o.fa-lg ng-show="doc.show_details"
+    a.btn.btn-default href="#{docs_path}/{{doc.id}}"
+      i.fa.fa-edit.fa-lg
+    button.btn.btn-default confirm="Do you really want to delete doc: '{{doc.name}}'?" action="ctrl.rest.delete($index,doc)"
+      i.fa.fa-remove.fa-lg.danger
+
+.tr.quick-view ng-hide='!doc.show_details'
+  .td
+    div render="true" url="docs/doc"

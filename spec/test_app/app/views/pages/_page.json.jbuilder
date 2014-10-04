@@ -1,0 +1,1 @@
+json.extract! page, :id, :subject, :body, :order_index, :created_at

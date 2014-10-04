@@ -1,0 +1,15 @@
+h4 Page Form
+form.form name="ctrl.page_form" role="form" ng-show="ctrl.is_editing(page)"
+  .form-group
+    .btn-group 
+      button.btn.btn-default type="submit" ng-click="ctrl.rest.update()"
+        i.fa.fa-check.success
+      button.btn-default.btn ng-click="ctrl.clear();ctrl.bridge.clearPanel()"      
+        i.fa.fa-remove.danger
+  .form-group
+    label.sr-only subject:
+    input.form-control.medium name='name' required="true" ng-model="ctrl.data.activePage.subject" placeholder="subject"
+    span.error ng-show="ctrl.page_form.name.$error.required" Required!
+  .form-group
+    label.sr-only body:
+    textarea.form-control name='body' ng-model="ctrl.data.activePage.body" placeholder="body"

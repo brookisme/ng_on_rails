@@ -1,0 +1,9 @@
+div ng_controller="DocsController as ctrl" ng-init="ctrl.setDocs(docs)"
+  input.pull-right.form-control.medium ng-model="search.name" placeholder="name"
+  div render="true" url="docs/new_form"
+  .div-table
+    .tr.header
+      .td.id ID
+      .td.name NAME
+      .td
+    .tr-collection ng-repeat="doc in ctrl.bridge.data.docs | filter:{name: search.name}:strict" render="true" url="docs/doc_list_item"

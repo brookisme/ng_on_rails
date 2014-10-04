@@ -1,0 +1,18 @@
+button.btn.btn-default ng-hide="ctrl.is_editing(doc)" ng-click="ctrl.rest.edit(doc)"
+  i.fa.fa-plus.fa 
+  span.light.i-left-label Edit Doc
+
+form.form name="ctrl.doc_form" role="form" ng-show="ctrl.is_editing(doc)"
+  .form-group
+    .btn-group 
+      button.btn.btn-default type="submit" ng-click="ctrl.rest.update()"
+        i.fa.fa-check.success
+      button.btn-default.btn ng-click="ctrl.clear()"      
+        i.fa.fa-remove.danger
+  .form-group
+    label.sr-only name:
+    input.form-control.medium name='name' required="true" ng-model="ctrl.data.activeDoc.name" placeholder="name"
+    span.error ng-show="ctrl.doc_form.name.$error.required" Required!
+  .form-group
+    label.sr-only description: 
+    textarea.form-control name='description' ng-model="ctrl.data.activeDoc.description" placeholder="description"

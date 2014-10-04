@@ -1,0 +1,140 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome";
+
+.wrapper {
+  margin: 25px;
+}
+section {
+  margin: 25px 0;
+  color: #333;
+}
+section.rails {
+  border-top: 1px solid #aaa;
+  padding-top: 25px;
+  color: #999;
+}
+
+i.fa {
+  color: #ccc;
+}
+.small {
+  font-size: 11px;
+}
+.light {
+  color: #aaa;
+}
+i.fa.white,
+.white {
+  color: #fff;
+}
+i.fa.danger,
+.error,
+.danger {
+  color: #d9534f;
+}
+.error {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+i.fa.success,
+.success {
+  color: #5cb85c;
+}
+span.i-left-label {
+  padding-left: 5px;
+}
+span.i-right-label {
+  padding-right: 5px;
+}
+
+/** DIV Tables **/
+.div-table {
+  width: 550px;
+  border: 1px solid #ccc;
+}
+.div-table .tr-collection:first-child {
+  border-top: 1px dotted #ccc;
+}
+.div-table .tr {  
+  border-bottom: 1px dotted #ccc;
+  padding: 5px;
+}
+.div-table .tr.header {  
+  font-size: 11px;
+  font-weight: bold;
+  color: #069;
+  background-color: #eee;
+}
+.div-table .tr .td {
+  display: inline-block;
+  margin-right: 5px;
+  padding-right: 5px;
+}
+.div-table .td-collection {
+  display: inline-block;
+}
+.div-table .tr:hover {
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+}
+.div-table {
+  margin: 25px 0;
+}
+.div-table .tr .td.id,
+.div-table .tr .td.order_index {
+  width: 75px;
+  text-align: center;
+}
+.div-table .tr .td.name,
+.div-table .tr .td.subject {
+  width: 250px;
+}
+.tr.quick-view {
+  padding: 20px 5px;
+}
+
+
+
+/* FORMS */
+.form-inline input {
+  margin-left: 2px;
+}
+input.form-control.medium {
+  width: 200px;
+}
+input[type="number"],
+input[type="number"].form-control {
+  width: 70px;
+}
+form span.error {
+  margin-left: 15px;
+}
+.list_label {
+  display: inline-block;
+}
+
+
+
+/** AngularJS Defaults **/
+i[sv-handle='true']{
+  cursor: move;
+}
+

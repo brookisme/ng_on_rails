@@ -1,0 +1,22 @@
+.tr 
+  .td.id
+    span ng-bind="page.id"
+  .td.order_index
+    span ng-bind="page.order_index"    
+  .td.subject
+    span ng-bind="page.subject"
+  .td.btn-group
+    a.btn.btn-default ng-click="ctrl.rest.edit(page,doc.id)"
+      i.fa.fa-edit.fa-lg
+    button.btn.btn-default confirm="Do you really want to delete page: '{{page.subject}}'?" action="ctrl.rest.delete($index,page)"
+      i.fa.fa-remove.fa-lg.danger
+  .td 
+    i.fa.fa-bars.fa-lg sv-handle="true"
+
+.tr.quick-view ng-show='page.show_details'
+  .td
+    div render="true" url="pages/page"
+
+.tr.quick-view ng-show='ctrl.is_editing(page)'
+  .td
+    div render="true" url="pages/form"
