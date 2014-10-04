@@ -1,0 +1,19 @@
+= form_for(@doc) do |f|
+  - if @doc.errors.any?
+    #error_explanation
+      h2
+        = pluralize(@doc.errors.count, "error")
+        | prohibited this doc from being saved:
+      ul
+        - @doc.errors.full_messages.each do |message|
+          li= message
+  .field
+    = f.label :name
+    br
+      = f.text_field :name
+  .field
+    = f.label :description
+    br
+      = f.text_field :description
+  .actions
+    = f.submit

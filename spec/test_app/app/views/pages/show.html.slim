@@ -1,0 +1,16 @@
+p#notice= notice
+p
+  strong Doc:
+  = @page.doc
+p
+  strong Subject:
+  = @page.subject
+p
+  strong Body:
+  = @page.body
+p
+  strong Order index:
+  = @page.order_index
+= link_to 'Edit', edit_page_path(@page)
+| &nbsp;| 
+= link_to 'Back', pages_path

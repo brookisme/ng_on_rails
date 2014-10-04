@@ -1,0 +1,16 @@
+section.angular
+  h1 Angular Show
+  div ng-init="doc=ctrl.rails.doc" render="true" url="docs/show" 
+section.rails
+  h1 Rails Scaffold
+  h3 Doc Show
+  p#notice= notice
+  p
+    strong Name:
+    = @doc.name
+  p
+    strong Description:
+    = @doc.description
+  = link_to 'Edit', edit_doc_path(@doc)
+  | &nbsp;| 
+  = link_to 'Back', docs_path

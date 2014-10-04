@@ -1,0 +1,22 @@
+section.angular
+  h1 Angular Index
+  div ng-init="docs=ctrl.rails.docs" render="true" url="docs/index" 
+section.rails
+  h1 Rails Scaffold
+  h3 Listing docs
+  table
+    thead
+      tr
+        th Name
+        th Description
+        th colspan="3" 
+    tbody
+      - @docs.each do |doc|
+        tr
+          td= doc.name
+          td= doc.description
+          td= link_to 'Show', doc
+          td= link_to 'Edit', edit_doc_path(doc)
+          td= link_to 'Destroy', doc, method: :delete, data: { confirm: 'Are you sure?' } 
+  br
+    = link_to 'New Doc', new_doc_path
