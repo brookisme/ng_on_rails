@@ -61,7 +61,14 @@ html
     == yield :javascripts
 ```
 
-Note: NgOnRailsApp is automatically created if it doesn't already exsit
+##### Service: Rails 
+As will be discussed in detail [below](#locals_to_json) NgOnRails will now provide you with a Rails-service that can be injected into your Angular Controllers.  This service has all your rails variables contained in json.  So @page and @pages will get mapped to Rails.page and Rails.pages to be used by your angular app.
+
+##### Directives: render and render\_view
+NgOnRails provides you with two directives, `render` for displapying angular partials and `render_view` for displaying angular views. More details [here](#render_directives).
+
+##### NgOnRailsApp
+A AngularApp, NgOnRailsApp, is automatically created if it doesn't already exsit
 ```javascript
 # ng_on_rails/app/assets/javascripts/app.js
 if (!window.NgOnRailsApp){
@@ -80,12 +87,6 @@ window.NgOnRailsApp = angular.module("NgOnRailsApp", ["ngResource","ngAnimate","
 //= require ng_on_rails
 //= require tree.
 ```
-
-##### Service: Rails 
-As will be discussed in detail [below](#locals_to_json) NgOnRails will now provide you with a Rails-service that can be injected into your Angular Controllers.  This service has all your rails variables contained in json.  So @page and @pages will get mapped to Rails.page and Rails.pages to be used by your angular app.
-
-##### Directives: render and render\_view
-NgOnRails provides you with two directives, `render` for displapying angular partials and `render_view` for displaying angular views. More details [here](#render_directives).
 
 I would love feed back (especially on convention choices) and possibly other contributers.  Send me a note!
 
