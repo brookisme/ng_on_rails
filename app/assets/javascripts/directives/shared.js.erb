@@ -1,11 +1,33 @@
 NgOnRailsApp.directive(
+  "renderView", 
+  function(){
+    return {
+      restrict: "AE",
+      transclude: true,
+      template: function(el,attrs){
+        format = attrs.format || "html"
+        console.log(attrs.url,format)
+        return '<div ng_include="\'/angular_app/'+attrs.url+'.'+format+'\'"></div>'
+      }
+    }
+  }
+)
+NgOnRailsApp.directive(
   "render", 
   function(){
     return {
       restrict: "AE",
       transclude: true,
       template: function(el,attrs){
-        return '<div ng_include="\'/angular_app/'+attrs.url+'.html\'"></div>'
+        format = attrs.format || "html"
+        url_parts = attrs.url.split("/")
+        if (url_parts[url_parts.length-1].trim()==""){
+          url_parts.pop()
+        }
+        last = url_parts.pop()
+        url_parts.push("_"+last)
+        path = url_parts.join("/")
+        return '<div ng_include="\'/angular_app/'+path+'.'+format+'\'"></div>'
       }
     }
   }

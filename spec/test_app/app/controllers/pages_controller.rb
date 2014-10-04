@@ -14,11 +14,6 @@ class PagesController < ApplicationController
 
   def create
     @page = Page.new(page_params)
-    puts "params>>>>>>>>>>>>>"
-    puts "#{params.to_json}"
-    puts "page_params.to_json>>>>>>>>>>>>>"
-    puts "#{page_params.to_json}"
-
     respond_to do |format|
       if @page.save
         format.html { redirect_to @page, notice: 'Page was successfully created.' }

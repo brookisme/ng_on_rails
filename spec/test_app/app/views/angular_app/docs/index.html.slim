@@ -1,6 +1,7 @@
 div ng_controller="DocsController as ctrl" ng-init="ctrl.setDocs(docs)"
-  input.pull-right.form-control.medium ng-model="search.name" placeholder="name"
-  div render="true" url="docs/new_form"
+  .clearfix
+    div.pull-left render="true" url="docs/new_form"
+    input.pull-left.form-control.medium ng-model="search.name" placeholder="filter"
   .div-table
     .tr.header
       .td.id ID
