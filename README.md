@@ -348,7 +348,6 @@ The [test_app](https://github.com/brookisme/ng_on_rails/tree/master/spec/test_ap
 * The (Angular) Views use Slim
 * The JS uses CoffeeScript (except for _rails_service.js.erb -- where I need access to Rails)
 * Much of app/views/angular_app & app/assests/javascripts/angular_app has been cut and pasted in from a different project and the models have been generated with Rails scaffolding.  This leads to a few oddities:
-  * There is a mixture of both erb and slim
   * The full scaffolding has been left in but the Angular views are contained solely withing the docs-index and doc-show pages.
   * Though there is limited CSS but I use both bootstrap and font-awesome 
 
