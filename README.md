@@ -81,11 +81,11 @@ window.NgOnRailsApp = angular.module("NgOnRailsApp", ["ngResource","ngAnimate","
 //= require tree.
 ```
 
-##### Rails Service
+##### Service: Rails 
 As will be discussed in detail [below](#locals_to_json) NgOnRails will now provide you with a Rails-service that can be injected into your Angular Controllers.  This service has all your rails variables contained in json.  So @page and @pages will get mapped to Rails.page and Rails.pages to be used by your angular app.
 
-##### render and render\_view Directives
-NgOnRails provides you with two directives, `render` for displapying angular partials and render\_view for displaying angular views. More details [here](#render_directives).
+##### Directives: render and render\_view
+NgOnRails provides you with two directives, `render` for displapying angular partials and `render_view` for displaying angular views. More details [here](#render_directives).
 
 I would love feed back (especially on convention choices) and possibly other contributers.  Send me a note!
 
