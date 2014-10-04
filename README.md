@@ -36,7 +36,7 @@ Finally, in your layout below the `javascript_include_tag "application"` load th
 </script>    
 ```
 
-Here, ng_data is a rails varible discuss [below](#locals_to_json).  A typical application layout (in Slim) might look like...
+Here, ng_data is a rails varible discussed [below](#locals_to_json).  A typical application layout (in Slim) might look like...
 ```slim
 - ng_data = {}
 - ng_data['BUILD'] = true
@@ -62,7 +62,7 @@ html
 ```
 
 ##### Service: Rails 
-As will be discussed in detail [below](#locals_to_json) NgOnRails will now provide you with a Rails-service that can be injected into your Angular Controllers.  This service has all your rails variables contained in json.  So @page and @pages will get mapped to Rails.page and Rails.pages to be used by your angular app.
+As will be discussed in detail [below](#locals_to_json), NgOnRails provides a Rails-service that can be injected into your Angular Controllers.  This service has all your rails variables contained in json.  So @page and @pages will get mapped to Rails.page and Rails.pages to be used by your angular app.
 
 ##### Directives: render and render\_view
 NgOnRails provides you with two directives, `render` for displapying angular partials and `render_view` for displaying angular views. More details [here](#render_directives).
@@ -75,7 +75,7 @@ if (!window.NgOnRailsApp){
   window.NgOnRailsApp = angular.module("NgOnRailsApp", ["ngResource","ngAnimate","ngSanitize"])
 }
 ```
-If you want to overide NgOnRailsApp - so you can inject your own providers
+If you want to overide NgOnRailsApp, so you can inject your own providers,
 Just incldue a app.js file that defines NgOnRailsApp in your own app and load it **before** ng\_on\_rails
 ```javascript
 # your_app/app/assets/javascripts/angular_app/app.js 
