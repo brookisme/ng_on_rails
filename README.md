@@ -28,6 +28,39 @@ gem 'ng_on_rails'
 //= require_tree .
 ```
 
+Finally, in your layout below the `javascript_include_tag "application"` load the Rails-service.
+
+```html.erb
+<script>
+  = render( partial: 'angular_app/rails_service', formats: ['js'], locals: { ng_data: ng_data} )
+</script>    
+```
+
+Here, ng_data is a rails varible discuss [below](#locals_to_json).  A typical application layout (in Slim) might look like...
+```slim
+- ng_data = {}
+- ng_data['BUILD'] = true
+
+doctype html
+html
+  head
+    title NgOnRails | TestApp
+    = csrf_meta_tags 
+    = stylesheet_link_tag  "application", :media => "all"
+    == yield :meta
+    == yield :styles
+
+  body ng-app="NgOnRailsApp" ng_controller="AppController as ctrl" 
+    .wrapper
+      == yield
+
+    / scripts
+    = javascript_include_tag "application"
+    script
+      = render( partial: 'angular_app/rails_service', formats: ['js'], locals: { ng_data: ng_data} )
+    == yield :javascripts
+```
+
 Note: NgOnRailsApp is automatically created if it doesn't already exsit
 ```javascript
 # app/assets/javascripts/app.js
