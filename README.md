@@ -145,7 +145,7 @@ The test_app serves as an example of the conventions discussed below, but before
 ```
 Files should be named/put in folders in the same maner that you would in Rails.  For instance, if you have a Page model, you would have a pages_controller.js and a service page.js. Then under views you would have pages/{show.html,index.html,\_page.html,\_form.html,...}. 
 
-<a name="render_directives">
+<a name="render_directives"></a>
 As in rails files prefixed with "\_" are 'partials' and should be loaded with the render directive. The 'views' should be loaded with the render\_view directive.  The main distinguishing factor between views and partials are if they load a angular controller.   Here are two examples: The first is a 'view', the index view for a Doc model, and the second is partial that displays information on the doc.
 ```slim
 # VIEW:  your_app/app/views/angular_app/docs/index.html.slim
