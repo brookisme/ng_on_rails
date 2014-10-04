@@ -127,7 +127,7 @@ Now you can then use the ng\_on\_rails directives 'render' and 'render\_view' to
 
 #### Conventions
 
-The test_app serves as an example of the conventions discussed below, but before looking it over read [this](#test_app).
+The [test_app](https://github.com/brookisme/ng_on_rails/tree/master/spec/test_app) serves as an example of the conventions discussed below, but before looking it over read [this](#test_app).
 
 * Put Angular controllers/directives/... in a folder "angular\_app" in the assets directory.  Similarly, as discussed above, the angular views(partials) are placed in a folder "angular\_app" in the views directory
 ```
@@ -342,7 +342,7 @@ To understand it better look at [ng_on_rails_helper.rb](https://github.com/brook
 
 <a name="test_app"></a>
 #### Test App
-The [test_app](https://github.com/brookisme/ng_on_rails/blob/master/app/spec/test_app) can be used as an example application.  A some details to mention:
+The [test_app](https://github.com/brookisme/ng_on_rails/tree/master/spec/test_app) can be used as an example application.  A some details to mention:
 
 * The DB is Postgres
 * The (Angular) Views use Slim
