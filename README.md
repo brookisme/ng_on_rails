@@ -67,7 +67,7 @@ As will be discussed in detail [below](#locals_to_json) NgOnRails will now provi
 ##### Directives: render and render\_view
 NgOnRails provides you with two directives, `render` for displapying angular partials and `render_view` for displaying angular views. More details [here](#render_directives).
 
-##### NgOnRailsApp
+##### Note: NgOnRailsApp
 A AngularApp, NgOnRailsApp, is automatically created if it doesn't already exsit
 ```javascript
 # ng_on_rails/app/assets/javascripts/app.js
