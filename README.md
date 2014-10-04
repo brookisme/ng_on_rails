@@ -81,6 +81,12 @@ window.NgOnRailsApp = angular.module("NgOnRailsApp", ["ngResource","ngAnimate","
 //= require tree.
 ```
 
+##### Rails Service
+As will be discussed in detail [below](#locals_to_json) NgOnRails will now provide you with a Rails-service that can be injected into your Angular Controllers.  This service has all your rails variables contained in json.  So @page and @pages will get mapped to Rails.page and Rails.pages to be used by your angular app.
+
+##### render and render\_view Directives
+NgOnRails provides you with two directives, `render` for displapying angular partials and render\_view for displaying angular views. More details [here](#render_directives).
+
 I would love feed back (especially on convention choices) and possibly other contributers.  Send me a note!
 
 -----------------------------------------------------------
@@ -138,6 +144,7 @@ The test_app serves as an example of the conventions discussed below, but before
 ```
 Files should be named/put in folders in the same maner that you would in Rails.  For instance, if you have a Page model, you would have a pages_controller.js and a service page.js. Then under views you would have pages/{show.html,index.html,\_page.html,\_form.html,...}. 
 
+<a name="render_directives">
 As in rails files prefixed with "\_" are 'partials' and should be loaded with the render directive. The 'views' should be loaded with the render\_view directive.  The main distinguishing factor between views and partials are if they load a angular controller.   Here are two examples: The first is a 'view', the index view for a Doc model, and the second is partial that displays information on the doc.
 ```slim
 # VIEW:  your_app/app/views/angular_app/docs/index.html.slim
