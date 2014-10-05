@@ -6,27 +6,27 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Bridge) ->
 
   # initializers
   ctrl.setPage = (page)->
-    ctrl.bridge.data.page = page
+    ctrl.data.page = page
   ctrl.setPages = (pages)->
-    ctrl.bridge.data.pages = pages
+    ctrl.data.pages = pages
 
   # rest methods
   ctrl.rest =
     index: ->
       params = {}
       Page.query(params).$promise.then (pages) ->
-        ctrl.bridge.data.pages = pages
+        ctrl.data.pages = pages
 
     show: (page_id)->
       Page.get({id: page_id}).$promise.then (page) ->
-        ctrl.bridge.data.page = page
-        ctrl.bridge.data.page_versions = page.page_versions
+        ctrl.data.page = page
+        ctrl.data.page_versions = page.page_versions
 
     new: (doc_id)->
       ctrl.clear()
-      ctrl.bridge.data.pages ||= []
+      ctrl.data.pages ||= []
       ctrl.data.activePage = {}
-      ctrl.data.activePage.order_index = ctrl.bridge.data.pages.length + 1
+      ctrl.data.activePage.order_index = ctrl.data.pages.length + 1
       ctrl.data.activePage.doc_id = doc_id
       ctrl.data.creating_new_page = true
 
@@ -37,8 +37,8 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Bridge) ->
         Page.save(
           working_page,
           (page)->
-            ctrl.bridge.data.pages ||= []
-            ctrl.bridge.data.pages.push(page)
+            ctrl.data.pages ||= []
+            ctrl.data.pages.push(page)
             ctrl.clear()
             ctrl.locked = false
           ,
@@ -77,7 +77,7 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Bridge) ->
       Page.delete(
         page, 
         (page)->
-          pages ||= ctrl.bridge.data.pages
+          pages ||= ctrl.data.pages
           pages.splice(index,1)
         ,
         (error)->

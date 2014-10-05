@@ -6,20 +6,20 @@ NgOnRailsApp.controller 'DocsController', ($scope,Doc,Page,Bridge) ->
 
   # initializers
   ctrl.setDoc = (doc)->
-    ctrl.bridge.data.doc = doc
+    ctrl.data.doc = doc
   ctrl.setDocs = (docs)->
-    ctrl.bridge.data.docs = docs
+    ctrl.data.docs = docs
 
   # rest methods
   ctrl.rest =
     index: ->
       params = {}
       Doc.query(params).$promise.then (docs) ->
-        ctrl.bridge.data.docs = docs
+        ctrl.data.docs = docs
 
     show: (doc_id)->
       Doc.get({id: doc_id}).$promise.then (doc) ->
-        ctrl.bridge.data.doc = doc
+        ctrl.data.doc = doc
         
     new: ()->
       ctrl.clear()
@@ -33,8 +33,8 @@ NgOnRailsApp.controller 'DocsController', ($scope,Doc,Page,Bridge) ->
         Doc.save(
           working_doc,
           (doc)->
-            ctrl.bridge.data.docs ||= []
-            ctrl.bridge.data.docs.push(doc)
+            ctrl.data.docs ||= []
+            ctrl.data.docs.push(doc)
             ctrl.clear()
             ctrl.locked = false
           ,
@@ -71,7 +71,7 @@ NgOnRailsApp.controller 'DocsController', ($scope,Doc,Page,Bridge) ->
       Doc.delete(
         doc, 
         (doc)->
-          docs ||= ctrl.bridge.data.docs
+          docs ||= ctrl.data.docs
           docs.splice(index,1)
         ,
         (error)->

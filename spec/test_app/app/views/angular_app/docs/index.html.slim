@@ -7,4 +7,4 @@ div ng_controller="DocsController as ctrl" ng-init="ctrl.setDocs(docs)"
       .td.id ID
       .td.name NAME
       .td
-    .tr-collection ng-repeat="doc in ctrl.bridge.data.docs | filter:{name: search.name}:strict" render="true" url="docs/doc_list_item"
+    .tr-collection ng-repeat="doc in ctrl.data.docs | filter:{name: search.name}:strict" render="true" url="docs/doc_list_item"
