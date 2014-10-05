@@ -1,6 +1,6 @@
-NgOnRailsApp.factory '<%="#{file_name.capitalize}"%>', ($resource) ->
-  <%="#{file_name.capitalize}"%>Resource = $resource '/<%="#{plural_name}"%>/:id.json', {id: '@id'}, {
+NgOnRailsApp.factory '<%="#{class_name}"%>', ($resource) ->
+  <%="#{class_name}"%>Resource = $resource '/<%="#{plural_name}"%>/:id.json', {id: '@id'}, {
     update:{method: "PUT"}
   }
-  class <%="#{file_name.capitalize}"%> extends <%="#{file_name.capitalize}"%>Resource
+  class <%="#{class_name}"%> extends <%="#{class_name}"%>Resource
     # place class and instance methods here

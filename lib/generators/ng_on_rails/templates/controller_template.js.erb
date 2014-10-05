@@ -1,4 +1,4 @@
-NgOnRailsApp.controller '<%="#{plural_name.capitalize}"%>Controller', ($scope,<%="#{file_name.capitalize}"%>,Rails) ->
+NgOnRailsApp.controller '<%="#{class_name.pluralize}"%>Controller', ($scope,<%="#{class_name}"%>,Rails) ->
   #
   # CONTROLLER SETUP
   #
@@ -10,9 +10,9 @@ NgOnRailsApp.controller '<%="#{plural_name.capitalize}"%>Controller', ($scope,<%
   #
   # INITIALIZERS
   #
-  ctrl.set<%="#{file_name.capitalize}"%> = (<%="#{file_name}"%>)->
+  ctrl.set<%="#{class_name}"%> = (<%="#{file_name}"%>)->
     ctrl.data.<%="#{file_name}"%> = <%="#{file_name}"%>
-  ctrl.set<%="#{plural_name.capitalize}"%> = (<%="#{plural_name}"%>)->
+  ctrl.set<%="#{class_name.pluralize}"%> = (<%="#{plural_name}"%>)->
     ctrl.data.<%="#{plural_name}"%> = <%="#{plural_name}"%>
 
 
@@ -22,23 +22,23 @@ NgOnRailsApp.controller '<%="#{plural_name.capitalize}"%>Controller', ($scope,<%
   ctrl.rest =
     index: ->
       params = {}
-      <%="#{file_name.capitalize}"%>.query(params).$promise.then (<%="#{plural_name}"%>) ->
+      <%="#{class_name}"%>.query(params).$promise.then (<%="#{plural_name}"%>) ->
         ctrl.data.<%="#{plural_name}"%> = <%="#{plural_name}"%>
 
     show: (<%="#{file_name}"%>_id)->
-      <%="#{file_name.capitalize}"%>.get({id: <%="#{file_name}"%>_id}).$promise.then (<%="#{file_name}"%>) ->
+      <%="#{class_name}"%>.get({id: <%="#{file_name}"%>_id}).$promise.then (<%="#{file_name}"%>) ->
         ctrl.data.<%="#{file_name}"%> = <%="#{file_name}"%>
         
     new: ()->
       ctrl.clear()
-      ctrl.data.active<%="#{file_name.capitalize}"%> = {}
+      ctrl.data.active<%="#{class_name}"%> = {}
       ctrl.data.creating_new_<%="#{file_name}"%> = true
 
     create: ->
       if !(ctrl.locked || ctrl.<%="#{file_name}"%>_form.$error.required)
         ctrl.locked = true
-        working_<%="#{file_name}"%> = angular.copy(ctrl.data.active<%="#{file_name.capitalize}"%>)
-        <%="#{file_name.capitalize}"%>.save(
+        working_<%="#{file_name}"%> = angular.copy(ctrl.data.active<%="#{class_name}"%>)
+        <%="#{class_name}"%>.save(
           working_<%="#{file_name}"%>,
           (<%="#{file_name}"%>)->
             ctrl.data.<%="#{plural_name}"%> ||= []
@@ -54,15 +54,15 @@ NgOnRailsApp.controller '<%="#{plural_name.capitalize}"%>Controller', ($scope,<%
 
     edit: (<%="#{file_name}"%>) ->
       ctrl.clear()
-      ctrl.data.active<%="#{file_name.capitalize}"%> = <%="#{file_name}"%>
+      ctrl.data.active<%="#{class_name}"%> = <%="#{file_name}"%>
       ctrl.data.editing_<%="#{file_name}"%> = true
 
     update: (<%="#{file_name}"%>)->
       if !(ctrl.locked || ctrl.<%="#{file_name}"%>_form.$error.required)
         ctrl.locked = true
-        <%="#{file_name}"%> = ctrl.data.active<%="#{file_name.capitalize}"%> unless !!<%="#{file_name}"%>
-        working_<%="#{file_name}"%> = angular.extend(angular.copy(<%="#{file_name}"%>),ctrl.data.active<%="#{file_name.capitalize}"%>)
-        <%="#{file_name.capitalize}"%>.update(
+        <%="#{file_name}"%> = ctrl.data.active<%="#{class_name}"%> unless !!<%="#{file_name}"%>
+        working_<%="#{file_name}"%> = angular.extend(angular.copy(<%="#{file_name}"%>),ctrl.data.active<%="#{class_name}"%>)
+        <%="#{class_name}"%>.update(
           working_<%="#{file_name}"%>,
           (<%="#{file_name}"%>)->
             # success handler
@@ -75,7 +75,7 @@ NgOnRailsApp.controller '<%="#{plural_name.capitalize}"%>Controller', ($scope,<%
         ctrl.clear()
 
     delete: (index,<%="#{file_name}"%>,<%="#{plural_name}"%>)->
-      <%="#{file_name.capitalize}"%>.delete(
+      <%="#{class_name}"%>.delete(
         <%="#{file_name}"%>, 
         (<%="#{file_name}"%>)->
           <%="#{plural_name}"%> ||= ctrl.data.<%="#{plural_name}"%>
@@ -91,12 +91,12 @@ NgOnRailsApp.controller '<%="#{plural_name.capitalize}"%>Controller', ($scope,<%
   # SCOPE METHODS
   #
   ctrl.clear = ->
-    ctrl.data.active<%="#{file_name.capitalize}"%> = null
+    ctrl.data.active<%="#{class_name}"%> = null
     ctrl.data.creating_new_<%="#{file_name}"%> = false
     ctrl.data.editing_<%="#{file_name}"%> = false
 
   ctrl.is_editing = (<%="#{file_name}"%>)->
-    (ctrl.data.editing_<%="#{file_name}"%> && !!<%="#{file_name}"%> && <%="#{file_name}"%>.id == ctrl.data.active<%="#{file_name.capitalize}"%>.id) ||
+    (ctrl.data.editing_<%="#{file_name}"%> && !!<%="#{file_name}"%> && <%="#{file_name}"%>.id == ctrl.data.active<%="#{class_name}"%>.id) ||
     (ctrl.data.creating_new_<%="#{file_name}"%> && !<%="#{file_name}"%>)
 
 
