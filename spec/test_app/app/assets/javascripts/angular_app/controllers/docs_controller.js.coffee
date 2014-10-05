@@ -1,16 +1,24 @@
-NgOnRailsApp.controller 'DocsController', ($scope,Doc,Page,Bridge) ->
-  # setup
+NgOnRailsApp.controller 'DocsController', ($scope,Doc,Rails) ->
+  #
+  # CONTROLLER SETUP
+  #
   ctrl = this
-  ctrl.bridge = Bridge
+  ctrl.rails = Rails
   ctrl.data = {}
 
-  # initializers
+
+  #
+  # INITIALIZERS
+  #
   ctrl.setDoc = (doc)->
     ctrl.data.doc = doc
   ctrl.setDocs = (docs)->
     ctrl.data.docs = docs
 
-  # rest methods
+
+  #  
+  # REST METHODS
+  #
   ctrl.rest =
     index: ->
       params = {}
@@ -43,7 +51,6 @@ NgOnRailsApp.controller 'DocsController', ($scope,Doc,Page,Bridge) ->
             ctrl.clear()
             ctrl.locked = false
         )
-
 
     edit: (doc) ->
       ctrl.clear()
@@ -80,10 +87,9 @@ NgOnRailsApp.controller 'DocsController', ($scope,Doc,Page,Bridge) ->
       ctrl.clear()
 
 
-  # scope methods
-  ctrl.toggleDetails = (doc)->
-    doc.show_details = !doc.show_details
-
+  #    
+  # SCOPE METHODS
+  #
   ctrl.clear = ->
     ctrl.data.activeDoc = null
     ctrl.data.creating_new_doc = false
@@ -93,7 +99,23 @@ NgOnRailsApp.controller 'DocsController', ($scope,Doc,Page,Bridge) ->
     (ctrl.data.editing_doc && !!doc && doc.id == ctrl.data.activeDoc.id) ||
     (ctrl.data.creating_new_doc && !doc)
 
-  # internal methods go here...
+  ctrl.toggleDetails = (doc)->
+    #
+    #  NOTE: 
+    #    ctrl.toggleDetails was added after generating this file:
+    #    $ bundle exec rails g ng_on_rails:controller Page
+    #
+    doc.show_details = !doc.show_details
 
-  # return
+
+  #  
+  # PRIVATE METHODS
+  #   
+  # => add methods here, not attached to the ctrl object to be used internally
+  #   
+
+
+  #
+  # END
+  #
   return

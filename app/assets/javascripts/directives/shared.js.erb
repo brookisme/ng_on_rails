@@ -6,7 +6,6 @@ NgOnRailsApp.directive(
       transclude: true,
       template: function(el,attrs){
         format = attrs.format || "html"
-        console.log(attrs.url,format)
         return '<div ng_include="\'/angular_app/'+attrs.url+'.'+format+'\'"></div>'
       }
     }
