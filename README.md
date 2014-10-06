@@ -10,7 +10,7 @@ The main motivations behind this gem is to standardize and simplify how AngularJ
 
 I am just getting started but this does function *as-is*.  Some things left to do:
 * Write more specs!!!
-* Create generators for controllers/services/(views?)
+* (Create generators for views?)
 * (ViewHelper functions via shared service?)
 
 ### Install it!
@@ -59,6 +59,13 @@ html
     script
       = render( partial: 'angular_app/rails_service', formats: ['js'], locals: { ng_data: ng_data} )
     == yield :javascripts
+```
+
+You are now up and running! To generate controllers and resource-services use NgOnRails generators:
+```
+# Assuming the Rails app has a "Page" model:
+$ bundle exec rails g ng_on_rails:controller Page
+$ bundle exec rails g ng_on_rails:resource Page
 ```
 
 ##### Service: Rails 
@@ -188,10 +195,13 @@ Note that using distinguishing characterisic of loading the controller via `ng_c
 
 
 #### Angular Services for Rails Models
-You are going to have a service for each rails model.  I plan on adding generators but for now this is what my services look like
-
+You are going to have a resource-service for each rails model.  You can create these with the NgOnRails generator
+```
+$ bundle exec rails g ng_on_rails:resource Page
+```
+Which creates the following file:
 ```coffeescript
-# app/assets/javascripts/angular_app/services/page.js.coffee
+# your_app/app/assets/javascripts/angular_app/services/page.js.coffee
 NgOnRailsApp.factory "Page", ($resource) ->
   PageResource = $resource "/questions/:id.json", {id: "@id"}, {
     update:{method: "PUT"}
@@ -202,37 +212,48 @@ NgOnRailsApp.factory "Page", ($resource) ->
 
 
 #### Angular Controllers for Rails Models
-Simalarly you are going to have an angular controller for each rails model.  Again, I plan on adding generators but for now an example is below.  Note that I place all the REST methods in a rest object.  Bridge is a service I use to pass data from one controller to another.
+Simalarly you are going to have an angular controller for each rails model. A controller that uses the Rails-service and pre-defined REST methods can be generated with 
+```
+$ bundle exec rails g ng_on_rails:controller Page
+```
+The output is below (*Note that I place all the REST methods in a rest object*):
 
 ```coffeescript
-NgOnRailsApp.controller 'PagesController', ($scope,Page,Bridge) ->
-  # setup
+# your_app/app/assets/javascripts/angular_app/controllers/pages_controller.js.coffee
+NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
+  #
+  # CONTROLLER SETUP
+  #
   ctrl = this
-  ctrl.bridge = Bridge
+  ctrl.rails = Rails
   ctrl.data = {}
 
-  # initializers
-  ctrl.setPage = (page)->
-    ctrl.bridge.data.page = page
-  ctrl.setPages = (pages)->
-    ctrl.bridge.data.pages = pages
 
-  # rest methods
+  #
+  # INITIALIZERS
+  #
+  ctrl.setPage = (page)->
+    ctrl.data.page = page
+  ctrl.setPages = (pages)->
+    ctrl.data.pages = pages
+
+
+  #  
+  # REST METHODS
+  #
   ctrl.rest =
     index: ->
       params = {}
       Page.query(params).$promise.then (pages) ->
-        ctrl.bridge.data.pages = pages
+        ctrl.data.pages = pages
 
     show: (page_id)->
       Page.get({id: page_id}).$promise.then (page) ->
-        ctrl.bridge.data.page = page
-        ctrl.bridge.data.page_versions = page.page_versions
-
-    new: (doc_id)->
+        ctrl.data.page = page
+        
+    new: ()->
       ctrl.clear()
       ctrl.data.activePage = {}
-      ctrl.data.activePage.doc_id = doc_id
       ctrl.data.creating_new_page = true
 
     create: ->
@@ -242,8 +263,8 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Bridge) ->
         Page.save(
           working_page,
           (page)->
-            ctrl.bridge.data.pages ||= []
-            ctrl.bridge.data.pages.push(page)
+            ctrl.data.pages ||= []
+            ctrl.data.pages.push(page)
             ctrl.clear()
             ctrl.locked = false
           ,
@@ -253,11 +274,9 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Bridge) ->
             ctrl.locked = false
         )
 
-    edit: (page,doc_id) ->
+    edit: (page) ->
       ctrl.clear()
-      page.show_details = false
       ctrl.data.activePage = page
-      ctrl.data.activePage.doc_id = doc_id
       ctrl.data.editing_page = true
 
     update: (page)->
@@ -281,7 +300,7 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Bridge) ->
       Page.delete(
         page, 
         (page)->
-          pages ||= ctrl.bridge.data.pages
+          pages ||= ctrl.data.pages
           pages.splice(index,1)
         ,
         (error)->
@@ -290,22 +309,9 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Bridge) ->
       ctrl.clear()
 
 
-  # scope methods 
-  ctrl.toggleDetails = (page)->
-    page.show_details = !page.show_details
-
-  ctrl.resort = (pages) ->
-    for page, index in pages
-      page.order_index = index + 1
-      Page.update(
-        page,
-       (page)->
-          # success handler
-        ,
-        (error)->
-          console.log("update_error:",error)
-        )
-
+  #    
+  # SCOPE METHODS
+  #
   ctrl.clear = ->
     ctrl.data.activePage = null
     ctrl.data.creating_new_page = false
@@ -315,10 +321,17 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Bridge) ->
     (ctrl.data.editing_page && !!page && page.id == ctrl.data.activePage.id) ||
     (ctrl.data.creating_new_page && !page)
 
-  # private methods
-  some_private_method = ->
-    console.log('nobody knows i exist') 
-  
+
+  #  
+  # PRIVATE METHODS
+  #   
+  # => add methods here, not attached to the ctrl object to be used internally
+  #   
+
+
+  #
+  # END
+  #
   return
 ```
 <a name="locals_to_json"></a>

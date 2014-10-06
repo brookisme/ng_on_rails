@@ -1,0 +1,113 @@
+NgOnRailsApp.controller '<%="#{class_name.pluralize}"%>Controller', ($scope,<%="#{class_name}"%>,Rails) ->
+  #
+  # CONTROLLER SETUP
+  #
+  ctrl = this
+  ctrl.rails = Rails
+  ctrl.data = {}
+
+
+  #
+  # INITIALIZERS
+  #
+  ctrl.set<%="#{class_name}"%> = (<%="#{file_name}"%>)->
+    ctrl.data.<%="#{file_name}"%> = <%="#{file_name}"%>
+  ctrl.set<%="#{class_name.pluralize}"%> = (<%="#{plural_name}"%>)->
+    ctrl.data.<%="#{plural_name}"%> = <%="#{plural_name}"%>
+
+
+  #  
+  # REST METHODS
+  #
+  ctrl.rest =
+    index: ->
+      params = {}
+      <%="#{class_name}"%>.query(params).$promise.then (<%="#{plural_name}"%>) ->
+        ctrl.data.<%="#{plural_name}"%> = <%="#{plural_name}"%>
+
+    show: (<%="#{file_name}"%>_id)->
+      <%="#{class_name}"%>.get({id: <%="#{file_name}"%>_id}).$promise.then (<%="#{file_name}"%>) ->
+        ctrl.data.<%="#{file_name}"%> = <%="#{file_name}"%>
+        
+    new: ()->
+      ctrl.clear()
+      ctrl.data.active<%="#{class_name}"%> = {}
+      ctrl.data.creating_new_<%="#{file_name}"%> = true
+
+    create: ->
+      if !(ctrl.locked || ctrl.<%="#{file_name}"%>_form.$error.required)
+        ctrl.locked = true
+        working_<%="#{file_name}"%> = angular.copy(ctrl.data.active<%="#{class_name}"%>)
+        <%="#{class_name}"%>.save(
+          working_<%="#{file_name}"%>,
+          (<%="#{file_name}"%>)->
+            ctrl.data.<%="#{plural_name}"%> ||= []
+            ctrl.data.<%="#{plural_name}"%>.push(<%="#{file_name}"%>)
+            ctrl.clear()
+            ctrl.locked = false
+          ,
+          (error)->
+            console.log("create_error:",error)
+            ctrl.clear()
+            ctrl.locked = false
+        )
+
+    edit: (<%="#{file_name}"%>) ->
+      ctrl.clear()
+      ctrl.data.active<%="#{class_name}"%> = <%="#{file_name}"%>
+      ctrl.data.editing_<%="#{file_name}"%> = true
+
+    update: (<%="#{file_name}"%>)->
+      if !(ctrl.locked || ctrl.<%="#{file_name}"%>_form.$error.required)
+        ctrl.locked = true
+        <%="#{file_name}"%> = ctrl.data.active<%="#{class_name}"%> unless !!<%="#{file_name}"%>
+        working_<%="#{file_name}"%> = angular.extend(angular.copy(<%="#{file_name}"%>),ctrl.data.active<%="#{class_name}"%>)
+        <%="#{class_name}"%>.update(
+          working_<%="#{file_name}"%>,
+          (<%="#{file_name}"%>)->
+            # success handler
+            ctrl.locked = false
+          ,
+          (error)->
+            console.log("update_error:",error)
+            ctrl.locked = false
+        )
+        ctrl.clear()
+
+    delete: (index,<%="#{file_name}"%>,<%="#{plural_name}"%>)->
+      <%="#{class_name}"%>.delete(
+        <%="#{file_name}"%>, 
+        (<%="#{file_name}"%>)->
+          <%="#{plural_name}"%> ||= ctrl.data.<%="#{plural_name}"%>
+          <%="#{plural_name}"%>.splice(index,1)
+        ,
+        (error)->
+          console.log("delete_error:",error)
+      )
+      ctrl.clear()
+
+
+  #    
+  # SCOPE METHODS
+  #
+  ctrl.clear = ->
+    ctrl.data.active<%="#{class_name}"%> = null
+    ctrl.data.creating_new_<%="#{file_name}"%> = false
+    ctrl.data.editing_<%="#{file_name}"%> = false
+
+  ctrl.is_editing = (<%="#{file_name}"%>)->
+    (ctrl.data.editing_<%="#{file_name}"%> && !!<%="#{file_name}"%> && <%="#{file_name}"%>.id == ctrl.data.active<%="#{class_name}"%>.id) ||
+    (ctrl.data.creating_new_<%="#{file_name}"%> && !<%="#{file_name}"%>)
+
+
+  #  
+  # PRIVATE METHODS
+  #   
+  # => add methods here, not attached to the ctrl object to be used internally
+  #   
+
+
+  #
+  # END
+  #
+  return

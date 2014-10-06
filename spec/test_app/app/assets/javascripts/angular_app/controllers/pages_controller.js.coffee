@@ -1,16 +1,24 @@
-NgOnRailsApp.controller 'PagesController', ($scope,Page,Bridge) ->
-  # setup
+NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
+  #
+  # CONTROLLER SETUP
+  #
   ctrl = this
-  ctrl.bridge = Bridge
+  ctrl.rails = Rails
   ctrl.data = {}
 
-  # initializers
+
+  #
+  # INITIALIZERS
+  #
   ctrl.setPage = (page)->
     ctrl.data.page = page
   ctrl.setPages = (pages)->
     ctrl.data.pages = pages
 
-  # rest methods
+
+  #  
+  # REST METHODS
+  #
   ctrl.rest =
     index: ->
       params = {}
@@ -20,12 +28,16 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Bridge) ->
     show: (page_id)->
       Page.get({id: page_id}).$promise.then (page) ->
         ctrl.data.page = page
-        ctrl.data.page_versions = page.page_versions
-
+        
     new: (doc_id)->
       ctrl.clear()
-      ctrl.data.pages ||= []
       ctrl.data.activePage = {}
+      #
+      #  NOTE: 
+      #    setting of order_index/doc_id were 
+      #    added after generating this file:
+      #    $ bundle exec rails g ng_on_rails:controller Page
+      #
       ctrl.data.activePage.order_index = ctrl.data.pages.length + 1
       ctrl.data.activePage.doc_id = doc_id
       ctrl.data.creating_new_page = true
@@ -48,11 +60,15 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Bridge) ->
             ctrl.locked = false
         )
 
-
     edit: (page,doc_id) ->
       ctrl.clear()
-      page.show_details = false
       ctrl.data.activePage = page
+      #
+      #  NOTE: 
+      #    setting of doc_id was added
+      #    after generating this file:
+      #    $ bundle exec rails g ng_on_rails:controller Page
+      #
       ctrl.data.activePage.doc_id = doc_id
       ctrl.data.editing_page = true
 
@@ -86,22 +102,9 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Bridge) ->
       ctrl.clear()
 
 
-  # scope methods 
-  ctrl.toggleDetails = (page)->
-    page.show_details = !page.show_details
-
-  ctrl.resort = (pages) ->
-    for page, index in pages
-      page.order_index = index + 1
-      Page.update(
-        page,
-       (page)->
-          # success handler
-        ,
-        (error)->
-          console.log("update_error:",error)
-        )
-
+  #    
+  # SCOPE METHODS
+  #
   ctrl.clear = ->
     ctrl.data.activePage = null
     ctrl.data.creating_new_page = false
@@ -111,7 +114,15 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Bridge) ->
     (ctrl.data.editing_page && !!page && page.id == ctrl.data.activePage.id) ||
     (ctrl.data.creating_new_page && !page)
 
-  # internal
 
-  # return
+  #  
+  # PRIVATE METHODS
+  #   
+  # => add methods here, not attached to the ctrl object to be used internally
+  #   
+
+
+  #
+  # END
+  #
   return
