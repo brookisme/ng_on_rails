@@ -10,3 +10,6 @@
 
 ### v0.0.2
 * introduce render\_view directive: render now uses ng-'partials' (whose name begins with '\_'). render\_view is now used for ng-'views'.  both directives now have a format option that defaults to 'html'
+
+### v0.0.3
+* generators for ng controllers/resource-services added
