@@ -1,0 +1,13 @@
+div ng_controller="<%= class_name.pluralize %>Controller as ctrl" ng-init="ctrl.set<%=class_name%>s(<%= plural_name %>)"
+  h3 <%=class_name%>s
+  .clearfix
+    div.pull-left render="true" url="<%= plural_name %>/form"
+  .div-table
+    .tr.header<%
+      options[:properties].each do |property|
+      property_hash = args(property)
+    %>
+      .td.<%= property_hash[:name] %><%= type_to_class(property_hash[:type]) %> <%= property_hash[:name] %><%
+      end 
+    %> 
+    .tr-collection ng-repeat="<%= resource_name %> in ctrl.data.<%= plural_name %>" render="true" url="<%= plural_name %>/<%= resource_name %>"

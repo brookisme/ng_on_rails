@@ -1,0 +1,8 @@
+h3 <%= class_name %> Details
+<%
+  options[:properties].each do |property|
+    property_hash = args(property)
+%>h5.<%= property_hash[:name] %><%= type_to_class(property_hash[:type]) %> <%= property_hash[:name] %>:
+div ng-bind="<%= resource_name %>.<%= property_hash[:name] %>"<%
+  end 
+%>

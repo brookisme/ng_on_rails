@@ -1,0 +1,22 @@
+.tr
+  <% 
+    options[:properties].each do |property|
+    property_hash = args(property)
+    @name_rep ||= property_hash[:name]
+  %>.td.<%= property_hash[:name] %><%= type_to_class(property_hash[:type]) %>
+      span ng-bind="<%= resource_name %>.<%= property_hash[:name] %>"
+  <% 
+    end 
+  %> 
+  .td.btn-group
+    a.btn.btn-default ng-click="ctrl.rest.edit(<%= resource_name %>,<%= resource_name %>.id)"
+      i.fa.fa-edit.fa-lg
+    button.btn.btn-default confirm="Do you really want to delete <%= resource_name %>: '{{<%= resource_name %>.<%=@name_rep %>}}'?" action="ctrl.rest.delete($index,<%= resource_name %>)"
+      i.fa.fa-remove.fa-lg.danger
+.tr.quick-view ng-show='ctrl.show_details'
+  .td
+    div render="true" url="<%= plural_name %>/show"
+
+.tr.quick-view ng-show='ctrl.is_editing(<%= resource_name %>)'
+  .td
+    div render="true" url="<%= plural_name %>/form"

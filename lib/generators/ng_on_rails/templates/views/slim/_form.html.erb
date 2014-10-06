@@ -1,0 +1,27 @@
+h4 <%= class_name %> Form
+form.form name="ctrl.<%= resource_name %>_form" role="form" ng-show="ctrl.is_editing(<%= resource_name %>)"
+  .form-group
+    .btn-group 
+      button.btn.btn-default type="submit" ng-click="ctrl.rest.update()"
+        i.fa.fa-check.success
+      button.btn-default.btn ng-click="ctrl.clear()"      
+        i.fa.fa-remove.danger
+
+  <% options[:properties].each do |property| %>
+    <% property_hash = args(property) %>
+    .form-group.<%= property_hash[:name] %><%= type_to_class(property_hash[:type]) %>
+      label.sr-only <%= property_hash[:name] %>:
+      <% 
+        type_string = "type=\"#{property_hash[:type]}\"" unless property_hash[:type].blank?;
+        if property_hash[:type]=="textarea"%>textarea.form-control<%= type_to_class(property_hash[:type]) 
+      %> name='<%= property_hash[:name] %>' required="<%=property_hash[:required].to_s%>" ng-model="ctrl.data.active<%= class_name %>.<%= property_hash[:name] %>" placeholder="<%= property_hash[:name] %>"<% 
+        else 
+      %>input.form-control<%= type_to_class(property_hash[:type]) %> <%=type_string%> name='<%= property_hash[:name] %>' required="<%=property_hash[:required].to_s%>" ng-model="ctrl.data.active<%= class_name %>.<%= property_hash[:name] %>" placeholder="<%= property_hash[:name] %>"<% 
+        end 
+      %>
+      <% if 
+        property_hash[:required] 
+      %>span.error ng-show="ctrl.<%= resource_name %>_form.name.$error.required" Required!<% 
+        end 
+      %>
+  <% end %>    

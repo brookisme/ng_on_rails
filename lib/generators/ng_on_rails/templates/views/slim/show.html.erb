@@ -1,0 +1,9 @@
+div ng_controller="<%= class_name.pluralize %>Controller as ctrl" ng-init="<%= resource_name %>=ctrl.data.<%= resource_name %>"
+  h3
+    | <%= class_name %> SUBJECT: &nbsp;
+    span ng-bind="<%= resource_name %>.subject"
+  button.btn.btn-default.pull-right ng-click="ctrl.toggleDetails(<%= resource_name %>)"
+    i.fa.fa-plus-square-o.fa-lg ng-hide="<%= resource_name %>.show_details"
+    i.fa.fa-minus-square-o.fa-lg ng-show="<%= resource_name %>.show_details"  
+  div ng-show="<%= resource_name %>.show_details" render="true" url="<%= plural_name %>/show"
+  div render="true" url="<%= plural_name %>/form"
