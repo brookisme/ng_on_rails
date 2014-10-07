@@ -13,3 +13,7 @@
 
 ### v0.0.3
 * generators for ng controllers/resource-services added
+
+### v0.0.3.1
+* genrators for ng views (and styles)
+* ng controller generator now has a belongs_to option
