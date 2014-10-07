@@ -6,7 +6,7 @@
         @name_rep ||= property_hash[:name]
         if property_hash[:link]
   %>.td.<%= property_hash[:name] %><%= type_to_class(property_hash[:type]) %>
-      a href="<%= plural_name %>/{{<%= resource_name %>.id}}"
+      a href="/<%= plural_name %>/{{<%= resource_name %>.id}}"
         span ng-bind="<%= resource_name %>.<%= property_hash[:name] %>"
   <%
         else

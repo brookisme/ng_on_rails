@@ -1,6 +1,6 @@
 div ng_controller="PagesController as ctrl" ng-init="ctrl.setPages(pages)"
   h3 Pages
-  button.btn.btn-default ng-hide="ctrl.data.creating_new_page" ng-click="ctrl.rest.new()" new
+  button.btn.btn-default ng-hide="ctrl.data.creating_new_page" ng-click="ctrl.rest.new(doc.id)" new
   div render="true" url="pages/form"
   .div-table
     .th

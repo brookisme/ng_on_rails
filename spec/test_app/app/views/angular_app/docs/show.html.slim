@@ -20,3 +20,7 @@ div ng_controller="DocsController as ctrl" ng-init="ctrl.setDocs(docs,doc)"
 
   .formbox ng-show='ctrl.is_editing(doc)'
     div render="true" url="docs/form"
+
+  
+  div render_view="true" url="pages/index" ng-init="pages=doc.pages"
+    

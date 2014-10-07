@@ -6,20 +6,27 @@ module NgOnRails
     # arguments
     argument :model_name, type: :string, required: true, desc: "required"
     class_option :properties, type: :array, required: false, default: [], desc: "list of properties"
+    class_option :relationships, type: :array, required: false, default: [], desc: "list of relationships. determines has_many/one from singular/plural name"
     class_option :format, type: :string, required: false, default: "slim", desc: "*** FOR NOW ONLY OFFERS SLIM*** templating engine. defaults to slim. slim, haml, erb"
     class_option :render_views, type: :boolean, required: false, default: true, desc: "Insert render_view directives into rails-views"
     class_option :styles, type: :boolean, required: false, default: true, desc: "add ng_on_rails_styles.css"
+    class_option :belongs_to, type: :array, required: false, default: [], desc: "list of models it belongs_to"
 
     def self.source_root
       @source_root ||= File.join(File.dirname(__FILE__), 'templates')
     end
 
     def generate_layout
-      template "#{ViewsGenerator.source_root}/views/#{options[:format]}/index.html.erb", "app/views/angular_app/#{plural_name}/index.html.#{options[:format]}"
-      template "#{ViewsGenerator.source_root}/views/#{options[:format]}/show.html.erb", "app/views/angular_app/#{plural_name}/show.html.#{options[:format]}"
-      template "#{ViewsGenerator.source_root}/views/#{options[:format]}/_show.html.erb", "app/views/angular_app/#{plural_name}/_show.html.#{options[:format]}"
-      template "#{ViewsGenerator.source_root}/views/#{options[:format]}/_form.html.erb", "app/views/angular_app/#{plural_name}/_form.html.#{options[:format]}"
-      template "#{ViewsGenerator.source_root}/views/#{options[:format]}/_model.html.erb", "app/views/angular_app/#{plural_name}/_#{resource_name}.html.#{options[:format]}"
+      template "#{ViewsGenerator.source_root}/views/#{options[:format]}/index.html.erb", 
+        "app/views/angular_app/#{plural_name}/index.html.#{options[:format]}"
+      template "#{ViewsGenerator.source_root}/views/#{options[:format]}/show.html.erb", 
+        "app/views/angular_app/#{plural_name}/show.html.#{options[:format]}"
+      template "#{ViewsGenerator.source_root}/views/#{options[:format]}/_show.html.erb", 
+        "app/views/angular_app/#{plural_name}/_show.html.#{options[:format]}"
+      template "#{ViewsGenerator.source_root}/views/#{options[:format]}/_form.html.erb", 
+        "app/views/angular_app/#{plural_name}/_form.html.#{options[:format]}"
+      template "#{ViewsGenerator.source_root}/views/#{options[:format]}/_model.html.erb", 
+        "app/views/angular_app/#{plural_name}/_#{resource_name}.html.#{options[:format]}"
     end
 
     def create_render_views_files
@@ -125,6 +132,28 @@ module NgOnRails
 
     def is_plural? string
       string.pluralize == string
+    end
+
+    def belongs_to_array
+      if options[:belongs_to].blank?
+        []
+      else
+        options[:belongs_to].map do |a| 
+          a.underscore.gsub(" ","")+".id"
+        end
+      end
+    end
+
+    def belongs_to_comma
+      unless options[:belongs_to].blank?
+        ","
+      end
+    end
+
+    def belongs_to_values
+      unless options[:belongs_to].blank?
+        belongs_to_array.join(",")
+      end
     end
 
     #

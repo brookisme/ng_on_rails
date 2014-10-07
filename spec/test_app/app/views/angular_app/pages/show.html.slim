@@ -14,7 +14,7 @@ div ng_controller="PagesController as ctrl" ng-init="ctrl.setPages(pages,page)"
     .property-label.body.textarea body:
     div ng-bind="page.body"
       
-  button.btn.btn-default ng-click="ctrl.rest.edit(page,page.id)"
+  button.btn.btn-default ng-click="ctrl.rest.edit(page,doc.id)"
     i.fa.fa-edit.fa-lg 
       span.ilabel edit
   button.btn.btn-default confirm="Do you really want to delete page: '{{page.id}}'?" action="ctrl.rest.delete($index,page)"
@@ -23,3 +23,5 @@ div ng_controller="PagesController as ctrl" ng-init="ctrl.setPages(pages,page)"
 
   .formbox ng-show='ctrl.is_editing(page)'
     div render="true" url="pages/form"
+
+    

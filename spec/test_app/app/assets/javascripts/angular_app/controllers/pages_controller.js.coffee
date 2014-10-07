@@ -29,10 +29,17 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
       Page.get({id: page_id}).$promise.then (page) ->
         ctrl.data.page = page
         
-    new: ()->
+    new: (doc_id)->
       ctrl.clear()
       ctrl.data.activePage = {}
       ctrl.data.creating_new_page = true
+      ctrl.data.activePage.doc_id = doc_id
+      #
+      #  NOTE: 
+      #    setting of order_index was added after generating this file:
+      #    $ bundle exec rails g ng_on_rails:controller Page --belongs_to Doc
+      #
+      ctrl.data.activePage.order_index = ctrl.data.pages.length + 1
 
     create: ->
       if !(ctrl.locked || ctrl.page_form.$error.required)
@@ -52,11 +59,13 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
             ctrl.locked = false
         )
 
-    edit: (page) ->
+    edit: (page,doc_id) ->
       ctrl.clear()
       ctrl.data.activePage = page
       ctrl.data.editing_page = true
       page.is_displayed = false
+      ctrl.data.activePage.doc_id = doc_id
+      
 
     update: (page)->
       if !(ctrl.locked || ctrl.page_form.$error.required)
