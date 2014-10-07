@@ -6,7 +6,6 @@ module NgOnRails
     # arguments
     argument :model_name, type: :string, required: true, desc: "required"
     class_option :properties, type: :array, required: false, default: [], desc: "list of properties"
-    class_option :relationships, type: :array, required: false, default: [], desc: "list of relationships:formatype"
     class_option :format, type: :string, required: false, default: "slim", desc: "*** FOR NOW ONLY OFFERS SLIM*** templating engine. defaults to slim. slim, haml, erb"
     class_option :render_views, type: :boolean, required: false, default: true, desc: "Insert render_view directives into rails-views"
     class_option :styles, type: :boolean, required: false, default: true, desc: "add ng_on_rails_styles.css"

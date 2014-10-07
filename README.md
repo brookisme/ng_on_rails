@@ -1,4 +1,4 @@
-##### *This project is still in developement and uses MIT-LICENSE.*
+##### *This project is in active developement. MIT-LICENSE.*
 
 -----------------------------------------------------------
 
@@ -8,10 +8,7 @@
 
 The main motivations behind this gem is to standardize and simplify how AngularJS is integrated in a rails  application.  
 
-I am just getting started but this does function *as-is*.  Some things left to do:
-* Write more specs!!!
-* (Create generators for views?)
-* (ViewHelper functions via shared service?)
+This project is in active development.  Check back often for updates and be very careful when using with any production app.
 
 ### Install it!
 ```
@@ -66,7 +63,49 @@ You are now up and running! To generate controllers and resource-services use Ng
 # Assuming the Rails app has a "Page" model:
 $ bundle exec rails g ng_on_rails:controller Page
 $ bundle exec rails g ng_on_rails:resource Page
+$ bundle exec rails g ng_on_rails:views Page
 ```
+`ng_on_rails:views` has many options:
+```
+$ be rails g ng_on_rails:views --help
+Usage:
+  rails generate ng_on_rails:views MODEL_NAME [options]
+
+Options:
+  [--properties=one two three]           # list of properties
+  [--format=FORMAT]                      # *** FOR NOW ONLY OFFERS SLIM*** templating engine. defaults to slim. slim, haml, erb
+                                         # Default: slim
+  [--render-views], [--no-render-views]  # Insert render_view directives into rails-views
+                                         # Default: true
+  [--styles], [--no-styles]              # add ng_on_rails_styles.css
+                                         # Default: true
+```
+* `--format, --styles` should be self explanatory.   
+
+* `--render-views=true` will append (creating file if necessary) code to load the angular views to your index and show views in your views directory.  For example, your index files becomes:
+```slim
+# your_app/app/views/docs/index.html.slim
+
+... your content ...
+
+/ 
+/ Inserted by NgOnRails view generator.
+/ 
+div ng-init="docs=ctrl.rails.docs" render_view="true" url="docs/index"
+/
+/
+/
+```
+* `--properties` is a list of properties you want in the views. A property looks like `property\_name:property\_type{opt1+opt2+...}`.
+  * property\_name: (required) name of the property 
+  * property\_type: (optional) number/textarea -- default empty
+  * opt-list: (optional) seperate options by "+".  the allowed values are:
+    * required: make the property required in the form
+    * skip_form: do not include in the form
+    * skip_index: do not include in the index table row
+    * link: link this property in index table to the show view
+
+
 
 ##### Service: Rails 
 As will be discussed in detail [below](#locals_to_json), NgOnRails provides a Rails-service that can be injected into your Angular Controllers.  This service has all your rails variables contained in json.  So @page and @pages will get mapped to Rails.page and Rails.pages to be used by your angular app.

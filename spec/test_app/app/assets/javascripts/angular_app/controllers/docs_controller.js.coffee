@@ -83,7 +83,7 @@ NgOnRailsApp.controller 'DocsController', ($scope,Doc,Rails) ->
           if !!docs
             docs.splice(index,1)
           else
-            window.location.href='/docs'
+            window.location.href = '/docs'
         ,
         (error)->
           console.log("delete_error:",error)

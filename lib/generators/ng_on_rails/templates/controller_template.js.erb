@@ -83,7 +83,7 @@ NgOnRailsApp.controller '<%="#{class_name.pluralize}"%>Controller', ($scope,<%="
           if !!<%="#{plural_name}"%>
             <%="#{plural_name}"%>.splice(index,1)
           else
-            window.location.href='/<%="#{plural_name}"%>'
+            window.location.href = '/<%="#{plural_name}"%>'
         ,
         (error)->
           console.log("delete_error:",error)
