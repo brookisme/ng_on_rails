@@ -1,15 +1,41 @@
-h4 Page Form
 form.form name="ctrl.page_form" role="form" ng-show="ctrl.is_editing(page)"
   .form-group
     .btn-group 
-      button.btn.btn-default type="submit" ng-click="ctrl.rest.update()"
-        i.fa.fa-check.success
-      button.btn-default.btn ng-click="ctrl.clear()"      
-        i.fa.fa-remove.danger
-  .form-group
-    label.sr-only subject:
-    input.form-control.medium name='name' required="true" ng-model="ctrl.data.activePage.subject" placeholder="subject"
-    span.error ng-show="ctrl.page_form.name.$error.required" Required!
-  .form-group
-    label.sr-only body:
-    textarea.form-control name='body' ng-model="ctrl.data.activePage.body" placeholder="body"
+      button.btn.btn-default ng-if="ctrl.data.creating_new_page" type="submit" ng-click="ctrl.rest.create()"
+        i.fa.fa-check.success 
+          span.ilabel create
+      button.btn.btn-default ng-if="ctrl.data.editing_page" type="submit" ng-click="ctrl.rest.update()"
+        i.fa.fa-check.success 
+          span.ilabel update
+      button.btn-default.btn ng-click="ctrl.clear(page)"      
+        i.fa.fa-remove.danger 
+          span.ilabel cancel
+
+  
+    
+        
+  
+    
+    
+      .form-group.order_index.number
+        label.sr-only order_index:
+        input.form-control.number type="number" name='order_index'  ng-model="ctrl.data.activePage.order_index" placeholder="order_index"
+        
+        
+  
+    
+    
+      .form-group.subject
+        label.sr-only subject:
+        input.form-control  name='subject' required="true" ng-model="ctrl.data.activePage.subject" placeholder="subject"
+        span.error ng-show="ctrl.page_form.name.$error.required" Required!
+        
+  
+    
+    
+      .form-group.body.textarea
+        label.sr-only body:
+        textarea.form-control.textarea name='body'  ng-model="ctrl.data.activePage.body" placeholder="body"
+        
+        
+      

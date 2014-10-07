@@ -1,21 +1,10 @@
-h1 Listing pages
-table
-  thead
-    tr
-      th Doc
-      th Subject
-      th Body
-      th Order index
-      th colspan="3" 
-  tbody
-    - @pages.each do |page|
-      tr
-        td= page.doc
-        td= page.subject
-        td= page.body
-        td= page.order_index
-        td= link_to 'Show', page
-        td= link_to 'Edit', edit_page_path(page)
-        td= link_to 'Destroy', page, method: :delete, data: { confirm: 'Are you sure?' } 
-br
-  = link_to 'New Page', new_page_path
+/ File created with NgOnRails view generator
+
+/ 
+/ Inserted by NgOnRails view generator.
+/ 
+div ng-init="pages=ctrl.rails.pages" render_view="true" url="pages/index"
+/
+/
+/
+

@@ -29,17 +29,9 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
       Page.get({id: page_id}).$promise.then (page) ->
         ctrl.data.page = page
         
-    new: (doc_id)->
+    new: ()->
       ctrl.clear()
       ctrl.data.activePage = {}
-      #
-      #  NOTE: 
-      #    setting of order_index/doc_id were 
-      #    added after generating this file:
-      #    $ bundle exec rails g ng_on_rails:controller Page
-      #
-      ctrl.data.activePage.order_index = ctrl.data.pages.length + 1
-      ctrl.data.activePage.doc_id = doc_id
       ctrl.data.creating_new_page = true
 
     create: ->
@@ -60,17 +52,11 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
             ctrl.locked = false
         )
 
-    edit: (page,doc_id) ->
+    edit: (page) ->
       ctrl.clear()
       ctrl.data.activePage = page
-      #
-      #  NOTE: 
-      #    setting of doc_id was added
-      #    after generating this file:
-      #    $ bundle exec rails g ng_on_rails:controller Page
-      #
-      ctrl.data.activePage.doc_id = doc_id
       ctrl.data.editing_page = true
+      page.is_displayed = false
 
     update: (page)->
       if !(ctrl.locked || ctrl.page_form.$error.required)
@@ -94,7 +80,10 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
         page, 
         (page)->
           pages ||= ctrl.data.pages
-          pages.splice(index,1)
+          if !!pages
+            pages.splice(index,1)
+          else
+            window.location.href = '/pages'
         ,
         (error)->
           console.log("delete_error:",error)
@@ -105,7 +94,7 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
   #    
   # SCOPE METHODS
   #
-  ctrl.clear = ->
+  ctrl.clear = (doc)->
     ctrl.data.activePage = null
     ctrl.data.creating_new_page = false
     ctrl.data.editing_page = false
@@ -114,6 +103,8 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
     (ctrl.data.editing_page && !!page && page.id == ctrl.data.activePage.id) ||
     (ctrl.data.creating_new_page && !page)
 
+  ctrl.toggleDisplay = (page)->
+    page.is_displayed = !page.is_displayed
 
   #  
   # PRIVATE METHODS

@@ -1,12 +1,10 @@
 div ng_controller="PagesController as ctrl" ng-init="ctrl.setPages(pages)"
   h3 Pages
-  .clearfix
-    div.pull-left render="true" url="pages/new_form"
-    input.pull-left.form-control.medium ng-model="search.subject" placeholder="filter"
-  .div-table sv-root="true" sv-part="ctrl.data.pages" sv-on-sort="ctrl.resort(ctrl.data.pages)"
+  button.btn.btn-default ng-hide="ctrl.data.creating_new_page" ng-click="ctrl.rest.new()" new
+  div render="true" url="pages/form"
+  .div-table
     .th
-      .td.id ID
-      .td.order_index ORDER
-      .td.subject SUBJECT
-      .td
-    .tr-collection ng-repeat="page in ctrl.data.pages | filter:{subject: search.subject}:strict | orderBy:'order_index' " sv-element="true" render="true" url="pages/page_list_item"
+      .td.id.number id
+      .td.order_index.number order_index
+      .td.subject subject 
+    .tr-collection ng-repeat="page in ctrl.data.pages" render="true" url="pages/page"

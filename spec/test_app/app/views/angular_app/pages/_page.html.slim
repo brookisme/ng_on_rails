@@ -1,14 +1,28 @@
-h3 Page Details
+.tr
+  .td.id.number
+      a href="pages/{{page.id}}"
+        span ng-bind="page.id"
+  .td.order_index.number
+      span ng-bind="page.order_index"
+  .td.subject
+      span ng-bind="page.subject"
+   
+  .td.btn-group
+    button.btn.btn-default ng-click="ctrl.toggleDisplay(page)"
+      i.fa.fa-plus-square-o.fa-lg ng-hide="page.displaying_page" 
+        span.ilabel show
+      i.fa.fa-minus-square-o.fa-lg ng-show="page.displaying_page" 
+        span.ilabel hide
+    button.btn.btn-default ng-click="ctrl.rest.edit(page,page.id)"
+      i.fa.fa-edit.fa-lg 
+        span.ilabel edit
+    button.btn.btn-default confirm="Do you really want to delete page: '{{page.id}}'?" action="ctrl.rest.delete($index,page)"
+      i.fa.fa-remove.fa-lg.danger 
+        span.ilabel delete
+.tr.quick-view ng-show='page.is_displayed'
+  .td
+    div render="true" url="pages/show"
 
-h5 
-  | ID:
-  span ng-bind="page.id"
-  
-h5 CREATED AT
-div ng-bind="page.created_at"
-
-h5 ORDER INDEX
-div ng-bind="page.order_index"
-
-h5 DESCRIPTION
-div ng-bind="page.description"
+.tr.quick-view ng-show='ctrl.is_editing(page)'
+  .td
+    div render="true" url="pages/form"

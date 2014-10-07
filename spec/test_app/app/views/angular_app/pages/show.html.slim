@@ -1,9 +1,25 @@
-div ng_controller="PagesController as ctrl" ng-init="page=ctrl.data.page"
+div ng_controller="PagesController as ctrl" ng-init="ctrl.setPages(pages,page)"
   h3
-    | PAGE SUBJECT: &nbsp;
-    span ng-bind="page.subject"
-  button.btn.btn-default.pull-right ng-click="ctrl.toggleDetails(page)"
-    i.fa.fa-plus-square-o.fa-lg ng-hide="page.show_details"
-    i.fa.fa-minus-square-o.fa-lg ng-show="page.show_details"  
-  div ng-show="page.show_details" render="true" url="pages/page"
-  div render="true" url="pages/form"
+    | Page: &nbsp;
+    
+    .property-label.id.number id:
+    div ng-bind="page.id"
+      
+    .property-label.order_index.number order_index:
+    div ng-bind="page.order_index"
+      
+    .property-label.subject subject:
+    div ng-bind="page.subject"
+      
+    .property-label.body.textarea body:
+    div ng-bind="page.body"
+      
+  button.btn.btn-default ng-click="ctrl.rest.edit(page,page.id)"
+    i.fa.fa-edit.fa-lg 
+      span.ilabel edit
+  button.btn.btn-default confirm="Do you really want to delete page: '{{page.id}}'?" action="ctrl.rest.delete($index,page)"
+    i.fa.fa-remove.fa-lg.danger 
+      span.ilabel delete
+
+  .formbox ng-show='ctrl.is_editing(page)'
+    div render="true" url="pages/form"
