@@ -115,6 +115,17 @@ div ng-init="docs=ctrl.rails.docs" render_view="true" url="docs/index"
 ```
 * `--belongs_to` same as for ng\_on\_rails:controller generator [include the index view of the related model(s) on the show page]
 
+##### Test App
+The [test_app](https://github.com/brookisme/ng_on_rails/tree/master/spec/test_app) serves as an example of how to set up a project. With one minor alteration the test app was generated with the following commands:
+```
+$ bundle exec rails g ng_on_rails:resource Doc
+$ bundle exec rails g ng_on_rails:controller Doc
+$ bundle exec rails g ng_on_rails:views Doc --properties id:number{skip_form+link} name{required} description:textarea{skip_index} --relationships pages
+$ bundle exec rails g ng_on_rails:resource Page
+$ bundle exec rails g ng_on_rails:controller Page --belongs_to Doc
+$ bundle exec rails g ng_on_rails:views Page --properties id:number{skip_form+link} order_index:number subject{required} body:textarea{skip_index} --belongs_to Doc
+```
+
 ##### Service: Rails 
 As will be discussed in detail [below](#locals_to_json), NgOnRails provides a Rails-service that can be injected into your Angular Controllers.  This service has all your rails variables contained in json.  So @page and @pages will get mapped to Rails.page and Rails.pages to be used by your angular app.
 
