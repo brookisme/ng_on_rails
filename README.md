@@ -80,8 +80,20 @@ Options:
   [--styles], [--no-styles]              # add ng_on_rails_styles.css
                                          # Default: true
 ```
-* `--format, --styles` should be self explanatory.   
+* `--properties` is a list of properties you want in the views. A property looks like `property_name:property_type{opt1+opt2+...}`.
+  * property\_name: (required) name of the property 
+  * property\_type: (optional) number/textarea -- default empty
+  * opt-list: (optional) seperate options by "+".  the allowed values are:
+    * required: make the property required in the form
+    * skip_form: do not include in the form
+    * skip_index: do not include in the index table row
+    * link: link this property in index table to the show view
 
+  A typical example might look like this
+```
+bundle exec rails g ng_on_rails:views Doc --properties id:number{skip_form+link} name{required} description:textarea{skip_index}
+```
+* `--format, --styles` should be self explanatory.   
 * `--render-views=true` will append (creating file if necessary) code to load the angular views to your index and show views in your views directory.  For example, your index files becomes:
 ```slim
 # your_app/app/views/docs/index.html.slim
@@ -95,19 +107,6 @@ div ng-init="docs=ctrl.rails.docs" render_view="true" url="docs/index"
 /
 /
 /
-```
-* `--properties` is a list of properties you want in the views. A property looks like `property_name:property_type{opt1+opt2+...}`.
-  * property\_name: (required) name of the property 
-  * property\_type: (optional) number/textarea -- default empty
-  * opt-list: (optional) seperate options by "+".  the allowed values are:
-    * required: make the property required in the form
-    * skip_form: do not include in the form
-    * skip_index: do not include in the index table row
-    * link: link this property in index table to the show view
-
-  A typical example might look like this
-```
-bundle exec rails g ng_on_rails:views Doc --properties id:number{skip_form+link} name{required} description:textarea{skip_index}
 ```
 
 ##### Service: Rails 
