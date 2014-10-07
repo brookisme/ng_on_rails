@@ -1,9 +1,22 @@
-div ng_controller="<%= class_name.pluralize %>Controller as ctrl" ng-init="<%= resource_name %>=ctrl.data.<%= resource_name %>"
+div ng_controller="<%= class_name.pluralize %>Controller as ctrl" ng-init="ctrl.set<%= class_name.pluralize %>(<%= plural_name %>,<%= resource_name %>)"
   h3
-    | <%= class_name %> SUBJECT: &nbsp;
-    span ng-bind="<%= resource_name %>.subject"
-  button.btn.btn-default.pull-right ng-click="ctrl.toggleDetails(<%= resource_name %>)"
-    i.fa.fa-plus-square-o.fa-lg ng-hide="<%= resource_name %>.show_details"
-    i.fa.fa-minus-square-o.fa-lg ng-show="<%= resource_name %>.show_details"  
-  div ng-show="<%= resource_name %>.show_details" render="true" url="<%= plural_name %>/show"
-  div render="true" url="<%= plural_name %>/form"
+    | <%= class_name %>: &nbsp;
+    <%
+      options[:properties].each do |property|
+        property_hash = args(property)
+        @name_rep ||= property_hash[:name]
+    %>
+    .property-label.<%= property_hash[:name] %><%= type_to_class(property_hash[:type]) %> <%= property_hash[:name] %>:
+    div ng-bind="<%= resource_name %>.<%= property_hash[:name] %>"
+      <%
+      end 
+    %>
+  button.btn.btn-default ng-click="ctrl.rest.edit(<%= resource_name %>,<%= resource_name %>.id)"
+    i.fa.fa-edit.fa-lg 
+      span.ilabel edit
+  button.btn.btn-default confirm="Do you really want to delete <%= resource_name %>: '{{<%= resource_name %>.<%=@name_rep %>}}'?" action="ctrl.rest.delete($index,<%= resource_name %>)"
+    i.fa.fa-remove.fa-lg.danger 
+      span.ilabel delete
+
+  .formbox ng-show='ctrl.is_editing(<%= resource_name %>)'
+    div render="true" url="<%= plural_name %>/form"

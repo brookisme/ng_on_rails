@@ -1,9 +1,22 @@
-div ng_controller="DocsController as ctrl" ng-init="doc=ctrl.data.doc"
+div ng_controller="DocsController as ctrl" ng-init="ctrl.setDocs(docs,doc)"
   h3
-    | Doc SUBJECT: &nbsp;
-    span ng-bind="doc.subject"
-  button.btn.btn-default.pull-right ng-click="ctrl.toggleDetails(doc)"
-    i.fa.fa-plus-square-o.fa-lg ng-hide="doc.show_details"
-    i.fa.fa-minus-square-o.fa-lg ng-show="doc.show_details"  
-  div ng-show="doc.show_details" render="true" url="docs/show"
-  div render="true" url="docs/form"
+    | Doc: &nbsp;
+    
+    .property-label.id.number id:
+    div ng-bind="doc.id"
+      
+    .property-label.name name:
+    div ng-bind="doc.name"
+      
+    .property-label.description.textarea description:
+    div ng-bind="doc.description"
+      
+  button.btn.btn-default ng-click="ctrl.rest.edit(doc,doc.id)"
+    i.fa.fa-edit.fa-lg 
+      span.ilabel edit
+  button.btn.btn-default confirm="Do you really want to delete doc: '{{doc.id}}'?" action="ctrl.rest.delete($index,doc)"
+    i.fa.fa-remove.fa-lg.danger 
+      span.ilabel delete
+
+  .formbox ng-show='ctrl.is_editing(doc)'
+    div render="true" url="docs/form"

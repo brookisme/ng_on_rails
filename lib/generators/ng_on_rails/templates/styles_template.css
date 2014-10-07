@@ -33,6 +33,12 @@ i span.ilabel {
   top: -2px;
   font-style: normal;
 }
+.property-label {
+  color: #069;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
 
 /** DIV Tables **/
 
