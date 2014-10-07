@@ -56,6 +56,7 @@ NgOnRailsApp.controller '<%="#{class_name.pluralize}"%>Controller', ($scope,<%="
       ctrl.clear()
       ctrl.data.active<%="#{class_name}"%> = <%="#{file_name}"%>
       ctrl.data.editing_<%="#{file_name}"%> = true
+      <%="#{file_name}"%>.is_displayed = false
 
     update: (<%="#{file_name}"%>)->
       if !(ctrl.locked || ctrl.<%="#{file_name}"%>_form.$error.required)
@@ -90,7 +91,7 @@ NgOnRailsApp.controller '<%="#{class_name.pluralize}"%>Controller', ($scope,<%="
   #    
   # SCOPE METHODS
   #
-  ctrl.clear = ->
+  ctrl.clear = (doc)->
     ctrl.data.active<%="#{class_name}"%> = null
     ctrl.data.creating_new_<%="#{file_name}"%> = false
     ctrl.data.editing_<%="#{file_name}"%> = false
@@ -99,6 +100,8 @@ NgOnRailsApp.controller '<%="#{class_name.pluralize}"%>Controller', ($scope,<%="
     (ctrl.data.editing_<%="#{file_name}"%> && !!<%="#{file_name}"%> && <%="#{file_name}"%>.id == ctrl.data.active<%="#{class_name}"%>.id) ||
     (ctrl.data.creating_new_<%="#{file_name}"%> && !<%="#{file_name}"%>)
 
+  ctrl.toggleDisplay = (<%="#{file_name}"%>)->
+    <%="#{file_name}"%>.is_displayed = !<%="#{file_name}"%>.is_displayed
 
   #  
   # PRIVATE METHODS

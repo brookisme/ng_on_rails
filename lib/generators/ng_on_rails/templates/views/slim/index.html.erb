@@ -1,9 +1,9 @@
 div ng_controller="<%= class_name.pluralize %>Controller as ctrl" ng-init="ctrl.set<%=class_name%>s(<%= plural_name %>)"
-  h3 <%=class_name%>s
-  .clearfix
-    div.pull-left render="true" url="<%= plural_name %>/form"
+  h3 <%=class_name.pluralize%>
+  button.btn.btn-default ng-hide="ctrl.data.creating_new_<%= resource_name %>" ng-click="ctrl.rest.new()" new
+  div render="true" url="<%= plural_name %>/form"
   .div-table
-    .tr.header<%
+    .th<%
       options[:properties].each do |property|
       property_hash = args(property)
     %>

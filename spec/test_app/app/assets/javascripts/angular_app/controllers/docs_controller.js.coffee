@@ -56,6 +56,7 @@ NgOnRailsApp.controller 'DocsController', ($scope,Doc,Rails) ->
       ctrl.clear()
       ctrl.data.activeDoc = doc
       ctrl.data.editing_doc = true
+      doc.is_displayed = false
 
     update: (doc)->
       if !(ctrl.locked || ctrl.doc_form.$error.required)
@@ -90,7 +91,7 @@ NgOnRailsApp.controller 'DocsController', ($scope,Doc,Rails) ->
   #    
   # SCOPE METHODS
   #
-  ctrl.clear = ->
+  ctrl.clear = (doc)->
     ctrl.data.activeDoc = null
     ctrl.data.creating_new_doc = false
     ctrl.data.editing_doc = false
@@ -99,14 +100,8 @@ NgOnRailsApp.controller 'DocsController', ($scope,Doc,Rails) ->
     (ctrl.data.editing_doc && !!doc && doc.id == ctrl.data.activeDoc.id) ||
     (ctrl.data.creating_new_doc && !doc)
 
-  ctrl.toggleDetails = (doc)->
-    #
-    #  NOTE: 
-    #    ctrl.toggleDetails was added after generating this file:
-    #    $ bundle exec rails g ng_on_rails:controller Page
-    #
-    doc.show_details = !doc.show_details
-
+  ctrl.toggleDisplay = (doc)->
+    doc.is_displayed = !doc.is_displayed
 
   #  
   # PRIVATE METHODS

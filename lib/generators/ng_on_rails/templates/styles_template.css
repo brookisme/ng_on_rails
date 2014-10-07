@@ -1,0 +1,94 @@
+.wrapper {
+  margin: 25px;
+}
+i.fa {
+  color: #ccc;
+}
+i.fa.light,
+.light {
+  color: #aaa;
+}
+i.fa.white,
+.white {
+  color: #fff;
+}
+i.fa.success,
+.success {
+  color: #5cb85c;
+}
+i.fa.danger,
+.error,
+.danger {
+  color: #d9534f;
+}
+.error {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/** DIV Tables **/
+
+.div-table {
+  border: 1px solid #ccc;
+}
+.div-table .tr-collection:first-child {
+  border-top: 1px dotted #ccc;
+}
+.div-table .th,
+.div-table .tr {  
+  border-bottom: 1px dotted #ccc;
+  padding: 5px;
+}
+.div-table .th {  
+  font-size: 11px;
+  font-weight: bold;
+  color: #069;
+  background-color: #eee;
+}
+.div-table .td {
+  display: inline-block;
+  margin-right: 5px;
+  padding-right: 5px;
+  width: 250px;
+}
+.div-table .td-collection {
+  display: inline-block;
+}
+.div-table .tr:hover {
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+}
+.div-table {
+  margin: 25px 0;
+}
+.div-table .td.id,
+.div-table .td.number {
+  width: 75px;
+  text-align: center;
+}
+.div-table .td.btn-group {
+  width: 300px;
+}
+.tr.quick-view {
+  padding: 20px 5px;
+}
+
+
+/* FORMS */
+.form-inline input {
+  margin-left: 2px;
+}
+input.form-control.medium {
+  width: 200px;
+}
+input[type="number"],
+input[type="number"].form-control {
+  width: 70px;
+}
+form span.error {
+  margin-left: 15px;
+}
+.list_label {
+  display: inline-block;
+}

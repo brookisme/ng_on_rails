@@ -9,11 +9,14 @@
     end 
   %> 
   .td.btn-group
-    a.btn.btn-default ng-click="ctrl.rest.edit(<%= resource_name %>,<%= resource_name %>.id)"
-      i.fa.fa-edit.fa-lg
+    button.btn.btn-default ng-click="ctrl.toggleDisplay(<%= resource_name %>)"
+      i.fa.fa-plus-square-o.fa-lg ng-hide="<%= resource_name %>.displaying_<%= resource_name %>" show
+      i.fa.fa-minus-square-o.fa-lg ng-show="<%= resource_name %>.displaying_<%= resource_name %>" hide
+    button.btn.btn-default ng-click="ctrl.rest.edit(<%= resource_name %>,<%= resource_name %>.id)"
+      i.fa.fa-edit.fa-lg edit
     button.btn.btn-default confirm="Do you really want to delete <%= resource_name %>: '{{<%= resource_name %>.<%=@name_rep %>}}'?" action="ctrl.rest.delete($index,<%= resource_name %>)"
-      i.fa.fa-remove.fa-lg.danger
-.tr.quick-view ng-show='ctrl.show_details'
+      i.fa.fa-remove.fa-lg.danger delete
+.tr.quick-view ng-show='<%= resource_name %>.is_displayed'
   .td
     div render="true" url="<%= plural_name %>/show"
 

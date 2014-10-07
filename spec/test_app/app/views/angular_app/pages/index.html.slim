@@ -4,7 +4,7 @@ div ng_controller="PagesController as ctrl" ng-init="ctrl.setPages(pages)"
     div.pull-left render="true" url="pages/new_form"
     input.pull-left.form-control.medium ng-model="search.subject" placeholder="filter"
   .div-table sv-root="true" sv-part="ctrl.data.pages" sv-on-sort="ctrl.resort(ctrl.data.pages)"
-    .tr.header
+    .th
       .td.id ID
       .td.order_index ORDER
       .td.subject SUBJECT

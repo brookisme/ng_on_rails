@@ -9,6 +9,7 @@ module NgOnRails
     class_option :relationships, type: :array, required: false, default: [], desc: "list of relationships:formatype"
     class_option :format, type: :string, required: false, default: "slim", desc: "*** FOR NOW ONLY OFFERS SLIM*** templating engine. defaults to slim. slim, haml, erb"
     class_option :render_views, type: :boolean, required: false, default: true, desc: "Insert render_view directives into rails-views"
+    class_option :styles, type: :boolean, required: false, default: true, desc: "add ng_on_rails_styles.css"
 
     def self.source_root
       @source_root ||= File.join(File.dirname(__FILE__), 'templates')
@@ -44,6 +45,15 @@ module NgOnRails
       end
     end
 
+    def add_css
+      if options[:styles]
+        styles_path = "app/assets/stylesheets/ng_on_rails_styles.css"  
+        unless File.exist?(styles_path)
+          copy_file "#{ViewsGenerator.source_root}/styles_template.css", styles_path    
+        end
+      end
+    end
+
   private
 
     def class_name
@@ -60,7 +70,7 @@ module NgOnRails
     
     def args arg_string
       parts = arg_string.split("{")
-      if (parts.length > 1) && !!parts[1].match(/required: true/)
+      if (parts.length > 1) && !!parts[1].match(/required/)
         req = true
       else
         req = false
@@ -73,9 +83,19 @@ module NgOnRails
       }
     end
 
+    #
+    #  VIEW HELPERS
+    #
+
     def type_to_class type_string
       unless type_string.blank?
         ".#{type_string}"
+      end
+    end
+
+    def required_string property_hash
+       if property_hash[:required] 
+        required_string = "required=\"true\""
       end
     end
 
