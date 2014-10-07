@@ -65,20 +65,25 @@ $ bundle exec rails g ng_on_rails:controller Page
 $ bundle exec rails g ng_on_rails:resource Page
 $ bundle exec rails g ng_on_rails:views Page
 ```
-`ng_on_rails:views` has many options:
-```
+  `ng_on_rails:controller` has one option, `[--belongs-to=one two three] # list of models it belongs_to` setting this option will ensure that belongs to relationships are set in the "rest.new()" and "rest.edit()" methods
+
+
+  `ng_on_rails:views` has many options:
+```  
 $ bundle exec rails g ng_on_rails:views --help
 Usage:
   rails generate ng_on_rails:views MODEL_NAME [options]
 
 Options:
   [--properties=one two three]           # list of properties
+  [--relationships=one two three]        # list of relationships. determines has_many/one from singular/plural name
   [--format=FORMAT]                      # *** FOR NOW ONLY OFFERS SLIM*** templating engine. defaults to slim. slim, haml, erb
                                          # Default: slim
   [--render-views], [--no-render-views]  # Insert render_view directives into rails-views
                                          # Default: true
   [--styles], [--no-styles]              # add ng_on_rails_styles.css
                                          # Default: true
+  [--belongs-to=one two three]           # list of models it belongs_to
 ```
 * `--properties` is a list of properties you want in the views. A property looks like `property_name:property_type{opt1+opt2+...}`.
   * property\_name: (required) name of the property 
@@ -108,6 +113,7 @@ div ng-init="docs=ctrl.rails.docs" render_view="true" url="docs/index"
 /
 /
 ```
+* `--belongs_to` same as for ng\_on\_rails:controller generator [include the index view of the related model(s) on the show page]
 
 ##### Service: Rails 
 As will be discussed in detail [below](#locals_to_json), NgOnRails provides a Rails-service that can be injected into your Angular Controllers.  This service has all your rails variables contained in json.  So @page and @pages will get mapped to Rails.page and Rails.pages to be used by your angular app.
