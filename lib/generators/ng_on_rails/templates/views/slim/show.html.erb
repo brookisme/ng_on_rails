@@ -1,0 +1,35 @@
+div ng_controller="<%= class_name.pluralize %>Controller as ctrl" ng-init="ctrl.set<%= class_name.pluralize %>(<%= plural_name %>,<%= resource_name %>)"
+  h3
+    | <%= class_name %>: &nbsp;
+    <%
+      options[:properties].each do |property|
+        property_hash = args(property)
+        @name_rep ||= property_hash[:name]
+    %>
+    .property-label.<%= property_hash[:name] %><%= type_to_class(property_hash[:type]) %> <%= property_hash[:name] %>:
+    div ng-bind="<%= resource_name %>.<%= property_hash[:name] %>"
+      <%
+      end 
+    %>
+  button.btn.btn-default ng-click="ctrl.rest.edit(<%= resource_name %><%= belongs_to_comma %><%= belongs_to_values %>)"
+    i.fa.fa-edit.fa-lg 
+      span.ilabel edit
+  button.btn.btn-default confirm="Do you really want to delete <%= resource_name %>: '{{<%= resource_name %>.<%=@name_rep %>}}'?" action="ctrl.rest.delete($index,<%= resource_name %>)"
+    i.fa.fa-remove.fa-lg.danger 
+      span.ilabel delete
+
+  .formbox ng-show='ctrl.is_editing(<%= resource_name %>)'
+    div render="true" url="<%= plural_name %>/form"
+
+  <%
+    options[:relationships].each do |relationship|
+      if is_plural?(relationship)
+        relationship_page = "index"
+      else
+        relationship_page = "show"
+      end
+  %>
+  div render_view="true" url="<%= relationship.pluralize %>/<%= relationship_page %>" ng-init="<%= relationship %>=<%= resource_name %>.<%= relationship %>"
+  <%
+    end 
+  %>  

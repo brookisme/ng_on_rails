@@ -1,4 +1,4 @@
-##### *This project is still in developement and uses MIT-LICENSE.*
+##### *This project is in active developement. MIT-LICENSE.*
 
 -----------------------------------------------------------
 
@@ -8,10 +8,7 @@
 
 The main motivations behind this gem is to standardize and simplify how AngularJS is integrated in a rails  application.  
 
-I am just getting started but this does function *as-is*.  Some things left to do:
-* Write more specs!!!
-* (Create generators for views?)
-* (ViewHelper functions via shared service?)
+This project is in active development.  Check back often for updates and be very careful when using with any production app.
 
 ### Install it!
 ```
@@ -66,6 +63,67 @@ You are now up and running! To generate controllers and resource-services use Ng
 # Assuming the Rails app has a "Page" model:
 $ bundle exec rails g ng_on_rails:controller Page
 $ bundle exec rails g ng_on_rails:resource Page
+$ bundle exec rails g ng_on_rails:views Page
+```
+  `ng_on_rails:controller` has one option, `[--belongs-to=one two three] # list of models it belongs_to` setting this option will ensure that belongs to relationships are set in the "rest.new()" and "rest.edit()" methods
+
+
+  `ng_on_rails:views` has many options:
+```  
+$ bundle exec rails g ng_on_rails:views --help
+Usage:
+  rails generate ng_on_rails:views MODEL_NAME [options]
+
+Options:
+  [--properties=one two three]           # list of properties
+  [--relationships=one two three]        # list of relationships. determines has_many/one from singular/plural name
+  [--format=FORMAT]                      # *** FOR NOW ONLY OFFERS SLIM*** templating engine. defaults to slim. slim, haml, erb
+                                         # Default: slim
+  [--render-views], [--no-render-views]  # Insert render_view directives into rails-views
+                                         # Default: true
+  [--styles], [--no-styles]              # add ng_on_rails_styles.css
+                                         # Default: true
+  [--belongs-to=one two three]           # list of models it belongs_to
+```
+* `--properties` is a list of properties you want in the views. A property looks like `property_name:property_type{opt1+opt2+...}`.
+  * property\_name: (required) name of the property 
+  * property\_type: (optional) number/textarea -- default empty
+  * opt-list: (optional) seperate options by "+".  the allowed values are:
+    * required: make the property required in the form
+    * skip_form: do not include in the form
+    * skip_index: do not include in the index table row
+    * link: link this property in index table to the show view
+
+  A typical example might look like this
+```
+bundle exec rails g ng_on_rails:views Doc --properties id:number{skip_form+link} name{required} description:textarea{skip_index}
+```
+* `--format, --styles` should be self explanatory.   
+* `--render-views=true` will append (creating file if necessary) code to load the angular views to your index and show views in your views directory.  For example, your index files becomes:
+```slim
+# your_app/app/views/docs/index.html.slim
+
+... your content ...
+
+/ 
+/ Inserted by NgOnRails view generator.
+/ 
+div ng-init="docs=ctrl.rails.docs" render_view="true" url="docs/index"
+/
+/
+/
+```
+* `--belongs_to` same as for ng\_on\_rails:controller generator [include the index view of the related model(s) on the show page]
+
+##### Test App
+The [test_app](https://github.com/brookisme/ng_on_rails/tree/master/spec/test_app) serves as an example of how to set up a project. With one minor alteration the test app was generated with the following commands:
+```
+$ bundle exec rails g ng_on_rails:resource Doc
+$ bundle exec rails g ng_on_rails:controller Doc
+$ bundle exec rails g ng_on_rails:views Doc --properties id:number{skip_form+link} name{required} description:textarea{skip_index} --relationships pages
+$ bundle exec rails g ng_on_rails:resource Page
+$ bundle exec rails g ng_on_rails:controller Page --belongs_to Doc
+$ bundle exec rails g ng_on_rails:views Page --properties id:number{skip_form+link} order_index:number subject{required} body:textarea{skip_index} --belongs_to Doc
 ```
 
 ##### Service: Rails 

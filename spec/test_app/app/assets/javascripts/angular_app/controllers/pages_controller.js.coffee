@@ -32,15 +32,14 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
     new: (doc_id)->
       ctrl.clear()
       ctrl.data.activePage = {}
+      ctrl.data.creating_new_page = true
+      ctrl.data.activePage.doc_id = doc_id
       #
       #  NOTE: 
-      #    setting of order_index/doc_id were 
-      #    added after generating this file:
-      #    $ bundle exec rails g ng_on_rails:controller Page
+      #    setting of order_index was added after generating this file:
+      #    $ bundle exec rails g ng_on_rails:controller Page --belongs_to Doc
       #
       ctrl.data.activePage.order_index = ctrl.data.pages.length + 1
-      ctrl.data.activePage.doc_id = doc_id
-      ctrl.data.creating_new_page = true
 
     create: ->
       if !(ctrl.locked || ctrl.page_form.$error.required)
@@ -63,14 +62,10 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
     edit: (page,doc_id) ->
       ctrl.clear()
       ctrl.data.activePage = page
-      #
-      #  NOTE: 
-      #    setting of doc_id was added
-      #    after generating this file:
-      #    $ bundle exec rails g ng_on_rails:controller Page
-      #
-      ctrl.data.activePage.doc_id = doc_id
       ctrl.data.editing_page = true
+      page.is_displayed = false
+      ctrl.data.activePage.doc_id = doc_id
+      
 
     update: (page)->
       if !(ctrl.locked || ctrl.page_form.$error.required)
@@ -94,7 +89,10 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
         page, 
         (page)->
           pages ||= ctrl.data.pages
-          pages.splice(index,1)
+          if !!pages
+            pages.splice(index,1)
+          else
+            window.location.href = '/pages'
         ,
         (error)->
           console.log("delete_error:",error)
@@ -105,7 +103,7 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
   #    
   # SCOPE METHODS
   #
-  ctrl.clear = ->
+  ctrl.clear = (doc)->
     ctrl.data.activePage = null
     ctrl.data.creating_new_page = false
     ctrl.data.editing_page = false
@@ -114,6 +112,8 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
     (ctrl.data.editing_page && !!page && page.id == ctrl.data.activePage.id) ||
     (ctrl.data.creating_new_page && !page)
 
+  ctrl.toggleDisplay = (page)->
+    page.is_displayed = !page.is_displayed
 
   #  
   # PRIVATE METHODS

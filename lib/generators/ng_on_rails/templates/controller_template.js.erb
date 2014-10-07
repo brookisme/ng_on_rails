@@ -29,10 +29,16 @@ NgOnRailsApp.controller '<%="#{class_name.pluralize}"%>Controller', ($scope,<%="
       <%="#{class_name}"%>.get({id: <%="#{file_name}"%>_id}).$promise.then (<%="#{file_name}"%>) ->
         ctrl.data.<%="#{file_name}"%> = <%="#{file_name}"%>
         
-    new: ()->
+    new: (<%=belongs_to_parameters%>)->
       ctrl.clear()
       ctrl.data.active<%="#{class_name}"%> = {}
       ctrl.data.creating_new_<%="#{file_name}"%> = true
+      <% 
+        belongs_to_array.each do |relationship| 
+      %>ctrl.data.active<%="#{class_name}"%>.<%= relationship%> = <%= relationship %>
+      <% 
+        end 
+      %>
 
     create: ->
       if !(ctrl.locked || ctrl.<%="#{file_name}"%>_form.$error.required)
@@ -52,10 +58,17 @@ NgOnRailsApp.controller '<%="#{class_name.pluralize}"%>Controller', ($scope,<%="
             ctrl.locked = false
         )
 
-    edit: (<%="#{file_name}"%>) ->
+    edit: (<%="#{file_name}"%>,<%=belongs_to_parameters%>) ->
       ctrl.clear()
       ctrl.data.active<%="#{class_name}"%> = <%="#{file_name}"%>
       ctrl.data.editing_<%="#{file_name}"%> = true
+      <%="#{file_name}"%>.is_displayed = false
+      <% 
+        belongs_to_array.each do |relationship| 
+      %>ctrl.data.active<%="#{class_name}"%>.<%= relationship%> = <%= relationship %>
+      <% 
+        end 
+      %>
 
     update: (<%="#{file_name}"%>)->
       if !(ctrl.locked || ctrl.<%="#{file_name}"%>_form.$error.required)
@@ -79,7 +92,10 @@ NgOnRailsApp.controller '<%="#{class_name.pluralize}"%>Controller', ($scope,<%="
         <%="#{file_name}"%>, 
         (<%="#{file_name}"%>)->
           <%="#{plural_name}"%> ||= ctrl.data.<%="#{plural_name}"%>
-          <%="#{plural_name}"%>.splice(index,1)
+          if !!<%="#{plural_name}"%>
+            <%="#{plural_name}"%>.splice(index,1)
+          else
+            window.location.href = '/<%="#{plural_name}"%>'
         ,
         (error)->
           console.log("delete_error:",error)
@@ -90,7 +106,7 @@ NgOnRailsApp.controller '<%="#{class_name.pluralize}"%>Controller', ($scope,<%="
   #    
   # SCOPE METHODS
   #
-  ctrl.clear = ->
+  ctrl.clear = (doc)->
     ctrl.data.active<%="#{class_name}"%> = null
     ctrl.data.creating_new_<%="#{file_name}"%> = false
     ctrl.data.editing_<%="#{file_name}"%> = false
@@ -99,6 +115,8 @@ NgOnRailsApp.controller '<%="#{class_name.pluralize}"%>Controller', ($scope,<%="
     (ctrl.data.editing_<%="#{file_name}"%> && !!<%="#{file_name}"%> && <%="#{file_name}"%>.id == ctrl.data.active<%="#{class_name}"%>.id) ||
     (ctrl.data.creating_new_<%="#{file_name}"%> && !<%="#{file_name}"%>)
 
+  ctrl.toggleDisplay = (<%="#{file_name}"%>)->
+    <%="#{file_name}"%>.is_displayed = !<%="#{file_name}"%>.is_displayed
 
   #  
   # PRIVATE METHODS
