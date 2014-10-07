@@ -67,7 +67,7 @@ $ bundle exec rails g ng_on_rails:views Page
 ```
 `ng_on_rails:views` has many options:
 ```
-$ be rails g ng_on_rails:views --help
+$ bundle exec rails g ng_on_rails:views --help
 Usage:
   rails generate ng_on_rails:views MODEL_NAME [options]
 
@@ -96,7 +96,7 @@ div ng-init="docs=ctrl.rails.docs" render_view="true" url="docs/index"
 /
 /
 ```
-* `--properties` is a list of properties you want in the views. A property looks like `property\_name:property\_type{opt1+opt2+...}`.
+* `--properties` is a list of properties you want in the views. A property looks like `property_name:property_type{opt1+opt2+...}`.
   * property\_name: (required) name of the property 
   * property\_type: (optional) number/textarea -- default empty
   * opt-list: (optional) seperate options by "+".  the allowed values are:
@@ -105,7 +105,10 @@ div ng-init="docs=ctrl.rails.docs" render_view="true" url="docs/index"
     * skip_index: do not include in the index table row
     * link: link this property in index table to the show view
 
-
+  A typical example might look like this
+```
+bundle exec rails g ng_on_rails:views Doc --properties id:number{skip_form+link} name{required} description:textarea{skip_index}
+```
 
 ##### Service: Rails 
 As will be discussed in detail [below](#locals_to_json), NgOnRails provides a Rails-service that can be injected into your Angular Controllers.  This service has all your rails variables contained in json.  So @page and @pages will get mapped to Rails.page and Rails.pages to be used by your angular app.
