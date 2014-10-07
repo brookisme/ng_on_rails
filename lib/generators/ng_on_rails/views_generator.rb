@@ -49,6 +49,7 @@ module NgOnRails
       if options[:styles]
         styles_path = "app/assets/stylesheets/ng_on_rails_styles.css"  
         unless File.exist?(styles_path)
+          puts "Adding ng_on_rails_styles.css -- <better with bootstrap and fontAwesome!>"
           copy_file "#{ViewsGenerator.source_root}/styles_template.css", styles_path    
         end
       end
@@ -70,16 +71,36 @@ module NgOnRails
     
     def args arg_string
       parts = arg_string.split("{")
-      if (parts.length > 1) && !!parts[1].match(/required/)
-        req = true
-      else
-        req = false
+      if (parts.length > 1)
+        if !!parts[1].match(/required/)
+          required = true
+        else
+          required = false
+        end 
+        if !!parts[1].match(/skip_form/)
+          skip_form = true
+        else
+          skip_form = false
+        end
+        if !!parts[1].match(/skip_index/)
+          skip_index = true
+        else
+          skip_index = false
+        end 
+        if !!parts[1].match(/link/)
+          link = true
+        else
+          link = false
+        end 
       end 
       args = parts[0].split(":")
       {
         name: args[0],
         type: args[1],
-        required: req
+        required: required,
+        skip_form: skip_form,
+        skip_index: skip_index,
+        link: link
       }
     end
 

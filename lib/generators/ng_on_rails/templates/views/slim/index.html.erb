@@ -5,9 +5,11 @@ div ng_controller="<%= class_name.pluralize %>Controller as ctrl" ng-init="ctrl.
   .div-table
     .th<%
       options[:properties].each do |property|
-      property_hash = args(property)
+        property_hash = args(property)
+        unless property_hash[:skip_index]
     %>
       .td.<%= property_hash[:name] %><%= type_to_class(property_hash[:type]) %> <%= property_hash[:name] %><%
+        end
       end 
     %> 
     .tr-collection ng-repeat="<%= resource_name %> in ctrl.data.<%= plural_name %>" render="true" url="<%= plural_name %>/<%= resource_name %>"

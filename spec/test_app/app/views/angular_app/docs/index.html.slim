@@ -1,10 +1,9 @@
 div ng_controller="DocsController as ctrl" ng-init="ctrl.setDocs(docs)"
-  .clearfix
-    div.pull-left render="true" url="docs/new_form"
-    input.pull-left.form-control.medium ng-model="search.name" placeholder="filter"
+  h3 Docs
+  button.btn.btn-default ng-hide="ctrl.data.creating_new_doc" ng-click="ctrl.rest.new()" new
+  div render="true" url="docs/form"
   .div-table
     .th
-      .td.id ID
-      .td.name NAME
-      .td
-    .tr-collection ng-repeat="doc in ctrl.data.docs | filter:{name: search.name}:strict" render="true" url="docs/doc_list_item"
+      .td.id.number id
+      .td.name name 
+    .tr-collection ng-repeat="doc in ctrl.data.docs" render="true" url="docs/doc"

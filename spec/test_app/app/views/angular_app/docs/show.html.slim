@@ -1,17 +1,9 @@
-div ng_controller="DocsController as ctrl"
+div ng_controller="DocsController as ctrl" ng-init="doc=ctrl.data.doc"
   h3
-    | DOC NAME: &nbsp;
-    span ng-bind="doc.name"
-  .clearfix
-    button.btn.btn-default.pull-left ng-click="ctrl.toggleDetails(doc)"
-      i.fa.fa-plus-square-o.fa-lg ng-hide="doc.show_details"
-      i.fa.fa-minus-square-o.fa-lg ng-show="doc.show_details"
-    div.pull-left render="true" url="docs/form"
-    a.btn.btn-default.pull-left.light href="/docs" Docs List
-
-  div ng-show="doc.show_details" render="true" url="docs/doc"
-
-  //
-  // Show all Pages for Doc
-  //
-  div render_view="true" url="pages/index" ng-init="pages=doc.pages"
+    | Doc SUBJECT: &nbsp;
+    span ng-bind="doc.subject"
+  button.btn.btn-default.pull-right ng-click="ctrl.toggleDetails(doc)"
+    i.fa.fa-plus-square-o.fa-lg ng-hide="doc.show_details"
+    i.fa.fa-minus-square-o.fa-lg ng-show="doc.show_details"  
+  div ng-show="doc.show_details" render="true" url="docs/show"
+  div render="true" url="docs/form"

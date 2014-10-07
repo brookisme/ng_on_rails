@@ -1,11 +1,26 @@
-h3 Doc Details
+.tr
+  .td.id.number
+      a href="docs/{{doc.id}}"
+        span ng-bind="doc.id"
+  .td.name
+      span ng-bind="doc.name"
+   
+  .td.btn-group
+    button.btn.btn-default ng-click="ctrl.toggleDisplay(doc)"
+      i.fa.fa-plus-square-o.fa-lg ng-hide="doc.displaying_doc" 
+        span.ilabel show
+      i.fa.fa-minus-square-o.fa-lg ng-show="doc.displaying_doc" 
+        span.ilabel hide
+    button.btn.btn-default ng-click="ctrl.rest.edit(doc,doc.id)"
+      i.fa.fa-edit.fa-lg 
+        span.ilabel edit
+    button.btn.btn-default confirm="Do you really want to delete doc: '{{doc.id}}'?" action="ctrl.rest.delete($index,doc)"
+      i.fa.fa-remove.fa-lg.danger 
+        span.ilabel delete
+.tr.quick-view ng-show='doc.is_displayed'
+  .td
+    div render="true" url="docs/show"
 
-h5 
-  | ID:
-  span ng-bind="doc.id"
-
-h5 CREATED AT
-div ng-bind="doc.created_at"
-
-h5 DESCRIPTION
-div ng-bind="doc.description"
+.tr.quick-view ng-show='ctrl.is_editing(doc)'
+  .td
+    div render="true" url="docs/form"

@@ -26,6 +26,13 @@ i.fa.danger,
   font-weight: bold;
   text-transform: uppercase;
 }
+i span.ilabel {
+  font-size: 14px;
+  margin-left: 5px;
+  position: relative;
+  top: -2px;
+  font-style: normal;
+}
 
 /** DIV Tables **/
 
