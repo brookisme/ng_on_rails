@@ -15,7 +15,5 @@
 //= require angular-resource
 //= require angular-animate
 //= require angular-sanitize
-//= require angular_app/app.js
 //= require ng_on_rails
-//= require angular_app/thirdparty/angular-sortable-view/angular-sortable-view.min.js
 //= require_tree .

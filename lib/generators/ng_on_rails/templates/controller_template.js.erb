@@ -58,7 +58,7 @@ NgOnRailsApp.controller '<%="#{class_name.pluralize}"%>Controller', ($scope,<%="
             ctrl.locked = false
         )
 
-    edit: (<%="#{resource_name}"%>,<%=belongs_to_parameters%>) ->
+    edit: (<%="#{resource_name}"%><%=belongs_to_comma%><%=belongs_to_parameters%>) ->
       ctrl.clear()
       ctrl.data.active<%="#{class_name}"%> = <%="#{resource_name}"%>
       ctrl.data.editing_<%="#{resource_name}"%> = true

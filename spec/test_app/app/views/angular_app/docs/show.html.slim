@@ -11,7 +11,7 @@ div ng_controller="DocsController as ctrl" ng-init="ctrl.setDocs(docs,doc)"
     .property-label.description.textarea description:
     div ng-bind="doc.description"
       
-  button.btn.btn-default ng-click="ctrl.rest.edit(doc,doc.id)"
+  button.btn.btn-default ng-click="ctrl.rest.edit(doc)"
     i.fa.fa-edit.fa-lg 
       span.ilabel edit
   button.btn.btn-default confirm="Do you really want to delete doc: '{{doc.id}}'?" action="ctrl.rest.delete($index,doc)"

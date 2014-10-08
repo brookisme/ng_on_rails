@@ -11,22 +11,28 @@ module NgOnRails
     class_option :render_views, type: :boolean, required: false, default: true, desc: "Insert render_view directives into rails-views"
     class_option :styles, type: :boolean, required: false, default: true, desc: "add ng_on_rails_styles.css"
     class_option :belongs_to, type: :array, required: false, default: [], desc: "list of models it belongs_to"
+    class_option :overwrite, type: :boolean, required: false, default: false, desc: "overwrite file if it exist"
 
     def self.source_root
       @source_root ||= File.join(File.dirname(__FILE__), 'templates')
     end
 
     def generate_views
-      template "#{ViewsGenerator.source_root}/views/#{options[:format]}/index.html.erb", 
-        "app/views/angular_app/#{plural_name}/index.html.#{options[:format]}"
-      template "#{ViewsGenerator.source_root}/views/#{options[:format]}/show.html.erb", 
-        "app/views/angular_app/#{plural_name}/show.html.#{options[:format]}"
-      template "#{ViewsGenerator.source_root}/views/#{options[:format]}/_show.html.erb", 
-        "app/views/angular_app/#{plural_name}/_show.html.#{options[:format]}"
-      template "#{ViewsGenerator.source_root}/views/#{options[:format]}/_form.html.erb", 
-        "app/views/angular_app/#{plural_name}/_form.html.#{options[:format]}"
-      template "#{ViewsGenerator.source_root}/views/#{options[:format]}/_model.html.erb", 
-        "app/views/angular_app/#{plural_name}/_#{resource_name}.html.#{options[:format]}"
+      option_template "#{ViewsGenerator.source_root}/views/#{options[:format]}/index.html.erb", 
+        "app/views/angular_app/#{plural_name}/index.html.#{options[:format]}",
+        "index view"
+      option_template "#{ViewsGenerator.source_root}/views/#{options[:format]}/show.html.erb", 
+        "app/views/angular_app/#{plural_name}/show.html.#{options[:format]}",
+        "show view"
+      option_template "#{ViewsGenerator.source_root}/views/#{options[:format]}/_show.html.erb", 
+        "app/views/angular_app/#{plural_name}/_show.html.#{options[:format]}",
+        "_show partial"
+      option_template "#{ViewsGenerator.source_root}/views/#{options[:format]}/_form.html.erb", 
+        "app/views/angular_app/#{plural_name}/_form.html.#{options[:format]}",
+        "_form partial"
+      option_template "#{ViewsGenerator.source_root}/views/#{options[:format]}/_model.html.erb", 
+        "app/views/angular_app/#{plural_name}/_#{resource_name}.html.#{options[:format]}",
+        "_#{resource_name} partial"
     end
 
     def create_render_views_files
@@ -73,6 +79,19 @@ module NgOnRails
     
     def plural_name
       @plural_name ||= resource_name.pluralize
+    end
+
+    def option_template from_path, to_path, file_type
+      if File.exist?(to_path)
+        if options[:overwrite]
+          remove_file(to_path)
+          template from_path, to_path
+        else
+          puts "ERROR: Failed to generate #{file_type || 'file'}. #{to_path} exists. Delete file or use the --overwrite=true option when generating the layout"
+        end
+      else
+        template from_path, to_path
+      end 
     end
     
     def args arg_string

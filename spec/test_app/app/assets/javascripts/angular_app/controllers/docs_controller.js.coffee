@@ -33,6 +33,7 @@ NgOnRailsApp.controller 'DocsController', ($scope,Doc,Rails) ->
       ctrl.clear()
       ctrl.data.activeDoc = {}
       ctrl.data.creating_new_doc = true
+      
 
     create: ->
       if !(ctrl.locked || ctrl.doc_form.$error.required)
@@ -57,6 +58,7 @@ NgOnRailsApp.controller 'DocsController', ($scope,Doc,Rails) ->
       ctrl.data.activeDoc = doc
       ctrl.data.editing_doc = true
       doc.is_displayed = false
+      
 
     update: (doc)->
       if !(ctrl.locked || ctrl.doc_form.$error.required)

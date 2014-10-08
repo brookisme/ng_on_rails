@@ -1,2 +1,0 @@
-NgOnRailsApp.factory "Bridge", ->
-  data: {}

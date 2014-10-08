@@ -35,11 +35,15 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
       ctrl.data.creating_new_page = true
       ctrl.data.activePage.doc_id = doc_id
       #
-      #  NOTE: 
-      #    setting of order_index was added after generating this file:
-      #    $ bundle exec rails g ng_on_rails:controller Page --belongs_to Doc
+      # Note: lines added after generating controller
       #
+      ctrl.data.pages ||= []
       ctrl.data.activePage.order_index = ctrl.data.pages.length + 1
+      #
+      #
+      #
+
+      
 
     create: ->
       if !(ctrl.locked || ctrl.page_form.$error.required)

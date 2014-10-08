@@ -71,7 +71,11 @@ module NgOnRails
         end
       end
     end
-
+    def belongs_to_comma
+      unless options[:belongs_to].blank?
+        ","
+      end
+    end
     def belongs_to_parameters
       unless options[:belongs_to].blank?
         belongs_to_array.join(",")
