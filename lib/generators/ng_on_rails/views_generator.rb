@@ -16,7 +16,7 @@ module NgOnRails
       @source_root ||= File.join(File.dirname(__FILE__), 'templates')
     end
 
-    def generate_layout
+    def generate_views
       template "#{ViewsGenerator.source_root}/views/#{options[:format]}/index.html.erb", 
         "app/views/angular_app/#{plural_name}/index.html.#{options[:format]}"
       template "#{ViewsGenerator.source_root}/views/#{options[:format]}/show.html.erb", 
