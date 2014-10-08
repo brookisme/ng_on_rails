@@ -1,26 +1,15 @@
-require 'rails/generators'
+require File.join(File.dirname(__FILE__), 'ng_on_rails_generator')
 module NgOnRails
-  class ScaffoldGenerator < Rails::Generators::Base
+  class ScaffoldGenerator < NgOnRails::NgOnRailsGenerator
     desc "Creates NgOnRails-style AngularJS Views"
     
     argument :model_name, type: :string, required: true, desc: "required"
-    class_option :properties, type: :array, required: false, default: [], desc: "list of properties"
-    class_option :relationships, type: :array, required: false, default: [], desc: "list of relationships. determines has_many/one from singular/plural name"
-    class_option :format, type: :string, required: false, default: "slim", desc: "*** FOR NOW ONLY OFFERS SLIM*** templating engine. defaults to slim. slim, haml, erb"
-    class_option :render_views, type: :boolean, required: false, default: true, desc: "Insert render_view directives into rails-views"
-    class_option :jbuilder, type: :boolean, required: false, default: false, desc: "Create jbuilder files the rails-views directory for json"
-    class_option :rails_views, type: :boolean, required: false, default: false, desc: "Insert both render_views and jbuilder files in rails-views"
-    class_option :styles, type: :boolean, required: false, default: true, desc: "add ng_on_rails_styles.css"
-    class_option :belongs_to, type: :array, required: false, default: [], desc: "list of models it belongs_to"
-    class_option :overwrite, type: :boolean, required: false, default: false, desc: "overwrite file if it exist"
-    class_option :app_controller, type: :boolean, required: false, default: true, desc: "create app_controller"
     class_option :layout, type: :boolean, required: false, default: true, desc: "create layout"
+    # layout generator
+    class_option :app_controller, type: :boolean, required: false, default: true, desc: "create app_controller"
     class_option :layout_name, type: :string, required: false, default: "application", desc: "name of layout. defaults to 'application', creating the file application.html.<format>"
-
-    def self.source_root
-      @source_root ||= File.join(File.dirname(__FILE__), 'templates')
-    end
-
+    # views generator
+    class_option :styles, type: :boolean, required: false, default: true, desc: "add ng_on_rails_styles.css"
 
     def generate_layout
       if options[:layout]

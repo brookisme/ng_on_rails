@@ -21,16 +21,10 @@ div ng_controller="<%= class_name.pluralize %>Controller as ctrl" ng-init="ctrl.
 
   .formbox ng-show='ctrl.is_editing(<%= resource_name %>)'
     div render="true" url="<%= plural_name %>/form"
-
   <%
     options[:relationships].each do |relationship|
-      if is_plural?(relationship)
-        relationship_page = "index"
-      else
-        relationship_page = "show"
-      end
   %>
-  div render_view="true" url="<%= relationship.pluralize %>/<%= relationship_page %>" ng-init="<%= relationship %>=<%= resource_name %>.<%= relationship %>"
+  div render_view="true" url="<%= relationship_url(relationship) %>" ng-init="<%= relationship %>=<%= resource_name %>.<%= relationship %>"
   <%
     end 
   %>  

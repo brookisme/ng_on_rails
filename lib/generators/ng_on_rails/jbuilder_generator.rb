@@ -1,10 +1,9 @@
-require 'rails/generators'
+require File.join(File.dirname(__FILE__), 'ng_on_rails_generator')
 module NgOnRails
-  class JbuilderGenerator < Rails::Generators::Base
-    desc "Creates NgOnRails-style AngularJS Resource Service"
+  class JbuilderGenerator < NgOnRails::NgOnRailsGenerator
+    desc "Creates jbuilder files in rails-views"
     argument :model_name, type: :string, required: true, desc: "model name"    
     argument :attributes, type: :array, required: false, desc: "list of attributes in json"    
-    class_option :overwrite, type: :boolean, required: false, default: false, desc: "overwrite file if it exist"
 
     def self.source_root
       @source_root ||= File.join(File.dirname(__FILE__), 'templates')
@@ -32,31 +31,6 @@ module NgOnRails
     end
 
   private
-
-    def class_name
-      @class_name ||= model_name.classify
-    end
-
-    def resource_name
-      @resource_name ||= class_name.underscore
-    end
-    
-    def plural_name
-      @plural_name ||= resource_name.pluralize
-    end
-
-    def option_create file_path, content, file_type
-      if File.exist?(file_path)
-        if options[:overwrite]
-          remove_file(file_path)
-          create_file file_path, content
-        else
-          puts "ERROR: Failed to generate #{file_type || 'file'}. #{file_path} exists. Delete file or use the --overwrite=true option when generating the layout"
-        end
-      else
-        create_file file_path, content
-      end 
-    end
 
     def attributes_string
       unless attributes.blank?
