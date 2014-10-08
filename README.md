@@ -189,8 +189,7 @@ div ng-init="docs=ctrl.rails.docs" render_view="true" url="docs/index"
 /
 ```
 * `--belongs_to` In the controller generator it will will ensure that belongs to relationships are set in the "rest.new()" and "rest.edit()" methods. In the views it will ensure that the correct id's for these models get passed in the right order.
-
-
+* `styles` Copies a simple NgOnRails stylesheet into your stylesheets directory.  This will make the views look slightly nicer.  *Note: The generated views are fine without additional frameworks but have been written to use both [bootstrap](http://getbootstrap.com/) and [fontAwesome](http://fortawesome.github.io/Font-Awesome/).*
 
 ##### Test App
 The [test_app](https://github.com/brookisme/ng_on_rails/tree/master/spec/test_app) serves as an example of how to use these generators. With one minor alteration the test app was generated with the following commands:
@@ -241,6 +240,7 @@ div ng-bind="doc.description"
 ```
 Note that using distinguishing characterisic of loading the controller via `ng_controller` loading layout is parallel to how views and partials are distinguished in rails.
 
+-----------------------------------------------------------
 
 <a name="test_app"></a>
 ### Test App
