@@ -17,6 +17,7 @@ div ng_controller="<%= class_name.pluralize %>Controller as ctrl" ng-init="ctrl.
   button.btn.btn-default confirm="Do you really want to delete <%= resource_name %>: '{{<%= resource_name %>.<%=@name_rep %>}}'?" action="ctrl.rest.delete($index,<%= resource_name %>)"
     i.fa.fa-remove.fa-lg.danger 
       span.ilabel delete
+  a.btn.btn-default href="<%= path_to_index_page %>" <%= plural_name %> list
 
   .formbox ng-show='ctrl.is_editing(<%= resource_name %>)'
     div render="true" url="<%= plural_name %>/form"

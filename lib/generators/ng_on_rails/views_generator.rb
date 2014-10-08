@@ -154,6 +154,10 @@ module NgOnRails
     #  VIEW HELPERS
     #
 
+    def path_to_index_page
+      Rails.application.routes.url_helpers.send("#{plural_name}_path")
+    end
+
     def type_to_class type_string
       unless type_string.blank?
         ".#{type_string}"

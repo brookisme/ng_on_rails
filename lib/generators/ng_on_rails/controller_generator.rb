@@ -62,6 +62,10 @@ module NgOnRails
     # View Helpers
     #
 
+    def path_to_index_page
+      Rails.application.routes.url_helpers.send("#{plural_name}_path")
+    end
+    
     def belongs_to_array
       if options[:belongs_to].blank?
         []

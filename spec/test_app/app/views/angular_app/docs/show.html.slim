@@ -17,6 +17,7 @@ div ng_controller="DocsController as ctrl" ng-init="ctrl.setDocs(docs,doc)"
   button.btn.btn-default confirm="Do you really want to delete doc: '{{doc.id}}'?" action="ctrl.rest.delete($index,doc)"
     i.fa.fa-remove.fa-lg.danger 
       span.ilabel delete
+  a.btn.btn-default href="/docs" docs list
 
   .formbox ng-show='ctrl.is_editing(doc)'
     div render="true" url="docs/form"
