@@ -157,9 +157,6 @@ Options:
                                              # Default: application
   [--styles], [--no-styles]                  # add ng_on_rails_styles.css
                                              # Default: true
-
-
-
 ```
 * `--properties` is a list of properties you want in the views. A property looks like `property_name:property_type{opt1+opt2+...}`.
   * property\_name: (required) name of the property 
