@@ -7,6 +7,7 @@ module NgOnRails
     class_option :layout, type: :boolean, required: false, default: true, desc: "create layout"
     # layout generator
     class_option :app_controller, type: :boolean, required: false, default: true, desc: "create app_controller"
+    class_option :build, type: :boolean, required: false, default: true, desc: "BUILD as ng_data default"
     class_option :layout_name, type: :string, required: false, default: "application", desc: "name of layout. defaults to 'application', creating the file application.html.<format>"
     # views generator
     class_option :styles, type: :boolean, required: false, default: true, desc: "add ng_on_rails_styles.css"
