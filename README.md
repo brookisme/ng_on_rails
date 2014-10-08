@@ -36,7 +36,7 @@ In your layout below the `javascript_include_tag "application"` load the Rails-s
   = render( partial: 'angular_app/rails_service', formats: ['js'], locals: { ng_data: ng_data} )
 </script>    
 ```
-See our wiki for an detailed layout [example](https://github.com/brookisme/ng_on_rails/wiki/Layouts).
+*See our wiki for an detailed layout [example](https://github.com/brookisme/ng_on_rails/wiki/Layouts).*
 
 NgOnRails is now up and running!
 
@@ -109,10 +109,12 @@ Example Directory Structure (*In this example the Rails app has 'Page' model*):
     <div render='true' url='pages/page'>
     <div ng-show="ctrl.is_editing(page)">... 
 ```
-* In the above, `ctrl.rails` has been set to the Rails service in the AppController*
-* This brings up another point.  Use the Controller-As syntax!  I know there are people who aren't a fan.  However in most apps where I am using angular there is a complicated Model structure.   I necessarly want to edit all these things on a single page, though spread out through many partials. Controller-As really really helps keep the logic clear.
+* In the above, `ctrl.rails` has been set to the Rails service in the AppController
+* Use the Controller-As syntax!  I know there are people who aren't a fan.  However in most apps where I am using angular there is a complicated Model structure.   I necessarly want to edit all these things on a single page, though spread out through many partials. Controller-As really really helps keep the logic clear.
 
-These conventions can be easily followed (directories will be generated) if you use the NgOnRails [generators](#ngor_generators)).  See [test_app](https://github.com/brookisme/ng_on_rails/tree/master/spec/test_app) for an example of these conventions.
+These conventions can be easily followed (directories will be generated) if you use the NgOnRails [generators](#ngor_generators)).  
+
+*See [test_app](https://github.com/brookisme/ng_on_rails/tree/master/spec/test_app) for an example of these conventions.*
 
 -----------------------------------------------------------
 
@@ -204,7 +206,7 @@ $ bundle exec rails g ng_on_rails:jbuilder Page
 $ bundle exec rails g ng_on_rails:views Page --properties id:number{skip_form+link} order_index:number subject{required} body:textarea{skip_index} --belongs_to Doc --rails-views
 ```
 or even better, in two lines with the scaffolding short hand:
-`
+```
 $ bundle exec rails g ng_on_rails:views Doc --properties id:number{skip_form+link} name{required} description:textarea{skip_index} --relationships pages --rails-views
 
 $ bundle exec rails g ng_on_rails:views Page --properties id:number{skip_form+link} order_index:number subject{required} body:textarea{skip_index} --belongs_to Doc --rails-views``
