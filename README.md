@@ -66,7 +66,7 @@ I would love feed back (especially on convention choices) and possibly other con
 
 -----------------------------------------------------------
 
-#### Conventions
+### Conventions
 
 NgOnRails expects that there is an "angular\_app" directory in your javascripts directory containing all of the controllers/directives/services you are going to use.  Simalarly, NgOnRails expects that there is an "angular\_app" directory in your views directory containing all the angular-views/partials. Naming/Path conventions follow what one would naturally expect from Rails.  
 
