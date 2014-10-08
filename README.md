@@ -92,7 +92,6 @@ Example Directory Structure (*In this example the Rails app has 'Page' model*):
         |-- index.html
         |-- show.html
     |-- pages/
-
 ```
 
 ##### Things to note:
