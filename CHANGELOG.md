@@ -17,3 +17,7 @@
 ### v0.0.3.1
 * genrators for ng views (and styles)
 * ng controller generator now has a belongs_to option
+
+### v0.0.3.2
+* genrators for ng layout, jbuilder, scaffold
+* readme overhaul
