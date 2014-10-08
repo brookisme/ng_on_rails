@@ -217,7 +217,9 @@ $ bundle exec rails g ng_on_rails:views Page --properties id:number{skip_form+li
 <a name="ngor_directives"></a>
 ### Render Directives
 
-As in rails files prefixed with "\_" are 'partials' and should be loaded with the render directive. The 'views' should be loaded with the render\_view directive.  The main distinguishing factor between views and partials are if they load a angular controller.   Here are two examples: The first is a 'view', the index view for a Doc model, and the second is partial that displays information on the doc.
+As in Rails partials are prefixed with and underscore ("\_").  Partials should be loaded with the render directive. The 'views' should be loaded with the render\_view directive.  The main distinguishing factor between views and partials are if they load a angular controller.   
+
+Here is an example: The first file is a 'view', the index view for a Doc model, and the second is partial that displays information on the doc.
 ```slim
 # VIEW:  your_app/app/views/angular_app/docs/index.html.slim
 div ng_controller="DocsController as ctrl" ng-init="ctrl.setDocs(docs)"
