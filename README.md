@@ -108,10 +108,10 @@ Example Directory Structure (*In this example the Rails app has 'Page' model*):
     <div render='true' url='pages/page'>
     <div ng-show="ctrl.is_editing(page)">... 
 ```
-* In the above, `ctrl.rails` has been set to the Rails service in the AppController
+* In the above, `ctrl.rails` has been set to the Rails-service in the AppController
 * Use the Controller-As syntax!  I know there are people who aren't a fan.  However in most apps where I am using angular there is a complicated Model structure.   I necessarly want to edit all these things on a single page, though spread out through many partials. Controller-As really really helps keep the logic clear.
 
-These conventions can be easily followed (directories will be generated) if you use the NgOnRails [generators](#ngor_generators)).  
+These conventions can be easily followed (directories will be generated) if you use the NgOnRails [generators](#ngor_generators).  
 
 *See [test_app](https://github.com/brookisme/ng_on_rails/tree/master/spec/test_app) for an example of these conventions.*
 
