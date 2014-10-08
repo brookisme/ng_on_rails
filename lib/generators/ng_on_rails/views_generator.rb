@@ -8,9 +8,11 @@ module NgOnRails
     class_option :properties, type: :array, required: false, default: [], desc: "list of properties"
     class_option :relationships, type: :array, required: false, default: [], desc: "list of relationships. determines has_many/one from singular/plural name"
     class_option :format, type: :string, required: false, default: "slim", desc: "*** FOR NOW ONLY OFFERS SLIM*** templating engine. defaults to slim. slim, haml, erb"
-    class_option :render_views, type: :boolean, required: false, default: true, desc: "Insert render_view directives into rails-views"
     class_option :styles, type: :boolean, required: false, default: true, desc: "add ng_on_rails_styles.css"
     class_option :belongs_to, type: :array, required: false, default: [], desc: "list of models it belongs_to"
+    class_option :render_views, type: :boolean, required: false, default: true, desc: "Insert render_view directives into rails-views"
+    class_option :jbuilder, type: :boolean, required: false, default: false, desc: "Create jbuilder files the rails-views directory for json"
+    class_option :rails_views, type: :boolean, required: false, default: false, desc: "Insert both render_views and jbuilder files in rails-views"
     class_option :overwrite, type: :boolean, required: false, default: false, desc: "overwrite file if it exist"
 
     def self.source_root
@@ -36,7 +38,7 @@ module NgOnRails
     end
 
     def create_render_views_files
-      if insert_the_render_views?
+      if options[:render_views] || options[:rails_views]
         unless File.exist?(index_path)
           puts "File[ #{index_path} ] does not exist. creating file"
           create_file index_path, '/ File created with NgOnRails view generator'
@@ -49,11 +51,30 @@ module NgOnRails
       end
     end
 
+    def create_jbuilder_files
+      if options[:render_views] || options[:rails_views]
+        unless File.exist?(index_path)
+          puts "File[ #{index_path} ] does not exist. creating file"
+          create_file index_path, '/ File created with NgOnRails view generator'
+        end
+
+        unless File.exist?(show_path)
+          puts "File[ #{show_path} ] does not exist. creating file"
+          create_file show_path, '/ File created with NgOnRails view generator'
+        end
+      end
+    end
 
     def insert_render_views
-      if insert_the_render_views?
+      if options[:render_views] || options[:rails_views]
         append_file index_path, render_index_view_template
         append_file show_path, render_show_view_template
+      end
+    end
+
+    def generate_jbuilder_files
+      if options[:jbuilder] || options[:rails_views]
+        generate "ng_on_rails:jbuilder #{class_name} #{jbuilder_attributes} --overwrite=#{options[:overwrite]}"
       end
     end
 
@@ -145,10 +166,6 @@ module NgOnRails
       end
     end
 
-    def insert_the_render_views?
-      !(options[:render_views].blank? || options[:render_views]=="false")
-    end
-
     def is_plural? string
       string.pluralize == string
     end
@@ -185,6 +202,14 @@ module NgOnRails
 
     def show_path
       @show_path ||= "app/views/#{plural_name}/show.html.#{options[:format]}"
+    end
+
+    def jbuilder_attributes
+      (
+        options[:properties].map{ |prop| "#{prop.split("{")[0].split(":")[0]}" } | 
+        options[:belongs_to].map{ |model| "#{model}_id" } | 
+        options[:relationships]
+      ).join(" ")
     end
 
     def render_index_view_template

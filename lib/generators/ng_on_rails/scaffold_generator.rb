@@ -8,6 +8,8 @@ module NgOnRails
     class_option :relationships, type: :array, required: false, default: [], desc: "list of relationships. determines has_many/one from singular/plural name"
     class_option :format, type: :string, required: false, default: "slim", desc: "*** FOR NOW ONLY OFFERS SLIM*** templating engine. defaults to slim. slim, haml, erb"
     class_option :render_views, type: :boolean, required: false, default: true, desc: "Insert render_view directives into rails-views"
+    class_option :jbuilder, type: :boolean, required: false, default: false, desc: "Create jbuilder files the rails-views directory for json"
+    class_option :rails_views, type: :boolean, required: false, default: false, desc: "Insert both render_views and jbuilder files in rails-views"
     class_option :styles, type: :boolean, required: false, default: true, desc: "add ng_on_rails_styles.css"
     class_option :belongs_to, type: :array, required: false, default: [], desc: "list of models it belongs_to"
     class_option :overwrite, type: :boolean, required: false, default: false, desc: "overwrite file if it exist"
