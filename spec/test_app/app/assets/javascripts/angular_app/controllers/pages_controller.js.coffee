@@ -29,21 +29,19 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
       Page.get({id: page_id}).$promise.then (page) ->
         ctrl.data.page = page
         
-    new: (doc_id)->
+    new: (doc.id)->
       ctrl.clear()
       ctrl.data.activePage = {}
       ctrl.data.creating_new_page = true
-      ctrl.data.activePage.doc_id = doc_id
+      ctrl.data.activePage.doc.id = doc.id
+      # ****************************************************************
       #
       # Note: lines added after generating controller
       #
       ctrl.data.pages ||= []
       ctrl.data.activePage.order_index = ctrl.data.pages.length + 1
       #
-      #
-      #
-
-      
+      # ****************************************************************
 
     create: ->
       if !(ctrl.locked || ctrl.page_form.$error.required)
@@ -63,12 +61,12 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
             ctrl.locked = false
         )
 
-    edit: (page,doc_id) ->
+    edit: (page,doc.id) ->
       ctrl.clear()
       ctrl.data.activePage = page
       ctrl.data.editing_page = true
       page.is_displayed = false
-      ctrl.data.activePage.doc_id = doc_id
+      ctrl.data.activePage.doc.id = doc.id
       
 
     update: (page)->
@@ -96,7 +94,7 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
           if !!pages
             pages.splice(index,1)
           else
-            window.location.href = '/pages'
+            window.location.href = "/pages"
         ,
         (error)->
           console.log("delete_error:",error)

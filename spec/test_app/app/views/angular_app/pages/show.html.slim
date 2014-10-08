@@ -20,8 +20,8 @@ div ng_controller="PagesController as ctrl" ng-init="ctrl.setPages(pages,page)"
   button.btn.btn-default confirm="Do you really want to delete page: '{{page.id}}'?" action="ctrl.rest.delete($index,page)"
     i.fa.fa-remove.fa-lg.danger 
       span.ilabel delete
+  a.btn.btn-default href="/pages" pages list
 
   .formbox ng-show='ctrl.is_editing(page)'
     div render="true" url="pages/form"
-
     

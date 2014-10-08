@@ -3,7 +3,11 @@
 / NgOnRails: starter-layout 
 / 
 - ng_data = {}
-- ng_data['BUILD'] = true
+<% 
+  if options[:build]
+%>- ng_data['BUILD'] = true<% 
+  end 
+%>
 
 doctype html
 html

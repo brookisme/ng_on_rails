@@ -61,29 +61,39 @@ html
 You are now up and running! To generate controllers and resource-services use NgOnRails generators:
 ```
 # Assuming the Rails app has a "Page" model:
-$ bundle exec rails g ng_on_rails:controller Page
-$ bundle exec rails g ng_on_rails:resource Page
-$ bundle exec rails g ng_on_rails:views Page
-```
-  `ng_on_rails:controller` has one option, `[--belongs-to=one two three] # list of models it belongs_to` setting this option will ensure that belongs to relationships are set in the "rest.new()" and "rest.edit()" methods
-
-
-  `ng_on_rails:views` has many options:
-```  
+$ bundle exec rails g ng_on_rails:controller --help
+$ bundle exec rails g ng_on_rails:resource --help
 $ bundle exec rails g ng_on_rails:views --help
+$ bundle exec rails g ng_on_rails:layout --help
+$ bundle exec rails g ng_on_rails:jbuilder --help
+$ bundle exec rails g ng_on_rails:scaffold --help
+```
+
+Here is a brief overview of many of the options available
+```  
 Usage:
-  rails generate ng_on_rails:views MODEL_NAME [options]
+  rails generate ng_on_rails:scaffold MODEL_NAME [options]
 
 Options:
-  [--properties=one two three]           # list of properties
-  [--relationships=one two three]        # list of relationships. determines has_many/one from singular/plural name
-  [--format=FORMAT]                      # *** FOR NOW ONLY OFFERS SLIM*** templating engine. defaults to slim. slim, haml, erb
-                                         # Default: slim
-  [--render-views], [--no-render-views]  # Insert render_view directives into rails-views
-                                         # Default: true
-  [--styles], [--no-styles]              # add ng_on_rails_styles.css
-                                         # Default: true
-  [--belongs-to=one two three]           # list of models it belongs_to
+  [--properties=one two three]               # list of properties
+  [--relationships=one two three]            # list of relationships. determines has_many/one from singular/plural name
+  [--format=FORMAT]                          # *** FOR NOW ONLY OFFERS SLIM*** templating engine. defaults to slim. slim, haml, erb
+                                             # Default: slim
+  [--render-views], [--no-render-views]      # Insert render_view directives into rails-views
+                                             # Default: true
+  [--jbuilder], [--no-jbuilder]              # Create jbuilder files the rails-views directory for json
+  [--rails-views], [--no-rails-views]        # Insert both render_views and jbuilder files in rails-views
+  [--belongs-to=one two three]               # list of models it belongs_to
+  [--overwrite], [--no-overwrite]            # overwrite file if it exist
+  [--layout], [--no-layout]                  # create layout
+                                             # Default: true
+  [--app-controller], [--no-app-controller]  # create app_controller
+                                             # Default: true
+  [--layout-name=LAYOUT_NAME]                # name of layout. defaults to 'application', creating the file application.html.<format>
+                                             # Default: application
+  [--styles], [--no-styles]                  # add ng_on_rails_styles.css
+                                             # Default: true
+
 ```
 * `--properties` is a list of properties you want in the views. A property looks like `property_name:property_type{opt1+opt2+...}`.
   * property\_name: (required) name of the property 
@@ -98,7 +108,6 @@ Options:
 ```
 bundle exec rails g ng_on_rails:views Doc --properties id:number{skip_form+link} name{required} description:textarea{skip_index}
 ```
-* `--format, --styles` should be self explanatory.   
 * `--render-views=true` will append (creating file if necessary) code to load the angular views to your index and show views in your views directory.  For example, your index files becomes:
 ```slim
 # your_app/app/views/docs/index.html.slim
@@ -113,17 +122,26 @@ div ng-init="docs=ctrl.rails.docs" render_view="true" url="docs/index"
 /
 /
 ```
-* `--belongs_to` same as for ng\_on\_rails:controller generator [include the index view of the related model(s) on the show page]
+* `--belongs_to` In the controller generator it will will ensure that belongs to relationships are set in the "rest.new()" and "rest.edit()" methods. In the views it will ensure that the correct id's for these models get passed in the right order.
 
 ##### Test App
 The [test_app](https://github.com/brookisme/ng_on_rails/tree/master/spec/test_app) serves as an example of how to set up a project. With one minor alteration the test app was generated with the following commands:
 ```
+$ bundle exec rails g ng_on_rails:layout
 $ bundle exec rails g ng_on_rails:resource Doc
 $ bundle exec rails g ng_on_rails:controller Doc
-$ bundle exec rails g ng_on_rails:views Doc --properties id:number{skip_form+link} name{required} description:textarea{skip_index} --relationships pages
+$ bundle exec rails g ng_on_rails:jbuilder Doc id name description pages --overwrite=true
+$ bundle exec rails g ng_on_rails:views Doc --properties id:number{skip_form+link} name{required} description:textarea{skip_index} --relationships pages --rails-views
 $ bundle exec rails g ng_on_rails:resource Page
 $ bundle exec rails g ng_on_rails:controller Page --belongs_to Doc
-$ bundle exec rails g ng_on_rails:views Page --properties id:number{skip_form+link} order_index:number subject{required} body:textarea{skip_index} --belongs_to Doc
+$ bundle exec rails g ng_on_rails:jbuilder Page
+$ bundle exec rails g ng_on_rails:views Page --properties id:number{skip_form+link} order_index:number subject{required} body:textarea{skip_index} --belongs_to Doc --rails-views
+```
+or even better, in two lines with the scaffolding short hand:
+`
+$ bundle exec rails g ng_on_rails:views Doc --properties id:number{skip_form+link} name{required} description:textarea{skip_index} --relationships pages --rails-views
+
+$ bundle exec rails g ng_on_rails:views Page --properties id:number{skip_form+link} order_index:number subject{required} body:textarea{skip_index} --belongs_to Doc --rails-views``
 ```
 
 ##### Service: Rails 
