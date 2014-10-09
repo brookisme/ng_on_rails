@@ -2,12 +2,17 @@
 
 describe "NgOnRails Directives", ->
   element = undefined
-  beforeEach inject ->
-    element = angular.element("<div eh-simple>{{2 + 2}}</div>")
-    @compile(element) @scope
 
-  it "should equal 4", ->
-    console.log("element",element)
-    console.log("scope",@scope)
-    @scope.$digest()
-    expect(element.html()).toBe "4"
+  describe "Hello World", ->
+    render_el = '<div hello_world="true">{{2+2}}</div>'
+
+    beforeEach inject ->
+      element = angular.element(render_el)
+      @compile(element) @scope
+
+    it "compile content", ->
+      @scope.$digest()
+      expect(element.html()).toBe "4"
+
+    it "should add a class of hello_world", ->
+      expect(element.hasClass("hello_world")).toBe(true);

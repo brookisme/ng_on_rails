@@ -54,6 +54,7 @@ module.exports = function(config) {
 
     // Preprocessors
     preprocessors: {
+      '../../app/assets/javascripts/**/*.coffee': ['coffee'],
       '**/*.coffee': ['coffee'],
       '**/*.slim': ['slim', 'ng-html2js']
     },
