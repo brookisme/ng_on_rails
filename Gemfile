@@ -24,5 +24,5 @@ gem 'sass-rails', '>= 3.2'
 gem 'autoprefixer-rails'
 gem 'font-awesome-rails','~> 4.2.0'
 
-
+gem 'jasmine-rails'
 

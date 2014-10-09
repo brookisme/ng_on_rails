@@ -29,7 +29,7 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
       Page.get({id: page_id}).$promise.then (page) ->
         ctrl.data.page = page
         
-    new: (doc.id)->
+    new: (doc_id)->
       ctrl.clear()
       ctrl.data.activePage = {}
       ctrl.data.creating_new_page = true
@@ -61,7 +61,7 @@ NgOnRailsApp.controller 'PagesController', ($scope,Page,Rails) ->
             ctrl.locked = false
         )
 
-    edit: (page,doc.id) ->
+    edit: (page,doc_id) ->
       ctrl.clear()
       ctrl.data.activePage = page
       ctrl.data.editing_page = true

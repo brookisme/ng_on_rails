@@ -9,8 +9,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'APPLICATION_SPEC',
-      'app/assets/templates/**/*.html.slim',
+      'app/views/angular_app/**/*.html.slim',
       'spec/javascripts/**/*_spec.{coffee,js,js.coffee}'
     ],
 
@@ -58,7 +57,7 @@ module.exports = function(config) {
     },
 
     ngHtml2JsPreprocessor: {
-      stripPrefix: 'app/assets/templates/',
+      stripPrefix: 'app/views/angular_app/',
       stripSufix: '.slim'
     }
   });
