@@ -2,10 +2,10 @@
 
 describe "NgOnRails Directives", ->
   element = undefined
-  beforeEach inject( ->
+  beforeEach inject ->
     element = angular.element("<div eh-simple>{{2 + 2}}</div>")
     @compile(element) @scope
-  )
+
   it "should equal 4", ->
     console.log("element",element)
     console.log("scope",@scope)

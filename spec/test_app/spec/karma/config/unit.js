@@ -9,7 +9,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      APPLICATION_SPEC,
       'app/views/angular_app/**/*.html.slim',
+      'spec/javascripts/spec_helper.js.coffee',
       'spec/javascripts/**/*_spec.{coffee,js,js.coffee}'
     ],
 

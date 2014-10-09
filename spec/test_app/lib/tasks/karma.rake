@@ -20,10 +20,20 @@ private
   end
 
   def application_spec_files
-    Rails.application.assets.find_asset("application_spec.js").to_a.map {|e| e.pathname.to_s }
+    [
+      'angular',
+      'angular-resource',
+      'angular-animate',
+      'angular-sanitize',
+      'angular-mocks',
+      'app'
+    ].map do |required_asset|
+      Rails.application.assets.find_asset(required_asset).pathname
+    end
   end
 
   def unit_js(files)
+    puts "application_spec_files #{application_spec_files}"
     unit_js = File.open('spec/karma/config/unit.js', 'r').read
     unit_js.gsub "APPLICATION_SPEC", "\"#{files.join("\",\n\"")}\""
   end
