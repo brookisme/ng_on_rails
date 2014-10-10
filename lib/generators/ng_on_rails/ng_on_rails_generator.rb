@@ -48,9 +48,19 @@ module NgOnRails
       end
     end
 
+    def belongs_to_parameter_array
+      if options[:belongs_to].blank?
+        []
+      else
+        options[:belongs_to].map do |a| 
+          a.underscore.gsub(" ","")+"_id"
+        end
+      end
+    end
+
     def belongs_to_parameters
       unless options[:belongs_to].blank?
-        belongs_to_array.join(",")
+        belongs_to_parameter_array.join(",")
       end
     end
 
