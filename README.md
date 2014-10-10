@@ -102,7 +102,7 @@ Example Directory Structure (*In this example the Rails app has 'Page' model*):
 <div render_view="true" url="pages/index" ng-init="pages=ctrl.rails.pages"></div>
 
 
-# your_app/app/views/angular_app/pages/show.html
+# your_app/app/views/angular_app/pages/index.html
 <div ng_controller="PagesController as ctrl">
   <div ng-repeat="page in pages">
     <div render='true' url='pages/page'>
