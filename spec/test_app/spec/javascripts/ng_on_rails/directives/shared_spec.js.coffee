@@ -3,7 +3,6 @@
 describe "NgOnRails Directives", ->
   element = undefined
 
-
   #
   #  Render Directives
   #
@@ -52,13 +51,13 @@ describe "NgOnRails Directives", ->
         has_been_clicked = true
         console.log(test_msg)
 
-      console.log(1,has_been_clicked)
+      console.log('SpecExperiment[has_been_clicked](before_click)',has_been_clicked)
       browser_log = console.log
       console.log = jasmine.createSpy("log")
       click_tester.click()
       expect(console.log).toHaveBeenCalledWith(test_msg)
       console.log = browser_log
-      console.log(2,has_been_clicked)
+      console.log('SpecExperiment[has_been_clicked](after_click)',has_been_clicked)
 
     xit "should have alert when clicked", ->
       browser_alert = alert

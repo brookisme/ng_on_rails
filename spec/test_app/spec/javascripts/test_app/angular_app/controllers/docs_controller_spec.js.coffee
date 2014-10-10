@@ -48,19 +48,19 @@ describe "DocsController", ->
       @http.when('DELETE', '/docs.json').respond(200)
       ctrl.doc_form =
         $error:
-          required: true
+          required: false
 
     it 'should have a rest object', ->
       expect(ctrl.rest).toBeTruthy()
 
     describe 'rest.index', ->
-      it 'should docs index json', ->
+      it 'should request index route', ->
         @http.expectGET('/docs.json')
         ctrl.rest.index()
         @http.flush()
 
     describe 'rest.show', ->
-      it 'should doc show json', ->
+      it 'should request show route', ->
         @http.expectGET('/docs/1.json')
         ctrl.rest.show(1)
         @http.flush()
@@ -77,7 +77,11 @@ describe "DocsController", ->
         expect(ctrl.data.creating_new_doc).toBe(true)
 
     describe 'rest.create', ->
-      it 'should create new object', ->
+      it 'should not request create route with error', ->
+        ctrl.doc_form.$error.required = true
+        ctrl.rest.create(doc)
+
+      it 'should request create route and create new object', ->
         expect(ctrl.data.docs).toBe undefined
         @http.expectPOST('/docs.json')
         ctrl.rest.create(doc)
@@ -101,16 +105,22 @@ describe "DocsController", ->
         expect(doc.is_displayed).toBe(false)
 
     describe 'rest.update', ->
-      it 'should update object', ->
+      it 'should not request update route with error', ->
+        ctrl.doc_form.$error.required = true
+        ctrl.rest.update(doc)
+
+      it 'should request update route', ->
         @http.expectPUT('/docs/1.json')
         ctrl.rest.update(doc)
         @http.flush()
 
     describe 'rest.delete', ->
-      it 'should delete object', ->
+      it 'should request delete route and remove object', ->
+        ctrl.data.docs = [doc]
         @http.expectDELETE('/docs.json')
         ctrl.rest.delete(doc)
         @http.flush()
+        expect(ctrl.data.docs.length).toBe 0
 
   #    
   # SCOPE METHODS
