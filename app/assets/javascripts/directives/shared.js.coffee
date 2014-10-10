@@ -1,4 +1,3 @@
-
 #
 # NgOnRails: Render Directives
 #
