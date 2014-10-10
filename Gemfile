@@ -26,7 +26,6 @@ group :development, :test do
   gem 'font-awesome-rails','~> 4.2.0'
 
   gem 'jquery-rails'
-  gem 'jasmine-jquery-rails'
   gem 'jasmine-rails'
 end
 
