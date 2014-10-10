@@ -21,3 +21,6 @@
 ### v0.0.3.2
 * genrators for ng layout, jbuilder, scaffold
 * readme overhaul
+
+### v0.0.3.3
+* angular specs added
