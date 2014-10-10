@@ -2,6 +2,7 @@
 
 describe "DocsController", ->
   ctrl = undefined
+  doc = undefined
 
   stub_doc = (id)->
     {id: id, name: 'Doc'+id, description: 'A description for doc_'+id}
@@ -11,6 +12,7 @@ describe "DocsController", ->
     doc: stub_doc(4)
 
   beforeEach inject ->
+    doc = stub_doc(1)
     ctrl = @controller 'DocsController', {
       '$scope': @scope,
       'Rails': stub_Rails
@@ -38,11 +40,31 @@ describe "DocsController", ->
   # REST METHODS
   #
   describe 'rest object', ->
+    beforeEach inject ->
+      @http.when('GET', '/docs.json').respond(200)
+      @http.when('GET', '/docs/1.json').respond(200)
+      @http.when('POST', '/docs.json').respond(200)
+      @http.when('PUT', '/docs/1.json').respond(200)
+      @http.when('DELETE', '/docs.json').respond(200)
+      ctrl.doc_form =
+        $error:
+          required: true
+
     it 'should have a rest object', ->
       expect(ctrl.rest).toBeTruthy()
 
     describe 'rest.index', ->
+      it 'should docs index json', ->
+        @http.expectGET('/docs.json')
+        ctrl.rest.index()
+        @http.flush()
+
     describe 'rest.show', ->
+      it 'should doc show json', ->
+        @http.expectGET('/docs/1.json')
+        ctrl.rest.show(1)
+        @http.flush()
+
     describe 'rest.new', ->
       it 'should create empty ctrl.data.activeDoc', ->
         ctrl.data.activeDoc = undefined
@@ -55,9 +77,14 @@ describe "DocsController", ->
         expect(ctrl.data.creating_new_doc).toBe(true)
 
     describe 'rest.create', ->
-    describe 'rest.edit', ->
-      doc = stub_doc(1)
+      it 'should create new object', ->
+        expect(ctrl.data.docs).toBe undefined
+        @http.expectPOST('/docs.json')
+        ctrl.rest.create(doc)
+        @http.flush()
+        expect(ctrl.data.docs.length).toBe 1
 
+    describe 'rest.edit', ->
       it 'should set ctrl.data.activeDoc to doc', ->
         ctrl.data.activeDoc = undefined
         ctrl.rest.edit(doc)
@@ -74,8 +101,16 @@ describe "DocsController", ->
         expect(doc.is_displayed).toBe(false)
 
     describe 'rest.update', ->
-    describe 'rest.delete', ->
+      it 'should update object', ->
+        @http.expectPUT('/docs/1.json')
+        ctrl.rest.update(doc)
+        @http.flush()
 
+    describe 'rest.delete', ->
+      it 'should delete object', ->
+        @http.expectDELETE('/docs.json')
+        ctrl.rest.delete(doc)
+        @http.flush()
 
   #    
   # SCOPE METHODS
@@ -99,8 +134,6 @@ describe "DocsController", ->
 
 
   describe 'is_editing', ->
-    
-    doc = stub_doc(5)
     it 'should display be false if not editing', ->
       ctrl.data.editing_doc = false
       expect(ctrl.is_editing(doc)).toBeFalsy()
@@ -112,12 +145,11 @@ describe "DocsController", ->
 
     it 'should display be true if editing this doc', ->
       ctrl.data.editing_doc = true
-      ctrl.data.activeDoc = stub_doc(5)
+      ctrl.data.activeDoc = doc
       expect(ctrl.is_editing(doc)).toBeTruthy()
 
   describe 'toggleDisplay', ->
     it 'should toggle doc.is_displayed', ->
-      doc = stub_doc(7)
       expect(doc.is_displayed).toBe undefined
       ctrl.toggleDisplay(doc)
       expect(doc.is_displayed).toBe true
