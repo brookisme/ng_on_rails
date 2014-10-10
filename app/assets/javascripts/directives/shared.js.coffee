@@ -1,7 +1,3 @@
-NgOnRailsApp.directive "helloWorld", ->
-  (scope, element) ->
-    element.addClass("hello_world")
-
 #
 # NgOnRails: Render Directives
 #

@@ -3,16 +3,14 @@
 describe "NgOnRails Directives", ->
   element = undefined
 
-  describe "Hello World", ->
-    render_el = '<div hello_world="true">{{2+2}}</div>'
+  describe "renderView", ->
+    render_el = '<div render_view="true" url="docs/index"></div>'
 
     beforeEach inject ->
+      @http.when('GET', '/angular_app/docs/index.html').respond(200);
       element = angular.element(render_el)
+
+    it "should load docs/index when compiled", ->
+      @http.expectGET('/angular_app/docs/index.html')
       @compile(element) @scope
-
-    it "compile content", ->
-      @scope.$digest()
-      expect(element.html()).toBe "4"
-
-    it "should add a class of hello_world", ->
-      expect(element.hasClass("hello_world")).toBe(true);
+      @http.flush()
