@@ -44,8 +44,35 @@ describe "DocsController", ->
     describe 'rest.index', ->
     describe 'rest.show', ->
     describe 'rest.new', ->
+      it 'should create empty ctrl.data.activeDoc', ->
+        ctrl.data.activeDoc = undefined
+        ctrl.rest.new()
+        expect(ctrl.data.activeDoc).toEqual({})
+
+      it 'should set ctrl.data.creating_new_doc to true', ->
+        ctrl.data.creating_new_doc = false
+        ctrl.rest.new()
+        expect(ctrl.data.creating_new_doc).toBe(true)
+
     describe 'rest.create', ->
     describe 'rest.edit', ->
+      doc = stub_doc(1)
+
+      it 'should set ctrl.data.activeDoc to doc', ->
+        ctrl.data.activeDoc = undefined
+        ctrl.rest.edit(doc)
+        expect(ctrl.data.activeDoc).toEqual(doc)
+
+      it 'should set ctrl.data.editing_doc to true', ->
+        ctrl.data.editing_doc = false
+        ctrl.rest.edit(doc)
+        expect(ctrl.data.editing_doc).toBe(true)
+
+      it 'should set doc.is_displayed to false', ->
+        doc.is_displayed = true
+        ctrl.rest.edit(doc)
+        expect(doc.is_displayed).toBe(false)
+
     describe 'rest.update', ->
     describe 'rest.delete', ->
 
