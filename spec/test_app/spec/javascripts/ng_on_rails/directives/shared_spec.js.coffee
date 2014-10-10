@@ -36,12 +36,39 @@ describe "NgOnRails Directives", ->
   #  ViewHelper Directives
   #
   describe "confirm", ->
-    el_string = '<button confirm="confirm-message" action="console.log(123)"></button>'
+    alert_message = 'alert message'
+    el_string = '<button confirm="'+alert_message+'" action="console.log(123)"></button>'
 
     beforeEach inject ->
       element = angular.element(el_string)
       @compile(element) @scope
+      @scope.$digest()
+
+    it "test detect click event", ->
+      test_msg = "testing without directive"
+      click_tester = $(element)
+      has_been_clicked = false
+      click_tester.click ->
+        has_been_clicked = true
+        console.log(test_msg)
+
+      console.log(1,has_been_clicked)
+      browser_log = console.log
+      console.log = jasmine.createSpy("log")
+      click_tester.click()
+      expect(console.log).toHaveBeenCalledWith(test_msg)
+      console.log = browser_log
+      console.log(2,has_been_clicked)
 
     xit "should have alert when clicked", ->
+      browser_alert = alert
+      alert = jasmine.createSpy()
+      # somehow click element
+      expect(alert).toHaveBeenCalledWith(alert_message)
+      alert = browser_alert
+    
     xit "execute action when clicked", ->
-
+      jq_el = jQuery(element)
+      console.log = jasmine.createSpy("log")
+      # somehow click element
+      expect(console.log).toHaveBeenCalledWith("this is a fake log not triggered by a click event")
