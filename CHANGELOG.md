@@ -24,3 +24,7 @@
 
 ### v0.0.3.3
 * angular specs added
+
+### v0.0.3.4
+* belongs\_to\_parameter bug
+* removed test button element
