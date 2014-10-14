@@ -1,131 +1,134 @@
-NgOnRailsApp.controller '<%="#{class_name.pluralize}"%>Controller', ($scope,<%="#{class_name}"%>,Rails) ->
-  #
-  # CONTROLLER SETUP
-  #
-  ctrl = this
-  ctrl.rails = Rails
-  ctrl.data = {}
+NgOnRailsApp.controller '<%="#{class_name.pluralize}"%>Controller', [
+  '$scope','<%="#{class_name}"%>','Rails',
+  ($scope,<%="#{class_name}"%>,Rails) ->
+    #
+    # CONTROLLER SETUP
+    #
+    ctrl = this
+    ctrl.rails = Rails
+    ctrl.data = {}
 
 
-  #
-  # INITIALIZERS
-  #
-  ctrl.set<%="#{class_name}"%> = (<%="#{resource_name}"%>)->
-    ctrl.data.<%="#{resource_name}"%> = <%="#{resource_name}"%>
-  ctrl.set<%="#{class_name.pluralize}"%> = (<%="#{plural_name}"%>)->
-    ctrl.data.<%="#{plural_name}"%> = <%="#{plural_name}"%>
+    #
+    # INITIALIZERS
+    #
+    ctrl.set<%="#{class_name}"%> = (<%="#{resource_name}"%>)->
+      ctrl.data.<%="#{resource_name}"%> = <%="#{resource_name}"%>
+    ctrl.set<%="#{class_name.pluralize}"%> = (<%="#{plural_name}"%>)->
+      ctrl.data.<%="#{plural_name}"%> = <%="#{plural_name}"%>
 
 
-  #  
-  # REST METHODS
-  #
-  ctrl.rest =
-    index: ->
-      params = {}
-      <%="#{class_name}"%>.query(params).$promise.then (<%="#{plural_name}"%>) ->
-        ctrl.data.<%="#{plural_name}"%> = <%="#{plural_name}"%>
+    #  
+    # REST METHODS
+    #
+    ctrl.rest =
+      index: ->
+        params = {}
+        <%="#{class_name}"%>.query(params).$promise.then (<%="#{plural_name}"%>) ->
+          ctrl.data.<%="#{plural_name}"%> = <%="#{plural_name}"%>
 
-    show: (<%="#{resource_name}"%>_id)->
-      <%="#{class_name}"%>.get({id: <%="#{resource_name}"%>_id}).$promise.then (<%="#{resource_name}"%>) ->
-        ctrl.data.<%="#{resource_name}"%> = <%="#{resource_name}"%>
-        
-    new: (<%=belongs_to_parameters%>)->
-      ctrl.clear()
-      ctrl.data.active<%="#{class_name}"%> = {}
-      ctrl.data.creating_new_<%="#{resource_name}"%> = true
-      <% 
-        belongs_to_array.each do |relationship| 
-      %>ctrl.data.active<%="#{class_name}"%>.<%= relationship%> = <%= relationship %>
-      <% 
-        end 
-      %>
+      show: (<%="#{resource_name}"%>_id)->
+        <%="#{class_name}"%>.get({id: <%="#{resource_name}"%>_id}).$promise.then (<%="#{resource_name}"%>) ->
+          ctrl.data.<%="#{resource_name}"%> = <%="#{resource_name}"%>
+          
+      new: (<%=belongs_to_parameters%>)->
+        ctrl.clear()
+        ctrl.data.active<%="#{class_name}"%> = {}
+        ctrl.data.creating_new_<%="#{resource_name}"%> = true
+        <% 
+          belongs_to_parameter_array.each do |relationship| 
+        %>ctrl.data.active<%="#{class_name}"%>.<%= relationship%> = <%= relationship %>
+        <% 
+          end 
+        %>
 
-    create: ->
-      if !(ctrl.locked || ctrl.<%="#{resource_name}"%>_form.$error.required)
-        ctrl.locked = true
-        working_<%="#{resource_name}"%> = angular.copy(ctrl.data.active<%="#{class_name}"%>)
-        <%="#{class_name}"%>.save(
-          working_<%="#{resource_name}"%>,
+      create: ->
+        if !(ctrl.locked || ctrl.<%="#{resource_name}"%>_form.$error.required)
+          ctrl.locked = true
+          working_<%="#{resource_name}"%> = angular.copy(ctrl.data.active<%="#{class_name}"%>)
+          <%="#{class_name}"%>.save(
+            working_<%="#{resource_name}"%>,
+            (<%="#{resource_name}"%>)->
+              ctrl.data.<%="#{plural_name}"%> ||= []
+              ctrl.data.<%="#{plural_name}"%>.push(<%="#{resource_name}"%>)
+              ctrl.clear()
+              ctrl.locked = false
+            ,
+            (error)->
+              console.log("create_error:",error)
+              ctrl.clear()
+              ctrl.locked = false
+          )
+
+      edit: (<%="#{resource_name}"%><%=belongs_to_comma%><%=belongs_to_parameters%>) ->
+        ctrl.clear()
+        ctrl.data.active<%="#{class_name}"%> = <%="#{resource_name}"%>
+        ctrl.data.editing_<%="#{resource_name}"%> = true
+        <%="#{resource_name}"%>.is_displayed = false
+        <% 
+          belongs_to_array.each do |relationship| 
+        %>ctrl.data.active<%="#{class_name}"%>.<%= relationship%> = <%= relationship %>
+        <% 
+          end 
+        %>
+
+      update: (<%="#{resource_name}"%>)->
+        if !(ctrl.locked || ctrl.<%="#{resource_name}"%>_form.$error.required)
+          ctrl.locked = true
+          <%="#{resource_name}"%> = ctrl.data.active<%="#{class_name}"%> unless !!<%="#{resource_name}"%>
+          working_<%="#{resource_name}"%> = angular.extend(angular.copy(<%="#{resource_name}"%>),ctrl.data.active<%="#{class_name}"%>)
+          <%="#{class_name}"%>.update(
+            working_<%="#{resource_name}"%>,
+            (<%="#{resource_name}"%>)->
+              # success handler
+              ctrl.locked = false
+            ,
+            (error)->
+              console.log("update_error:",error)
+              ctrl.locked = false
+          )
+          ctrl.clear()
+
+      delete: (index,<%="#{resource_name}"%>,<%="#{plural_name}"%>)->
+        <%="#{class_name}"%>.delete(
+          <%="#{resource_name}"%>, 
           (<%="#{resource_name}"%>)->
-            ctrl.data.<%="#{plural_name}"%> ||= []
-            ctrl.data.<%="#{plural_name}"%>.push(<%="#{resource_name}"%>)
-            ctrl.clear()
-            ctrl.locked = false
+            <%="#{plural_name}"%> ||= ctrl.data.<%="#{plural_name}"%>
+            if !!<%="#{plural_name}"%>
+              <%="#{plural_name}"%>.splice(index,1)
+            else
+              window.location.href = "<%= path_to_index_page %>"
           ,
           (error)->
-            console.log("create_error:",error)
-            ctrl.clear()
-            ctrl.locked = false
-        )
-
-    edit: (<%="#{resource_name}"%><%=belongs_to_comma%><%=belongs_to_parameters%>) ->
-      ctrl.clear()
-      ctrl.data.active<%="#{class_name}"%> = <%="#{resource_name}"%>
-      ctrl.data.editing_<%="#{resource_name}"%> = true
-      <%="#{resource_name}"%>.is_displayed = false
-      <% 
-        belongs_to_array.each do |relationship| 
-      %>ctrl.data.active<%="#{class_name}"%>.<%= relationship%> = <%= relationship %>
-      <% 
-        end 
-      %>
-
-    update: (<%="#{resource_name}"%>)->
-      if !(ctrl.locked || ctrl.<%="#{resource_name}"%>_form.$error.required)
-        ctrl.locked = true
-        <%="#{resource_name}"%> = ctrl.data.active<%="#{class_name}"%> unless !!<%="#{resource_name}"%>
-        working_<%="#{resource_name}"%> = angular.extend(angular.copy(<%="#{resource_name}"%>),ctrl.data.active<%="#{class_name}"%>)
-        <%="#{class_name}"%>.update(
-          working_<%="#{resource_name}"%>,
-          (<%="#{resource_name}"%>)->
-            # success handler
-            ctrl.locked = false
-          ,
-          (error)->
-            console.log("update_error:",error)
-            ctrl.locked = false
+            console.log("delete_error:",error)
         )
         ctrl.clear()
 
-    delete: (index,<%="#{resource_name}"%>,<%="#{plural_name}"%>)->
-      <%="#{class_name}"%>.delete(
-        <%="#{resource_name}"%>, 
-        (<%="#{resource_name}"%>)->
-          <%="#{plural_name}"%> ||= ctrl.data.<%="#{plural_name}"%>
-          if !!<%="#{plural_name}"%>
-            <%="#{plural_name}"%>.splice(index,1)
-          else
-            window.location.href = "<%= path_to_index_page %>"
-        ,
-        (error)->
-          console.log("delete_error:",error)
-      )
-      ctrl.clear()
+
+    #    
+    # SCOPE METHODS
+    #
+    ctrl.clear = (doc)->
+      ctrl.data.active<%="#{class_name}"%> = null
+      ctrl.data.creating_new_<%="#{resource_name}"%> = false
+      ctrl.data.editing_<%="#{resource_name}"%> = false
+
+    ctrl.is_editing = (<%="#{resource_name}"%>)->
+      (ctrl.data.editing_<%="#{resource_name}"%> && !!<%="#{resource_name}"%> && <%="#{resource_name}"%>.id == ctrl.data.active<%="#{class_name}"%>.id) ||
+      (ctrl.data.creating_new_<%="#{resource_name}"%> && !<%="#{resource_name}"%>)
+
+    ctrl.toggleDisplay = (<%="#{resource_name}"%>)->
+      <%="#{resource_name}"%>.is_displayed = !<%="#{resource_name}"%>.is_displayed
+
+    #  
+    # PRIVATE METHODS
+    #   
+    # => add methods here, not attached to the ctrl object to be used internally
+    #   
 
 
-  #    
-  # SCOPE METHODS
-  #
-  ctrl.clear = (doc)->
-    ctrl.data.active<%="#{class_name}"%> = null
-    ctrl.data.creating_new_<%="#{resource_name}"%> = false
-    ctrl.data.editing_<%="#{resource_name}"%> = false
-
-  ctrl.is_editing = (<%="#{resource_name}"%>)->
-    (ctrl.data.editing_<%="#{resource_name}"%> && !!<%="#{resource_name}"%> && <%="#{resource_name}"%>.id == ctrl.data.active<%="#{class_name}"%>.id) ||
-    (ctrl.data.creating_new_<%="#{resource_name}"%> && !<%="#{resource_name}"%>)
-
-  ctrl.toggleDisplay = (<%="#{resource_name}"%>)->
-    <%="#{resource_name}"%>.is_displayed = !<%="#{resource_name}"%>.is_displayed
-
-  #  
-  # PRIVATE METHODS
-  #   
-  # => add methods here, not attached to the ctrl object to be used internally
-  #   
-
-
-  #
-  # END
-  #
-  return
+    #
+    # END
+    #
+    return
+  ]

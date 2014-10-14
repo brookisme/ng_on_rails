@@ -152,8 +152,8 @@ module NgOnRails
     def jbuilder_attributes
       (
         options[:properties].map{ |prop| "#{prop.split("{")[0].split(":")[0]}" } | 
-        options[:belongs_to].map{ |model| "#{model}_id" } | 
-        options[:relationships]
+        options[:belongs_to].map{ |model| "#{model.underscore}_id" } | 
+        options[:relationships].map{ |relationship| relationship.underscore }
       ).join(" ")
     end
 
