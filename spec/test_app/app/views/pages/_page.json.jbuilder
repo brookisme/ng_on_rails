@@ -1,1 +1,1 @@
-json.extract! page , :id, :order_index, :subject, :body, :Doc_id
+json.extract! page , :id, :order_index, :subject, :body, :doc_id

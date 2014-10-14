@@ -202,8 +202,8 @@ $ bundle exec rails g ng_on_rails:views Page --properties id:number{skip_form+li
 ```
 or even better, in two lines with the scaffolding short hand:
 ```
-$ bundle exec rails g ng_on_rails:views Doc --properties id:number{skip_form+link} name{required} description:textarea{skip_index} --relationships pages --rails-views
-$ bundle exec rails g ng_on_rails:views Page --properties id:number{skip_form+link} order_index:number subject{required} body:textarea{skip_index} --belongs_to Doc --rails-views``
+$ bundle exec rails g ng_on_rails:scaffold Doc --properties id:number{skip_form+link} name{required} description:textarea{skip_index} --relationships pages --rails-views
+$ bundle exec rails g ng_on_rails:scaffold Page --properties id:number{skip_form+link} order_index:number subject{required} body:textarea{skip_index} --belongs_to Doc --rails-views
 ```
 
 -----------------------------------------------------------
