@@ -44,7 +44,7 @@ NgOnRailsApp.controller 'PagesController', [
         ctrl.data.activePage.order_index = ctrl.data.pages.length + 1
         #
         # ****************************************************************
-      
+        
       create: ->
         if !(ctrl.locked || ctrl.page_form.$error.required)
           ctrl.locked = true

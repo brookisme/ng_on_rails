@@ -3,7 +3,7 @@ module NgOnRails
   class ScaffoldGenerator < NgOnRails::NgOnRailsGenerator
     desc "Creates NgOnRails-style AngularJS Views"
     
-    argument :model_name, type: :string, required: true, desc: "required"
+    argument :full_model_name, type: :string, required: true, desc: "required"
     class_option :layout, type: :boolean, required: false, default: true, desc: "create layout"
     # layout generator
     class_option :app_controller, type: :boolean, required: false, default: true, desc: "create app_controller"
@@ -14,17 +14,17 @@ module NgOnRails
 
     def generate_layout
       if options[:layout]
-        generate "ng_on_rails:layout #{options_string}"
+        generate "ng_on_rails:layout #{full_model_name} #{options_string}"
       end
     end
     def generate_resource
-      generate "ng_on_rails:resource #{model_name} #{options_string}"
+      generate "ng_on_rails:resource #{full_model_name} #{options_string}"
     end
     def generate_controller
-      generate "ng_on_rails:controller #{model_name} #{options_string}"
+      generate "ng_on_rails:controller #{full_model_name} #{options_string}"
     end
     def generate_views
-      generate "ng_on_rails:views #{model_name} #{options_string}"
+      generate "ng_on_rails:views #{full_model_name} #{options_string}"
     end
     
   private

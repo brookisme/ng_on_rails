@@ -1,5 +1,5 @@
 NgOnRailsApp.factory '<%="#{class_name}"%>', ($resource) ->
-  <%="#{class_name}"%>Resource = $resource '/<%="#{plural_name}"%>/:id.json', {id: '@id'}, {
+  <%="#{class_name}"%>Resource = $resource '/<%= mounted_path %><%= plural_name %>/:id.json', {id: '@id'}, {
     update:{method: "PUT"}
   }
   class <%="#{class_name}"%> extends <%="#{class_name}"%>Resource

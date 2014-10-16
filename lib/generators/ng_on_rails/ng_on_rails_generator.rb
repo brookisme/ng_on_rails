@@ -1,4 +1,5 @@
 require 'rails/generators'
+require "ng_on_rails/config_manager"
 module NgOnRails
   class NgOnRailsGenerator < Rails::Generators::Base
     desc "Shared options and methods for NgOnRails Generators"
@@ -16,10 +17,36 @@ module NgOnRails
       @source_root ||= File.join(File.dirname(__FILE__), 'templates')
     end
 
+    def set_attributes
+      if (defined?(full_model_name) && !full_model_name.nil?)
+        if full_model_name.include?("::")
+          parts = full_model_name.split("::")
+          @module_name = parts[0]
+          @model_name = parts[1]
+        else
+          @model_name = full_model_name
+        end
+      end
+    end
+
   private
 
+    def module_name
+      return @module_name
+    end
+
+    def module_path
+      unless module_name.nil?
+        "#{module_name.underscore}/"
+      end
+    end
+
+    def model_name
+      @model_name
+    end
+
     def class_name
-      @class_name ||= model_name.classify
+      @class_name ||= @model_name.classify
     end
 
     def resource_name
@@ -31,11 +58,26 @@ module NgOnRails
     end
 
     #
+    # Config
+    #
+
+    def config
+      @config ||= ConfigManager.load_config
+    end
+
+    def mounted_path
+      if @mounted_path.nil? && !config['mounted_path'].blank?
+        @mounted_path = "#{config['mounted_path']}/"
+      end
+      @mounted_path
+    end
+
+    #
     # View Helpers
     #
     
     def path_to_index_page
-      Rails.application.routes.url_helpers.send("#{plural_name}_path")
+      "/#{mounted_path}#{plural_name}"
     end
 
     def belongs_to_array

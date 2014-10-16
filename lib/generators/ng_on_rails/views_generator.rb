@@ -4,24 +4,24 @@ module NgOnRails
     desc "Creates NgOnRails-style AngularJS Views"
     
     # arguments
-    argument :model_name, type: :string, required: true, desc: "required"
+    argument :full_model_name, type: :string, required: true, desc: "required"
     class_option :styles, type: :boolean, required: false, default: true, desc: "add ng_on_rails_styles.css"
 
     def generate_views
       option_template "#{ViewsGenerator.source_root}/views/#{options[:format]}/index.html.erb", 
-        "app/views/angular_app/#{plural_name}/index.html.#{options[:format]}",
+        "app/views/#{module_path}angular_app/#{plural_name}/index.html.#{options[:format]}",
         "index view"
       option_template "#{ViewsGenerator.source_root}/views/#{options[:format]}/show.html.erb", 
-        "app/views/angular_app/#{plural_name}/show.html.#{options[:format]}",
+        "app/views/#{module_path}angular_app/#{plural_name}/show.html.#{options[:format]}",
         "show view"
       option_template "#{ViewsGenerator.source_root}/views/#{options[:format]}/_show.html.erb", 
-        "app/views/angular_app/#{plural_name}/_show.html.#{options[:format]}",
+        "app/views/#{module_path}angular_app/#{plural_name}/_show.html.#{options[:format]}",
         "_show partial"
       option_template "#{ViewsGenerator.source_root}/views/#{options[:format]}/_form.html.erb", 
-        "app/views/angular_app/#{plural_name}/_form.html.#{options[:format]}",
+        "app/views/#{module_path}angular_app/#{plural_name}/_form.html.#{options[:format]}",
         "_form partial"
       option_template "#{ViewsGenerator.source_root}/views/#{options[:format]}/_model.html.erb", 
-        "app/views/angular_app/#{plural_name}/_#{resource_name}.html.#{options[:format]}",
+        "app/views/#{module_path}angular_app/#{plural_name}/_#{resource_name}.html.#{options[:format]}",
         "_#{resource_name} partial"
     end
 
@@ -62,7 +62,7 @@ module NgOnRails
 
     def generate_jbuilder_files
       if options[:jbuilder] || options[:rails_views]
-        generate "ng_on_rails:jbuilder #{class_name} #{jbuilder_attributes} --overwrite=#{options[:overwrite]}"
+        generate "ng_on_rails:jbuilder #{full_model_name} #{jbuilder_attributes} --overwrite=#{options[:overwrite]}"
       end
     end
 
@@ -142,11 +142,11 @@ module NgOnRails
     #
 
     def index_path
-      @index_path ||= "app/views/#{plural_name}/index.html.#{options[:format]}"
+      @index_path ||= "app/views/#{module_path}#{plural_name}/index.html.#{options[:format]}"
     end
 
     def show_path
-      @show_path ||= "app/views/#{plural_name}/show.html.#{options[:format]}"
+      @show_path ||= "app/views/#{module_path}#{plural_name}/show.html.#{options[:format]}"
     end
 
     def jbuilder_attributes
