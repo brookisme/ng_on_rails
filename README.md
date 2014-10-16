@@ -40,7 +40,7 @@ In your layout below the `javascript_include_tag "application"` load the Rails-s
 
 NgOnRails is now up and running!
 
-*Instructions for using NgOnRails with a Rails Engine can be found [here](https://github.com/brookisme/ng_on_rails/wiki/Engines).*
+_Instructions for using NgOnRails with a **Rails Engine** can be found [here](https://github.com/brookisme/ng_on_rails/wiki/Engines)._
 
 
 <a name="#ngor_app_note"></a>
