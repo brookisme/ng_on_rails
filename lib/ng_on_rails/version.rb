@@ -1,3 +1,3 @@
 module NgOnRails
-  VERSION = "0.0.3.6alpha"
+  VERSION = "0.0.3.6"
 end

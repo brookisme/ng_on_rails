@@ -28,7 +28,12 @@
 ### v0.0.3.4
 * belongs\_to\_parameter bug
 * removed test button element
+
 ### v0.0.3.5
 * No longer require setting mangle to false
-* bug fix: controller_template - use correct relationship names
+* bug fix: controller_template - use correct relationship names in new.edit
 * bug fix: jbuilder_template - ensure underscore for relationship names
+
+### v0.0.3.6
+* support for rails engines
+* bug fix: controller_template - use correct relationship names in rest.edit

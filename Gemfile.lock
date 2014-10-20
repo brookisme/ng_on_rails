@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ng_on_rails (0.0.3.6alpha)
+    ng_on_rails (0.0.3.6)
       angular_rails_csrf (~> 1)
       angularjs-rails (~> 1)
       rails (~> 4.1.6)
