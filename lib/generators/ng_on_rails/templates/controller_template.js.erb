@@ -36,8 +36,8 @@ NgOnRailsApp.controller '<%="#{class_name.pluralize}"%>Controller', [
         ctrl.data.active<%="#{class_name}"%> = {}
         ctrl.data.creating_new_<%="#{resource_name}"%> = true
         <% 
-          belongs_to_parameter_array.each do |relationship| 
-        %>ctrl.data.active<%="#{class_name}"%>.<%= relationship%> = <%= relationship %>
+          belongs_to_parameter_array.each do |owner| 
+        %>ctrl.data.active<%="#{class_name}"%>.<%= owner %> = <%= owner %>
         <% 
           end 
         %>
@@ -66,8 +66,8 @@ NgOnRailsApp.controller '<%="#{class_name.pluralize}"%>Controller', [
         ctrl.data.editing_<%="#{resource_name}"%> = true
         <%="#{resource_name}"%>.is_displayed = false
         <% 
-          belongs_to_array.each do |relationship| 
-        %>ctrl.data.active<%="#{class_name}"%>.<%= relationship%> = <%= relationship %>
+          belongs_to_parameter_array.each do |owner| 
+        %>ctrl.data.active<%="#{class_name}"%>.<%= owner %> = <%= owner %>
         <% 
           end 
         %>
