@@ -37,3 +37,6 @@
 ### v0.0.3.6
 * support for rails engines
 * bug fix: controller_template - use correct relationship names in rest.edit
+
+### v0.0.3.7
+* rails\_service: check if active_record before converting to json
