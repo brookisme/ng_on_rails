@@ -12,20 +12,24 @@ module NgOnRailsHelper
               rv = instance_var
             else
               unless ng_data[name] == "IGNORE"
-                if !ng_data[name]
-                  if !!ng_data["BUILD"] 
+                if instance_var.is_a?(ActiveRecord::Base)
+                  if !ng_data[name]
+                    if !!ng_data["BUILD"] 
+                      rv = build(name,instance_var)
+                    else
+                      rv = instance_var
+                    end
+                  elsif ng_data[name]=="BUILD"
                     rv = build(name,instance_var)
-                  else
-                    rv = instance_var
+                  elsif ng_data[name].class==Hash
+                    path = ng_data[name][:path]
+                    model_name = ng_data[name][:as] || name
+                    rv = build(model_name,instance_var,path)
                   end
-                elsif ng_data[name]=="BUILD"
-                  rv = build(name,instance_var)
-                elsif ng_data[name].class==Hash
-                  path = ng_data[name][:path]
-                  model_name = ng_data[name][:as] || name
-                  rv = build(model_name,instance_var,path)
+                else
+                  rv = instance_var
                 end
-              end        
+              end
             end
             unless !defined?(rv) || rv.blank?
               if (rv.is_a?(String) && !is_json?(rv)) || rv.is_a?(Numeric)
