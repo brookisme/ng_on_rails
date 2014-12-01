@@ -3,11 +3,17 @@
 #
 
 set_data = (scope,el,attrs)->
+  scope.data ||= {} 
+  if attrs['includeParentData'] != "false"
+    for k, v of scope.data.parent
+      scope.data[k] = v
+  scope.data.parent = null
   if !!attrs['data']
-    data_array = attrs['data'].split(";")
-    for data in data_array
-      key_val_arr = data.split("=")
-      scope[key_val_arr[0].trim()] = scope.$eval(key_val_arr[1].trim())
+    if !!scope.data
+      data_array = attrs['data'].split(";")
+      for data in data_array
+        key_val_arr = data.split("=")
+        scope.data[key_val_arr[0].trim()] = scope.$eval(key_val_arr[1].trim())
 
 NgOnRailsApp.directive "renderView", ->
   restrict: "AE",
