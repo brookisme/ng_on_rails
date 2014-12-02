@@ -11,8 +11,8 @@ module NgOnRailsHelper
             if ng_data.blank?
               rv = instance_var
             else
-              unless ng_data[name] == "IGNORE"
-                if instance_var.is_a?(ActiveRecord::Base)
+              unless ng_data[name] == "IGNORE"                
+                if instance_var.is_a?(ActiveRecord::Base) || instance_var.is_a?(ActiveRecord::Relation)
                   if !ng_data[name]
                     if !!ng_data["BUILD"] 
                       rv = build(name,instance_var)
