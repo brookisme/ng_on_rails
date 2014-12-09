@@ -14,7 +14,7 @@ module NgOnRailsHelper
               unless ng_data[name] == "IGNORE"                
                 if instance_var.is_a?(ActiveRecord::Base) || instance_var.is_a?(ActiveRecord::Relation)
                   if !ng_data[name]
-                    if !!ng_data["BUILD"] 
+                    if !!ng_data["BUILD"]
                       rv = build(name,instance_var)
                     else
                       rv = instance_var
@@ -25,6 +25,8 @@ module NgOnRailsHelper
                     path = ng_data[name][:path]
                     model_name = ng_data[name][:as] || name
                     rv = build(model_name,instance_var,path)
+                  else
+                    rv = instance_var
                   end
                 else
                   rv = instance_var
@@ -44,7 +46,7 @@ module NgOnRailsHelper
         end
       end
     end
-    return locals_hash.to_json
+    return escape_javascript(locals_hash.to_json)
   end
 
 private
