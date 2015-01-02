@@ -6,6 +6,8 @@
 
 *A Rails inspired framework for using AngularJS with Rails*
 
+**IMPORTANT!!! The key parts of this project, namely the Rails-Service and the render(View) directives are working properly.  However there were some breaking changes with Angular 1.3 and I've been updating my thoughts on best practices. All this is leading to new ideas on how the generators should work.  Moreover, talk of Angular 2.0 has called into question the logic of continuing this project as it is now.  I'll be making updates so I can use it with projects I am personally working on but it probably won't be actively maintained until after Angular 2.0 comes out and there is a complete overhaul**
+
 **This project is in active development.  Check back often for updates and be very careful when using with any production app.**
 
 This gem aims to standardize and simplify how AngularJS is integrated within a rails application. The hope is to push towards a *convention-over-configuration* approach with using AngularJS with rails.  
