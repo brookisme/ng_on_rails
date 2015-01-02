@@ -3,22 +3,17 @@
 #
 
 set_data = (scope,el,attrs)->
-  scope.data ||= {} 
-  if attrs['includeParentData'] != "false"
-    for k, v of scope.data.parent
-      scope.data[k] = v
-  scope.data.parent = null
   if !!attrs['data']
-    if !!scope.data
-      data_array = attrs['data'].split(";")
-      for data in data_array
-        key_val_arr = data.split("=")
-        scope.data[key_val_arr[0].trim()] = scope.$eval(key_val_arr[1].trim())
+    scope.data = angular.copy(scope.data) || {} 
+    data_array = attrs['data'].split(";")
+    for data in data_array
+      key_val_arr = data.split("=")
+      scope.data[key_val_arr[0].trim()] = scope.$eval(key_val_arr[1].trim())
 
 NgOnRailsApp.directive "renderView", ->
   restrict: "AE",
   transclude: true,
-  link: set_data
+  link: set_data,
   template: (el,attrs)->
     format = attrs.format || "html"
     '<div ng_include="\'/angular_app/'+attrs.url+'.'+format+'\'"></div>'
@@ -26,7 +21,7 @@ NgOnRailsApp.directive "renderView", ->
 NgOnRailsApp.directive "render", ->
   restrict: "AE",
   transclude: true,
-  link: set_data
+  link: set_data,
   template: (el,attrs)->
     format = attrs.format || "html"
     url_parts = attrs.url.split("/")
