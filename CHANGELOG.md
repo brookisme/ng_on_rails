@@ -40,3 +40,7 @@
 
 ### v0.0.3.7
 * rails\_service: check if active_record before converting to json
+
+### v0.0.4
+* don't use ng-init.
+* remove data_controller
